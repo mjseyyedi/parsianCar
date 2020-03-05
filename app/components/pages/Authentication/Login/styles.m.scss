@@ -1,0 +1,38 @@
+@import "../../../theme/abstracts/_mixins.scss";
+
+
+.container {
+  height: var(--container-height);
+  @include flexCenter;
+  @include flexLayout(column, center, center);
+
+  &__title{
+    @include fontStyles(--text-super-large, --font-light);
+    margin-bottom: 44px;
+  }
+
+  &__fields{
+    @include flexCenter;
+    input{
+      width: 270px;
+      margin-left: 12px;
+    }
+
+    &--mobile{
+      @include flexLayout(column, center, center);
+      > input{
+        margin: 0 0 25px !important;
+      }
+
+      > button{
+        width: 100%;
+      }
+    }
+  }
+
+  &__logo{
+    margin-bottom: 130px;
+  }
+
+
+}

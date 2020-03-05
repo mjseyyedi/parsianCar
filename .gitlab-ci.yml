@@ -1,0 +1,27 @@
+stages:
+  - build
+  - deploy
+
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+build-staging:
+  stage: build
+  script:
+    - docker build -t registry.snappfood.ir/snappfood/snappfood-web/snappfood-ui/snappfood-landings:${CI_COMMIT_SHA:0:8} .
+    - docker push registry.snappfood.ir/snappfood/snappfood-web/snappfood-ui/snappfood-landings:${CI_COMMIT_SHA:0:8}
+    - docker push registry.snappfood.ir/snappfood/snappfood-web/snappfood-ui/snappfood-landings
+  when: manual
+  only:
+    - master
+
+deploy_staging:
+  stage: deploy
+  script:
+    - export PRODUCTION_IMAGE="registry.snappfood.ir/snappfood/snappfood-web/snappfood-ui/snappfood-landings:${CI_COMMIT_SHA:0:8}"
+    - docker-compose -f docker-compose.yml pull
+    - docker-compose -f docker-compose.yml up -d
+    - docker-compose -f docker-compose.yml ps
+  only:
+    - master
+  when: manual

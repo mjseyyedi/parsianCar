@@ -1,0 +1,19 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.footer {
+  height: var(--mobile-footer-height);
+  background-color: var(--yellow-color);
+  @include border-radius(10px);
+  margin: 0 16px;
+  @include flexLayout(row, space-around, center);
+
+  > a {
+    @include flexLayout(column, center, center);
+    width: 70px;
+
+    > span {
+      margin-top: 10px;
+      color: var(--button-text-color) !important;
+    }
+  }
+}

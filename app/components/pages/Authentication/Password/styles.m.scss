@@ -1,0 +1,65 @@
+@import "../../../theme/abstracts/_mixins.scss";
+
+
+.container {
+  height: var(--container-height);
+  @include flexCenter;
+  @include flexLayout(column, center, center);
+
+  &__title{
+    @include fontStyles(--text-super-large, --font-light);
+    margin-bottom: 44px;
+  }
+  &__logo{
+    margin-bottom: 130px;
+  }
+
+  &__fields{
+    @include flexLayout(column, center, center);
+    > input{
+      width: 270px;
+      margin-bottom: 12px;
+    }
+    > button{
+      width: 100%;
+    }
+    &--mobile{
+
+      .otpContainer{
+        //width: 270px;
+        margin: 0 0 25px !important;
+      }
+      .otpInput{
+        margin-left: 4px !important;
+        width: 42px !important;
+      }
+
+    }
+  }
+}
+
+.otpContainer{
+  flex-direction: row-reverse;
+}
+
+
+.otpInput{
+  @include border-radius(10px);
+  border: none;
+  width: 52px !important;
+  height: 48px;
+  margin-left: 11px !important;
+  @include fontStyles(--text-x-large, --font-light, --button-text-color);
+  outline: none;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Firefox */
+  &[type=number] {
+    -moz-appearance:textfield;
+  }
+
+}

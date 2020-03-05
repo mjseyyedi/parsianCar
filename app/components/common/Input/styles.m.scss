@@ -1,0 +1,22 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.container {
+  @include border-radius(10px);
+  height: 48px;
+  outline: none;
+  border: none;
+  @include fontStyles(--text-x-large, --font-light, --button-text-color);
+  padding: 0 10px;
+
+  &[type='tel'] {
+    direction: ltr;
+    text-align: left;
+  }
+
+  &::placeholder {
+    font-family: 'dana-persian';
+    padding: 0 10px;
+    @include fontStyles(--text-x-large, --font-light, --button-text-color);
+    text-align: right;
+  }
+}

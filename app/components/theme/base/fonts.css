@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'dana-persian';
+  font-style: normal;
+  font-weight: 800;
+  font-display: fallback;
+  src: url('../../../assets/fonts/Dana-FaNum-UltraBold.ttf');
+}
+@font-face {
+  font-family: 'dana-persian';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url('../../../assets/fonts/Dana-FaNum-ExtraBold.ttf');
+}
+@font-face {
+  font-family: 'dana-persian';
+  font-style: normal;
+  font-weight: 600;
+  font-display: fallback;
+  src: url('../../../assets/fonts/Dana-FaNum-Bold.ttf');
+}
+@font-face {
+  font-family: 'dana-persian';
+  font-style: normal;
+  font-weight: 500;
+  font-display: fallback;
+  src: url('../../../assets/fonts/Dana-FaNum-Medium.ttf');
+}
+@font-face {
+  font-family: 'dana-persian';
+  font-style: normal;
+  font-weight: 400;
+  font-display: fallback;
+  src: url('../../../assets/fonts/Dana-FaNum-Regular.ttf');
+}
+@font-face {
+  font-family: 'dana-persian';
+  font-style: normal;
+  font-weight: 300;
+  font-display: fallback;
+  src: url('../../../assets/fonts/Dana-FaNum-Light.ttf');
+}
+@font-face {
+  font-family: 'dana-persian';
+  font-style: normal;
+  font-weight: 200;
+  font-display: fallback;
+  src: url('../../../assets/fonts/Dana-FaNum-ExtraLight.ttf');
+}

@@ -1,0 +1,48 @@
+import React from 'react'
+import {Link} from 'react-router-dom'
+
+import LogoIcon from 'components/common/Icons/Logo'
+
+import {Events} from 'utils'
+
+import styles from './styles'
+
+export default function Navbar({userCredential}) {
+
+
+  console.log(666666, userCredential)
+  function handleLoginClick() {
+    window.dispatchEvent(
+      new CustomEvent(Events.CLICK_ON_LOGIN)
+    )
+  }
+
+  return (
+    <div className={styles.navbar}>
+      <div>
+        <Link to={'/'} className={styles.navbar__actions}>
+          انتخاب خودرو
+        </Link>
+        {
+          userCredential ? <Link to={'/'}
+                                 className={styles.navbar__actions}>
+              خروج
+            </Link>
+            :<Link to={'/login'}
+                                  onClick={handleLoginClick}
+                                  className={styles.navbar__actions}>
+            عضویت&nbsp;|&nbsp;ورود
+          </Link>
+        }
+      </div>
+      <div>
+
+      </div>
+      <div>
+        <LogoIcon/>
+      </div>
+
+
+    </div>
+  )
+}

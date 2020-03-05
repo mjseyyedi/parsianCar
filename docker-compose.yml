@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  production-landings:
+    image: ${PRODUCTION_IMAGE:-registry.snappfood.ir/snappfood/snappfood-web/snappfood-ui/snappfood-landings:${TAG:-latest}
+    container_name: production-landings
+    restart: always
+    volumes:
+      - node_modules_production_landing:/app/node_modules
+    ports:
+      - 3004:3004
+
+volumes:
+  node_modules_production_landing:

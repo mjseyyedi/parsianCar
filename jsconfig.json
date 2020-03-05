@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": "app",
+    "paths": {
+      "API/*": ["./API/*"],
+      "utils/*": ["./utils/*"],
+      "store/*": ["./redux/*"],
+      "root/*": ["./components/root/*"],
+      "pages/*": ["./components/pages/*"],
+      "hooks/*": ["./components/hooks/*"],
+      "reducers/*": ["./redux/reducers/*"],
+      "common/*": ["./components/common/*"]
+    }
+  },
+  "include": ["app"]
+}

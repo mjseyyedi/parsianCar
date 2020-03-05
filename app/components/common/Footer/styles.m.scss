@@ -1,0 +1,37 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.footer {
+  height: var(--footer-height);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  @include fontStyles(--text-small, --font-light, --text-color);
+  padding: 0 16px 0 30px;
+  @include flexLayout(row, space-between, center);
+
+  div {
+    &:first-child {
+      span {
+        display: inline-block;
+        margin-left: 12px;
+      }
+    }
+
+    &:last-child {
+      font-size: var(--text-xx-small);
+    }
+  }
+
+  &__social {
+    @include flexLayout(column, center, center);
+    position: absolute;
+    bottom: 50px;
+    left: 30px;
+
+    > svg {
+      margin-bottom: 5px;
+    }
+  }
+
+}

@@ -1,0 +1,14 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.navbar {
+  height: var(--navbar-height);
+  @include flexLayout(row, space-between, center);
+  padding: 0 22px;
+  @include fontStyles(--text-large, --font-light, --white-color);
+  border-bottom: var(--seperator);
+
+  &__actions {
+    margin-left: 16px;
+    display: inline-block;
+  }
+}
