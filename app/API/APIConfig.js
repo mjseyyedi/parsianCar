@@ -35,5 +35,19 @@ export default {
       url: 'v1/placeholders/',
       method: 'GET',
     },
+
+    //cars list
+    {
+      key: 'carsList',
+      url: 'v2/cars/',
+      method: 'GET',
+    },
+{
+      key: 'brandsList',
+      url: 'v2/brands/',
+      method: 'GET',
+    },
+
+
   ],
 }

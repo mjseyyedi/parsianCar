@@ -44,6 +44,12 @@ const Routes = [
             exact: true,
             fetching: import('components/pages/Authentication/Password/fetching'),
           },
+          {
+            component: loadable(() => import('components/pages/Cars')),
+            path: '/cars',
+            exact: true,
+            fetching: import('components/pages/Cars/fetching'),
+          },
         ],
       },
     ],

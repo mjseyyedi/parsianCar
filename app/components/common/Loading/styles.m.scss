@@ -1,0 +1,15 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.container {
+  z-index: 100;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(50, 48, 59, .95);
+  @include flexLayout(column, center, center);
+  > svg{
+    margin-bottom: 30px;
+  }
+}

@@ -2,6 +2,48 @@
 
 
 .container {
-  height: var(--container-height);
+  $parent: &;
+  //height: var(--container-height);
+  @include flexCenter;
+
+  &__middle{
+    width: 50vw;
+    height: 70vh;
+    background-color: var(--yellow-color);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    //@include flexCenter;
+
+    #{$parent}__image{
+      position: absolute;
+      width: 70vw;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 5vh;
+      img{
+        width: 100%;
+      }
+    }
+
+  }
+
+
+  &__fields{
+    margin-top: calc(70vh + 35px - var(--navbar-height));
+    @include flexLayout(row, space-between, center);
+    width: 50vw;
+
+    > input{
+      margin-left: 12px;
+      width: 50%;
+      &:first-child{
+        width: 100%;
+      }
+    }
+  }
 
 }

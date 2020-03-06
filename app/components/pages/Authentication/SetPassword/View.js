@@ -22,11 +22,11 @@ const SetPassword = ({addNotification, history, register, isMobile, error,setErr
 
   function handleRegister(password, rePass) {
     if (!password || !rePass) {
-      addNotification('error', 'لطفا کلمه عبور و تکرار آن را به دقت وارد کنید.')
+      addNotification('warning', 'لطفا کلمه عبور و تکرار آن را به دقت وارد کنید.')
     } else if (password.length < 6 || rePass.length < 6) {
-      addNotification('error', 'کلمه عبور باید حداقل ۶ کاراکتر باشد.')
+      addNotification('warning', 'کلمه عبور باید حداقل ۶ کاراکتر باشد.')
     } else if (password !== rePass) {
-      addNotification('error', 'کلمه عبور و تکرار آن برابر نیست.')
+      addNotification('warning', 'کلمه عبور و تکرار آن برابر نیست.')
     } else {
       register({password})
     }

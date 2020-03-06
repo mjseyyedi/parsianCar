@@ -1,0 +1,63 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.container {
+  $parent: &;
+  padding: 14px;
+  section{
+    width: 100%;
+    @include flexLayout(column, center, center);
+    border-radius: 10px;
+    padding-top: 10px;
+    div{
+      &:first-child{
+        width: 230px;
+        img{
+          width: 100%;
+        }
+      }
+    }
+  }
+
+
+
+  &--border{
+    border-left: var(--seperator);
+  }
+
+
+  &__info{
+    #{$parent}__name{
+      @include fontStyles(--text-mid-large, --font-bold, --yellow-color);
+    }
+
+    #{$parent}__location{
+      @include flexLayout(row, flex-start, center);
+      height: 20px;
+      @include fontStyles(--text-x-small, --font-light, --gray-color);
+    }
+  }
+
+  &__pricing{
+    span{
+      &:first-child{
+        @include fontStyles(--text-x-large, --font-medium);
+        opacity: .8;
+      }
+
+      &:last-child{
+        @include fontStyles(--text-xxx-small, --font-small);
+        opacity: .4;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  &__button{
+    width: 100%;
+    padding: 8px;
+    button{
+      width: 100%;
+    }
+  }
+
+}

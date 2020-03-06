@@ -39,7 +39,7 @@ const Password = ({addNotification, isMobile, phone, login, history}) => {
     if (phone && password) {
       login({phone, password})
     } else {
-      addNotification('error', 'لطفا تلفن همراه و رمز عبور خود را به درستی وارد کنید')
+      addNotification('warning', 'لطفا تلفن همراه و رمز عبور خود را به درستی وارد کنید')
     }
   }
 

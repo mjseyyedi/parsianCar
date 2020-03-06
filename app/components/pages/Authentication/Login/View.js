@@ -29,7 +29,7 @@ const Login = ({addNotification, login, OTPResult,history,isMobile,loginNumber, 
       login({phone})
     }
     else{
-      addNotification('error', 'شماره تماس وارد شده معتبر نمی باشد.')
+      addNotification('warning', 'شماره تماس وارد شده معتبر نمی باشد.')
     }
   }
 

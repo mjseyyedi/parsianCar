@@ -51,11 +51,9 @@ const Providers = ({route}) => {
     dispatch(setRouterMatch(match))
   }, [location.pathname])
 
-  function addNotification(type, text) {
-    console.log(1212121212121212, type, text)
-  }
 
-  return renderRoutes(route.routes, {...selectors, addNotification, ...dispatches})
+
+  return renderRoutes(route.routes, {...selectors, ...dispatches})
 }
 
 export default Providers

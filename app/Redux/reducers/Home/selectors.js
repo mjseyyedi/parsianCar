@@ -1,17 +1,17 @@
 import {createSelector} from 'reselect'
 
-const selectGlobal = state =>
-  state.global
+const selectHome = state =>
+  state.home
 
-const selectPageTitle = () =>
+const selectHomeData = () =>
   createSelector(
-    selectGlobal,
-    global =>
-      global.pageTitle,
+    selectHome,
+    home =>
+      home.HomeData,
   )
 
 
 export {
-  selectPageTitle,
+  selectHomeData,
 
 }

@@ -8,11 +8,16 @@
   outline: none;
   border: none;
   font-family: 'dana-persian';
+  cursor: pointer;
 }
 
 .primary {
   background-color: var(--yellow-color);
   @include fontStyles(--text-x-large, --font-light, --button-text-color);
   @include flexCenter;
-  //color: var(--button-text);
+}
+
+.deactive{
+  @include fontStyles(--text-x-large, --font-light, --button-text-color);
+  background-color: var(--hover-background);
 }

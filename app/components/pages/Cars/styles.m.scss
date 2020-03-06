@@ -1,0 +1,58 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+
+.container {
+  direction: rtl;
+  $parent: &;
+  height: var(--container-height);
+  overflow-y: auto;
+  @include flexLayout(row, center,center);
+
+  > div{
+    height: 100%;
+  }
+
+  &__brands{
+    flex: 0 0 20%;
+    @include flexLayout(column, center, center);
+    //margin-right: 120px;
+    > div{
+      margin-bottom: 8px;
+    }
+  }
+
+  &__cars{
+    flex: 0 0 70%;
+    @include flexLayout(column, space-around, flex-start);
+    #{$parent}__content{
+      @include flexLayout(row, flex-start, center, wrap);
+      > section{
+        flex: 0 0 33%;
+      }
+    }
+
+    > span{
+      display: block;
+      @include fontStyles(--text-super-large, --font-light, --white-color);
+    }
+  }
+
+  &__paging{
+    padding-left: 90px;
+    width: 100%;
+    text-align: left;
+    @include fontStyles(--text-xx-large,--font-light, --gray-color);
+    @include flexLayout(row, flex-end, center);
+
+    > div{
+      cursor: pointer;
+      margin-right: 8px;
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      background-color: var(--hover-background);
+      @include flexCenter
+    }
+  }
+
+}

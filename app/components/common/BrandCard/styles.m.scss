@@ -1,0 +1,26 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.container {
+  border: var(--seperator);
+  border-radius: 10px;
+  width: 100%;
+
+  &:hover{
+    background-color: var(--hover-background);
+  }
+
+  div{
+    &:first-child{
+      padding: 5px 36px;
+      img{
+        width: 36px;
+      }
+    }
+    &:last-child{
+      text-align: center;
+      //line-height: 27px;
+      @include fontStyles(--text-x-large, --font-medium);
+      opacity: .3;
+    }
+  }
+}

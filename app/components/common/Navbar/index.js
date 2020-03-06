@@ -10,7 +10,6 @@ import styles from './styles'
 export default function Navbar({userCredential}) {
 
 
-  console.log(666666, userCredential)
   function handleLoginClick() {
     window.dispatchEvent(
       new CustomEvent(Events.CLICK_ON_LOGIN)
@@ -20,7 +19,7 @@ export default function Navbar({userCredential}) {
   return (
     <div className={styles.navbar}>
       <div>
-        <Link to={'/'} className={styles.navbar__actions}>
+        <Link to={'/cars'} className={styles.navbar__actions}>
           انتخاب خودرو
         </Link>
         {

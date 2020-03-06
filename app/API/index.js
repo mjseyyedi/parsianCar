@@ -18,6 +18,10 @@ const request = async (reqUrl, method, params, data, headers, options) => {
   let url = reqUrl
   if (!params) params = {}
   const Authorization = Cookies.get('Authorization')
+  let finalHeaders = headers;
+  if(Authorization){
+    finalHeaders = {...headers, Authorization}
+  }
 
   return await instance
     .request({
@@ -25,7 +29,7 @@ const request = async (reqUrl, method, params, data, headers, options) => {
       method,
       params,
       data,
-      headers:{...headers, Authorization},
+      headers:finalHeaders,
       ...options,
     })
     .then(response => {

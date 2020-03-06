@@ -41,7 +41,7 @@ const ConfirmCode = ({addNotification, OTPResult, history,setOTP,isMobile, ...pr
       history.push('/login/set-password')
     }
     else{
-      addNotification('error', 'لطفا کد دریافتی خود را به صورت کامل وارد کنید.')
+      addNotification('warning', 'لطفا کد دریافتی خود را به صورت کامل وارد کنید.')
     }
   }
 

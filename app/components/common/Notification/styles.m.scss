@@ -1,0 +1,60 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.container {
+  --success-color:#95FE93;
+  --warning-color:#FEE093;
+  --info-color:#93D7FE;
+  --error-color:#FE9393;
+  --notif-text-color: #32303B;
+
+  min-height: 60px;
+  min-width: 340px;
+
+  position: fixed;
+  top: calc(var(--navbar-height) + 25px);
+  left: 22px;
+  transition: all 650ms;
+
+  @include flexLayout(row-reverse, space-between, center);
+  @include border-radius(10px);
+  @include fontStyles(--text-large, --font-light, --notif-text-color);
+
+
+
+  span{
+    &:first-child{
+      padding: 18px;
+    }
+    &:last-child{
+      padding-right: 20px;
+    }
+  }
+
+
+  &__error{
+      background-color: var(--error-color);
+  }
+
+  &__warning{
+    background-color: var(--warning-color);
+  }
+
+  &__info{
+    background-color: var(--info-color);
+  }
+
+  &__success{
+    background-color: var(--success-color);
+  }
+
+  &--open{
+    transform: translate3d(0 , 0 , 0);
+    //opacity: 1;
+  }
+
+  &--close{
+    transform: translate3d(-50vw, 0 , 0);
+    //opacity: 0;
+  }
+}
+

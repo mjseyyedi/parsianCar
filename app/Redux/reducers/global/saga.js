@@ -7,7 +7,6 @@ import {setUserCredentials} from './actions'
 function* verifyCurrentToken(actions) {
   const token = actions.data.replace('JWT ', '')
   const response = yield call(Request.verifyToken, '', {token})
-  console.log('*************************' , token, response)
   if(!!response && !!response.token){
     yield put(setUserCredentials(true))
   }

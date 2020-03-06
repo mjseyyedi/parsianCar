@@ -31,7 +31,10 @@ app.get('*', async (req, res) => {
     .map(({route}) =>
       route.fetching
         ? route.fetching.then
-          ? route.fetching.then(result => result.fetching(store, req, res))
+          ? route.fetching.then(result => {
+          console.log('then statement ', result)
+          return result.fetching(store, req, res)
+        })
           : route.fetching(store, req, res)
         : [],
     )

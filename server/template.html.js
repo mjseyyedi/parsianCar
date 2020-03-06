@@ -22,6 +22,7 @@ export default (content, extractor, state) => {
     </head>
     <body>
       <div id="app">${content}</div>
+      <div id="toaster"></div>
       <script>
         window.__STATE__ = ${JSON.stringify(state)}
       </script>
