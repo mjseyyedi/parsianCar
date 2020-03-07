@@ -4,7 +4,8 @@ export const loadState = (initialState, subStateKey = '') => {
     localState = localState[subStateKey] || {}
     return merge(localState, initialState)
   }
-  return mergeAndRemoveRedundant(localState, initialState)
+  return localState
+  // return mergeAndRemoveRedundant(localState, initialState)
 }
 export const saveState = newState => {
   try {
@@ -18,7 +19,7 @@ export const saveState = newState => {
   }
 }
 
-const merge = (first, second) => {
+export const merge = (first, second) => {
   Object.keys(second).map(key => {
     if (!(key in first)) first[key] = second[key]
   })
@@ -58,3 +59,4 @@ const getServerState = () => {
   }
   return {}
 }
+

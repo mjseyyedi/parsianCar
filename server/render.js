@@ -23,6 +23,5 @@ export default (pathname, store, context) => {
   )
 
   const state = store.getState()
-
   return html(content, extractor, state)
 }

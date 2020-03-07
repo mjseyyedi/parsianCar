@@ -4,11 +4,11 @@ import styles from './styles'
 import Img from 'components/common/Img'
 
 const Brand = ({
-             id, name, brands_logo
+             id, name, brands_logo,onClick
              }) => {
 
 
-  return (<section className={styles.container}>
+  return (<section className={styles.container} onClick={() => onClick(name)}>
     <div>
       {brands_logo ? <Img src={brands_logo.logo} alt={name}/> : null}
     </div>

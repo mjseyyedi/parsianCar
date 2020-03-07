@@ -25,7 +25,6 @@ const Car = ({
   const [isHovered, setHovered] = useState(false)
 
 
-  console.log(car_images)
   return (<section className={`${styles.container} ${hasBorder && styles['container--border']}`}
                    onMouseOver={() => setHovered(true)} onMouseOut={() => setHovered(false)}>
     <section style={{backgroundColor: isHovered ? `var(--hover-background)` : ''}}>

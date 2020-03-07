@@ -19,7 +19,7 @@ export default function Navbar({userCredential}) {
   return (
     <div className={styles.navbar}>
       <div>
-        <Link to={'/cars'} className={styles.navbar__actions}>
+        <Link to={'/cars/all'} className={styles.navbar__actions}>
           انتخاب خودرو
         </Link>
         {

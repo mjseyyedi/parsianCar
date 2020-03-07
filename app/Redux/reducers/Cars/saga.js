@@ -9,14 +9,10 @@ import types from './constants'
 
 function* fetchCarsList() {
 
-  console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-
   yield put(setLoading(true))
 
   const response = yield call(Request.carsList)
   if(response.status ){
-    console.log(444444, response)
-
     yield put(setCarsList(response.data))
   }
 
@@ -27,7 +23,6 @@ function* fetchBrandsList() {
   yield put(setLoading(true))
 
   const response = yield call(Request.brandsList)
-  console.log('******************************' ,response)
   if(response.status){
     yield put(setBrandsList(response.data))
   }

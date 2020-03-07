@@ -46,8 +46,8 @@ const Routes = [
           },
           {
             component: loadable(() => import('components/pages/Cars')),
-            path: '/cars',
-            exact: true,
+            path: '/cars/:brand',
+            exact: false,
             fetching: import('components/pages/Cars/fetching'),
           },
         ],

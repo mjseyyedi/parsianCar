@@ -1,15 +1,16 @@
 import C from './constants'
+import {loadState, merge} from 'Redux/store/localStorage'
 import {combineReducers} from 'redux'
 import initialState from './state'
-import {loadState} from 'Redux/store/localStorage'
 
 const persistedState = loadState(initialState)
 
-console.log(111111, persistedState)
-const Cars = (state = initialState.Cars, action) =>
+const startingState = typeof window !== 'undefined' ?  merge(persistedState.cars, initialState) : initialState
+
+const Cars = (state = startingState.Cars, action) =>
   action.type === C.SET_CARS_LIST ? action.result : state
 
-const Brands = (state = initialState.Brands, action) =>
+const Brands = (state = startingState.Brands, action) =>
   action.type === C.SET_BRANDS_LIST ? action.result : state
 
 

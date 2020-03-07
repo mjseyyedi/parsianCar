@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
+import {useParams} from 'react-router-dom'
 
-import Input from 'components/common/Input'
-import Button from 'components/common/Button'
 import CarCard from 'components/common/CarCard'
 import Brand from 'components/common/BrandCard'
 import Arrow from 'components/common/Icons/Arrow'
@@ -10,15 +9,17 @@ import styles from './styles'
 
 const PAGE_SIZE = 5
 
-const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands}) => {
+const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history}) => {
 
   const [page, setPage] = useState(1)
 
   const totalPage = Math.ceil(carsList.length / PAGE_SIZE)
 
+  const {brand} = useParams()
+
   useEffect(() => {
-    // getCarsList()
-    // getBrandsList()
+    (!carsList || !carsList.length) && getCarsList()
+    (!brands || !brands.length) && getBrandsList()
   }, [])
 
   return (
@@ -27,7 +28,9 @@ const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands}) => {
         {brands &&
         brands
           .map(item => <div>
-            <Brand {...item}/>
+            <Brand {...item}
+                  activeBrand={brand}
+                   onClick={brand => history.replace('/cars/'+brand)}/>
           </div>)}
       </div>
 
