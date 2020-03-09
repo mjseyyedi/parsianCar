@@ -18,8 +18,8 @@ const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history})
   const totalPage = Math.ceil(cars.length / PAGE_SIZE)
 
   useEffect(() => {
-    (!carsList || !carsList.length) && getCarsList()
-    (!brands || !brands.length) && getBrandsList()
+    (!carsList || !carsList.length) && getCarsList();
+    (!brands || !brands.length) && getBrandsList();
   }, [])
 
   return (

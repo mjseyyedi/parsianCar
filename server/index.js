@@ -5,7 +5,7 @@ import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import expressStaticGzip from 'express-static-gzip'
 
-import store from 'Redux'
+import getStore from 'Redux'
 import render from './render'
 import {routeParser} from './middlewares'
 
@@ -26,7 +26,7 @@ app.use(expressStaticGzip(publicPath, {enableBrotli: true}))
 app.get('*', async (req, res) => {
   const userAgent = req.headers['user-agent']
   const {Authorization} = req.cookies
-
+  const store = getStore()
   const actions = req.router.branch
     .map(({route}) =>
       route.fetching

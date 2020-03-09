@@ -3,9 +3,11 @@ import {hydrate} from 'react-dom'
 import {Provider} from 'react-redux'
 import {loadableReady} from '@loadable/component'
 
-import store from 'Redux'
+import getStore from 'Redux'
 import {ClientRouter} from './router'
 
+
+const store = getStore()
 const MOUNT_NODE = document.getElementById('app')
 
 window.addEventListener('load', async () =>
