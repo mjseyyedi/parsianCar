@@ -45,11 +45,23 @@ const Routes = [
             fetching: import('components/pages/Authentication/Password/fetching'),
           },
           {
+            component: loadable(() => import('components/pages/Reserve')),
+            path: '/cars/reserve/:carId',
+            exact: true,
+            fetching: import('components/pages/Reserve/fetching'),
+          },
+          {
             component: loadable(() => import('components/pages/Cars')),
             path: '/cars/:brand',
             exact: false,
             fetching: import('components/pages/Cars/fetching'),
           },
+          // {
+          //   component: loadable(() => import('components/pages/Cars')),
+          //   path: '/cars/:brand/source/:source/startDate/:startDate/endDate/:endDate',
+          //   exact: false,
+          //   fetching: import('components/pages/Cars/fetching'),
+          // },
         ],
       },
     ],

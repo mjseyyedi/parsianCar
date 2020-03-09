@@ -7,7 +7,9 @@ import HomeLand from 'components/common/Icons/HomeLand'
 import styles from './styles'
 
 const Car = ({
-               category_name, brand_name, name, available,
+               id,
+               category_name, brand_name,
+               name, available,
                reserve,
                model,
                car_details,
@@ -19,7 +21,8 @@ const Car = ({
                car_reserve_detail,
                car_comments,
                car_votes,
-                hasBorder
+               hasBorder,
+               reserveCar,
              }) => {
 
   const [isHovered, setHovered] = useState(false)
@@ -65,7 +68,7 @@ const Car = ({
       </span>
       </div>
       <div className={styles.container__button}>
-        <Button type={isHovered ? 'primary' : 'deactive'}>
+        <Button type={isHovered ? 'primary' : 'deactive'} onClick={() => reserveCar(id)}>
           رزرو کنید
         </Button>
       </div>

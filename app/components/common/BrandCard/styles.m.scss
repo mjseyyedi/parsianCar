@@ -1,11 +1,12 @@
 @import "../../theme/abstracts/_mixins.scss";
 
 .container {
+  cursor: pointer;
   border: var(--seperator);
   border-radius: 10px;
   width: 100%;
 
-  &:hover{
+  &:hover, &--active{
     background-color: var(--hover-background);
   }
 
@@ -23,4 +24,5 @@
       opacity: .3;
     }
   }
+
 }

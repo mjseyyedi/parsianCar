@@ -1,0 +1,10 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+
+.container {
+  $parent: &;
+  padding: 0 120px;
+  //height: var(--container-height);
+
+
+}

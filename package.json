@@ -16,8 +16,10 @@
   "dependencies": {
     "@loadable/component": "^5.12.0",
     "axios": "^0.19.2",
+    "jalali-react-datepicker": "^0.0.1-alpha-01",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
+    "moment-jalaali": "^0.9.1",
     "persianjs": "^0.4.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.10.1",

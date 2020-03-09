@@ -5,7 +5,7 @@ import types from './constants'
 import {setUserCredentials} from './actions'
 
 function* verifyCurrentToken(actions) {
-  const token = actions.data.replace('JWT ', '')
+  const token = actions.data ? actions.data.replace('JWT ', '') : null
   const response = yield call(Request.verifyToken, '', {token})
   if(!!response && !!response.token){
     yield put(setUserCredentials(true))

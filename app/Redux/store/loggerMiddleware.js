@@ -4,7 +4,6 @@ export default store => next => action => {
   if (typeof window !== 'undefined') {
     console.groupCollapsed(action.type)
     console.log('new payload', action)
-    console.log('old state', store.getState())
   } else {
     console.log('\x1b[104m%s\x1b[0m', action.type)
   }

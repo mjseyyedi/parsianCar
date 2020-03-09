@@ -12,10 +12,10 @@ const PAGE_SIZE = 5
 const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history}) => {
 
   const [page, setPage] = useState(1)
-
-  const totalPage = Math.ceil(carsList.length / PAGE_SIZE)
-
   const {brand} = useParams()
+
+  const cars = brand !== 'all' ? carsList.filter(({brand_name}) => brand_name === brand) : carsList
+  const totalPage = Math.ceil(cars.length / PAGE_SIZE)
 
   useEffect(() => {
     (!carsList || !carsList.length) && getCarsList()
@@ -29,8 +29,8 @@ const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history})
         brands
           .map(item => <div>
             <Brand {...item}
-                  activeBrand={brand}
-                   onClick={brand => history.replace('/cars/'+brand)}/>
+                   activeBrand={brand}
+                   onClick={brand => history.replace('/cars/' + brand)}/>
           </div>)}
       </div>
 
@@ -39,22 +39,24 @@ const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history})
             خودرو خود را انتخاب کنید
           </span>
         <div className={styles.container__content}>
-          {carsList && carsList
+          {cars && cars
             .slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
-            .map((car, idx) => <CarCard {...car} hasBorder={(idx + 1) % 3}/>)}
+            .map((car, idx) => <CarCard {...car}
+                                        reserveCar={id => history.push('/cars/reserve/'+id)}
+                                        hasBorder={(idx + 1) % 3}/>)}
         </div>
         {
-          carsList.length > PAGE_SIZE && <div className={styles.container__paging}>
+          cars.length > PAGE_SIZE && <div className={styles.container__paging}>
             {
-              page === totalPage && <div style={{marginLeft: '8px'}} onClick={() => setPage(state => state - 1 )}>
+              page === totalPage && <div style={{marginLeft: '8px'}} onClick={() => setPage(state => state - 1)}>
                 <Arrow rotation={'180deg'}/>
               </div>
             }
             <span>
-            صفحه {page} از  {totalPage}
+            صفحه {page} از {totalPage}
             </span>
             {
-              page !== totalPage && <div onClick={() => setPage(state => state + 1 )}>
+              page !== totalPage && <div onClick={() => setPage(state => state + 1)}>
                 <Arrow/>
               </div>
             }
