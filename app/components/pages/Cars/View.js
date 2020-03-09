@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
+import { useQueryParams, StringParam } from 'use-query-params';
 
 import CarCard from 'components/common/CarCard'
 import Brand from 'components/common/BrandCard'
@@ -9,18 +10,40 @@ import styles from './styles'
 
 const PAGE_SIZE = 5
 
-const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history}) => {
+const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history, searchCars, setCarsList}) => {
 
   const [page, setPage] = useState(1)
   const {brand} = useParams()
+
+  const [query] = useQueryParams({
+    start_date: StringParam,
+    end_date: StringParam,
+    city: StringParam,
+  });
+
+
 
   const cars = brand !== 'all' ? carsList.filter(({brand_name}) => brand_name === brand) : carsList
   const totalPage = Math.ceil(cars.length / PAGE_SIZE)
 
   useEffect(() => {
-    (!carsList || !carsList.length) && getCarsList();
+    if(!carsList || !carsList.length){
+      if(query && Object.values(query).some(item => item)){
+        searchCars(query)
+      }
+      else{
+        getCarsList()
+      }
+    }
     (!brands || !brands.length) && getBrandsList();
+
+    return() =>{
+      setCarsList([])
+    }
+
   }, [])
+
+
 
   return (
     <div className={styles.container}>
@@ -30,7 +53,7 @@ const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history})
           .map(item => <div>
             <Brand {...item}
                    activeBrand={brand}
-                   onClick={brand => history.replace('/cars/' + brand)}/>
+                   onClick={brand => history.replace('/cars/' + brand+history.location.search)}/>
           </div>)}
       </div>
 
@@ -42,6 +65,7 @@ const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history})
           {cars && cars
             .slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
             .map((car, idx) => <CarCard {...car}
+                                        selectCar={id => history.push('/cars/detail/'+id)}
                                         reserveCar={id => history.push('/cars/reserve/'+id)}
                                         hasBorder={(idx + 1) % 3}/>)}
         </div>

@@ -13,8 +13,18 @@ const Cars = (state = startingState.Cars, action) =>
 const Brands = (state = startingState.Brands, action) =>
   action.type === C.SET_BRANDS_LIST ? action.result : state
 
+const CarDetail = (state = startingState.CarDetail, action) =>{
+  const currentDate = state
+  if(action.type === C.SET_CAR_DETAIL){
+    currentDate[action.result.id] = action.result
+    return {...currentDate}
+  }
+  return state
+}
+
 
 export default combineReducers({
   Cars,
-  Brands
+  Brands,
+  CarDetail
 })

@@ -7,6 +7,7 @@ function Img({ src, alt, className, loaded, ...props }) {
     <img
       src={src || pattern}
       alt={alt}
+      key={alt}
       className={className}
       {...props}
       onError={e => (e.target.src = pattern)}

@@ -42,9 +42,19 @@ export default {
       url: 'v2/cars/',
       method: 'GET',
     },
-{
+    {
       key: 'brandsList',
       url: 'v2/brands/',
+      method: 'GET',
+    },
+    {
+      key: 'search',
+      url: 'v2/search/',
+      method: 'GET',
+    },
+    {
+      key: 'carDetail',
+      url: 'v2/cars/:variable/',
       method: 'GET',
     },
 

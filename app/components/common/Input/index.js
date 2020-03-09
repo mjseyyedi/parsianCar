@@ -7,6 +7,10 @@ const Input = ({type, onInput, placeholder, disabled, initialValue = ''}) => {
   const [input, setInput] = useState(initialValue)
 
   useEffect(() =>{
+    setInput(initialValue)
+  } , [initialValue])
+
+  useEffect(() =>{
     if(!disabled){
       onInput(input)
     }

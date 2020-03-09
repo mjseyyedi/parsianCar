@@ -3,6 +3,7 @@
 .container {
   $parent: &;
   padding: 14px;
+  cursor: pointer;
   section{
     width: 100%;
     @include flexLayout(column, center, center);

@@ -53,15 +53,15 @@ const Routes = [
           {
             component: loadable(() => import('components/pages/Cars')),
             path: '/cars/:brand',
-            exact: false,
+            exact: true,
             fetching: import('components/pages/Cars/fetching'),
           },
-          // {
-          //   component: loadable(() => import('components/pages/Cars')),
-          //   path: '/cars/:brand/source/:source/startDate/:startDate/endDate/:endDate',
-          //   exact: false,
-          //   fetching: import('components/pages/Cars/fetching'),
-          // },
+          {
+            component: loadable(() => import('components/pages/Detail')),
+            path: '/cars/detail/:id',
+            exact: true,
+            fetching: import('components/pages/Detail/fetching'),
+          },
         ],
       },
     ],

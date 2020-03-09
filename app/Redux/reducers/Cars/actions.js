@@ -2,7 +2,7 @@ import {makeActionCreator} from '../helpers'
 import C from './constants'
 
 export const getCarsList = makeActionCreator(
-  C.GET_CARS_lIST,
+  C.GET_CARS_LIST,
   'data',
 )
 export const setCarsList = makeActionCreator(
@@ -15,5 +15,17 @@ export const getBrandsList = makeActionCreator(
 )
 export const setBrandsList = makeActionCreator(
   C.SET_BRANDS_LIST,
+  'result',
+)
+export const searchCars = makeActionCreator(
+  C.SEARCH_CARS,
+  'data',
+)
+export const getCarDetail = makeActionCreator(
+  C.GET_CAR_DETAIL,
+  'data',
+)
+export const setCarDetail = makeActionCreator(
+  C.SET_CAR_DETAIL,
   'result',
 )

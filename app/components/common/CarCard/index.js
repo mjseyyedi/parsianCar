@@ -23,17 +23,19 @@ const Car = ({
                car_votes,
                hasBorder,
                reserveCar,
+               selectCar
              }) => {
 
   const [isHovered, setHovered] = useState(false)
 
 
   return (<section className={`${styles.container} ${hasBorder && styles['container--border']}`}
+                   onClick={() => selectCar(id)}
                    onMouseOver={() => setHovered(true)} onMouseOut={() => setHovered(false)}>
     <section style={{backgroundColor: isHovered ? `var(--hover-background)` : ''}}>
       <div>
         {car_images && car_images.length ?
-          <Img src={car_images[0].image}/>
+          <Img src={car_images[0].image} alt={name}/>
           : null}
       </div>
       <div className={styles.container__info}>
@@ -68,7 +70,10 @@ const Car = ({
       </span>
       </div>
       <div className={styles.container__button}>
-        <Button type={isHovered ? 'primary' : 'deactive'} onClick={() => reserveCar(id)}>
+        <Button type={isHovered ? 'primary' : 'deactive'} onClick={e => {
+          e.stopPropagation()
+          reserveCar(id)
+        }}>
           رزرو کنید
         </Button>
       </div>

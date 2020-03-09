@@ -4,14 +4,14 @@ import {createStructuredSelector} from 'reselect'
 import reducer from 'Redux/reducers/Cars/reducer'
 import saga from 'Redux/reducers/Cars/saga'
 
-import {getCarsList, getBrandsList, searchCars, setCarsList} from 'Redux/reducers/Cars/actions'
-import {selectCarsList, selectBrands} from 'Redux/reducers/Cars/selectors'
+import {getCarDetail} from 'Redux/reducers/Cars/actions'
+import {selectCarDetail} from 'Redux/reducers/Cars/selectors'
 
 import useRedux from 'Hooks/useRedux'
 
 import View from './View'
 
-const CarsPageIndex = (initialProps) => {
+const CarPageIndex = (initialProps) => {
   const reducers = {cars: reducer}
   const sagas = {cars: saga}
   const dispatch = useDispatch()
@@ -19,15 +19,12 @@ const CarsPageIndex = (initialProps) => {
   useRedux(reducers,sagas)
 
   const mapDispatchToProps = {
-    getBrandsList : data => dispatch(getBrandsList(data)),
-    setCarsList : data => dispatch(setCarsList(data)),
-    getCarsList : data => dispatch(getCarsList(data)),
-    searchCars : data => dispatch(searchCars(data)),
+    getCarDetail : data => dispatch(getCarDetail(data)),
   }
 
   const mapStateToProps = useSelector(createStructuredSelector({
-    carsList : selectCarsList(),
-    brands : selectBrands()
+    carDetail : selectCarDetail(),
+    // brands : selectBrands()
   }))
 
   const props = Object.assign({}, initialProps, mapDispatchToProps, mapStateToProps)
@@ -35,4 +32,4 @@ const CarsPageIndex = (initialProps) => {
   return <View {...props} />
 }
 
-export default CarsPageIndex
+export default CarPageIndex

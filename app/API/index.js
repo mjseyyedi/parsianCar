@@ -16,6 +16,9 @@ let instance = axios.create(axiosConfig)
 
 const request = async (reqUrl, method, params, data, headers, options) => {
   let url = reqUrl
+  if(reqUrl.includes(':variable')){
+    url = url.replace(':variable', params.variable)
+  }
   if (!params) params = {}
   const Authorization = Cookies.get('Authorization')
   let finalHeaders = headers;
@@ -23,6 +26,7 @@ const request = async (reqUrl, method, params, data, headers, options) => {
     finalHeaders = {...headers, Authorization}
   }
 
+  console.log('(((((((((((((', url)
   return await instance
     .request({
       url,

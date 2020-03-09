@@ -3,22 +3,15 @@
 .container {
   color: red;
 
-  &__startDate{
-
-  }
-
-  &__endDate{
-
-  }
-
   input{
-    @include border-radius(10px);
-    height: 48px;
-    outline: none;
-    border: none;
-    @include fontStyles(--text-x-large, --font-light, --button-text-color);
-    padding: 0 10px;
-    margin-left: 12px;
+    display: none;
+    //@include border-radius(10px);
+    //height: 48px;
+    //outline: none;
+    //border: none;
+    //@include fontStyles(--text-x-large, --font-light, --button-text-color);
+    //padding: 0 10px;
+    //margin-left: 12px;
   }
 
   button{

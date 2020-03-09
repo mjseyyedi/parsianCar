@@ -15,6 +15,8 @@ const Home = ({getFrontContent, isMobile, homeData, history, ...props}) => {
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
 
+  const [startDatePickerRef, setStartRef] = useState(null)
+  const [endDatePickerRef, setEndRef] = useState(null)
 
   useEffect(() =>{
     (!homeData || !homeData.length) && getFrontContent()
@@ -22,6 +24,8 @@ const Home = ({getFrontContent, isMobile, homeData, history, ...props}) => {
 
 
   const background = homeData && homeData.filter(item => item.name === 'background')
+
+  console.log(startDate, endDate)
 
   return (
     <div className={styles.container}>
@@ -34,17 +38,32 @@ const Home = ({getFrontContent, isMobile, homeData, history, ...props}) => {
       </div>
       <div className={styles.container__fields}>
           <Input placeholder={'مبدا'} type={'text'} onInput={setSource}/>
-          <Datepicker label={'تاریخ شروع'}
-                      id={'startDate'}
-                      value={startDate}
-                      className={styles.container__startDate}
-                      selectDate={val => setStartDate(moment(val).format('jYYYY/jM/jD'))}/>
+          <div className={styles.container__dateContainer} onClick={() => {
+            !(startDatePickerRef.state.isOpenModal) && startDatePickerRef.toggleModalOpen();
+            setStartRef(state => ({...state}))
+          }}>
+            <Input type={'text'} placeholder={'تاریخ شروع'} initialValue={startDate} disabled/>
+            <Datepicker label={'تاریخ شروع'}
+                        id={'startDate'}
+                        value={startDate}
+                        setRef={el => setStartRef(el)}
+                        className={styles.container__startDate}
+                        selectDate={setStartDate}/>
+          </div>
+        <div className={styles.container__dateContainer} onClick={() => {
+          !(endDatePickerRef.state.isOpenModal) && endDatePickerRef.toggleModalOpen()
+          setEndRef(state => ({...state}))
+        }}>
+          <Input type={'text'} placeholder={'تاریخ پایان'} initialValue={endDate} disabled/>
           <Datepicker label={'تاریخ پایان'}
                       id={'endDate'}
                       value={endDate}
+                      setRef={el => setEndRef(el)}
                       className={styles.container__endDate}
-                      selectDate={val => setEndDate(moment(val).format('jYYYY/jM/jD'))}/>
-          <Button type={'primary'} onClick={() => history.push(`/cars/all/source/${source}/startDate/${startDate}/endDate/${endDate}`)}>
+                      selectDate={setEndDate}/>
+        </div>
+
+          <Button type={'primary'} onClick={() => history.push(`/cars/all/?start_date=${startDate}&end_date=${endDate}&city=${source}`)}>
             جستجو کنید
           </Button>
       </div>
