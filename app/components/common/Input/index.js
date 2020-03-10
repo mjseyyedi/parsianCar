@@ -11,6 +11,7 @@ const Input = ({type, onInput, placeholder, disabled, initialValue = ''}) => {
   } , [initialValue])
 
   useEffect(() =>{
+    console.log(placeholder, disabled)
     if(!disabled){
       onInput(input)
     }

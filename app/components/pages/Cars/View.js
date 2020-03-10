@@ -44,6 +44,10 @@ const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history, 
   }, [])
 
 
+  useEffect(() =>{
+    window.scrollTo(0, 0);
+  } , [page])
+
 
   return (
     <div className={styles.container}>

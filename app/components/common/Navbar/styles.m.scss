@@ -6,6 +6,10 @@
   padding: 0 22px;
   @include fontStyles(--text-large, --font-light, --white-color);
   border-bottom: var(--seperator);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--primary-bg-color);
 
   &__actions {
     margin-left: 16px;

@@ -3,20 +3,15 @@
 
 .container {
   $parent: &;
-  height: var(--container-height);
-  @include flexLayout(row, space-evenly, center);
-  > div{
-    background-color: var(--hover-background);
-    //opacity: .7;
-    border-radius: 10px;
-    margin-top: 80px;
-
-  }
-
+  //height: var(--container-height);
+  @include flexLayout(row, space-evenly, flex-start);
+  padding-top: 80px;
   &__detail{
     @include flexLayout(column, flex-start, center);
     flex: 0 0 calc(30%);
     position: relative;
+    background-color: var(--hover-background);
+    border-radius: 10px;
 
     #{$parent}__images{
       margin: 8px -60px 24px -50px;
@@ -85,9 +80,91 @@
   }
 
   &__info{
-    @include flexLayout(column, center, center);
+    --inactive-tab: #646070;
+    --inactive-text-color:#43404B;
+    @include flexLayout(column, center, flex-start);
     flex: 0 0 calc(60% - 105px - 35px);
     height: calc(100% - 80px);
+
+    #{$parent}__title{
+      @include flexLayout(column, center, center);
+      margin-bottom: 50px;
+
+      span{
+        &:first-child{
+          @include fontStyles(--text-super-large, --font-light, --yellow-color);
+        }
+
+        &:last-child{
+          @include fontStyles(--text-x-large, --font-light, --gray-color);
+        }
+      }
+    }
+
+    #{$parent}__tabs{
+      @include flexLayout(row, flex-start, flex-end);
+      transition: background-color var(--animation-time, 350ms);
+
+      > div{
+        background-color: var(--inactive-tab);
+        @include fontStyles(--text-medium, --font-light, --inactive-text-color);
+        width: 125px;
+        padding: 12px 0;
+        text-align: center;
+        margin-left: 1px;
+        cursor: pointer;
+        &:first-child{
+          border-top-right-radius: 10px;
+        }
+
+        &:last-child{
+          border-top-left-radius: 10px;
+        }
+
+      }
+
+      &--active{
+        background-color: var(--inactive-text-color) !important;
+        font-size: var(--text-large) !important;
+        color: var(--gray-color) !important;
+        padding-top: 17px !important;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        line-height: 30px;
+      }
+
+    }
+
+    #{$parent}__tabContent{
+      min-height: 60vh;
+      width: 100%;
+      background-color: var(--inactive-text-color) !important;
+      border-radius: 10px;
+      border-top-right-radius: 0 !important;
+      padding: 16px;
+    }
+
+  }
+
+  &__gallery{
+      @include flexLayout(column, flex-start, center);
+    img{
+      width: 100%;
+      border-radius: 10px;
+    }
+    #{$parent}__firstRow{
+      @include flexLayout(row, space-between, center);
+
+      > div{
+        &:first-child{
+          width: 70% !important;
+        }
+        &:last-child{
+          width: 30%;
+        }
+
+      }
+    }
   }
 
 }

@@ -4,18 +4,21 @@
 .container {
   direction: rtl;
   $parent: &;
-  height: var(--container-height);
+  //height: var(--container-height);
   overflow-y: auto;
-  @include flexLayout(row, center,center);
+  @include flexLayout(row, center, flex-start);
 
   > div{
     height: 100%;
   }
 
   &__brands{
+    padding-top: 50px;
     flex: 0 0 20%;
     @include flexLayout(column, center, center);
     //margin-right: 120px;
+    position: sticky;
+    //top: calc(10vh + var(--navbar-height));
     > div{
       margin-bottom: 8px;
     }
@@ -33,12 +36,13 @@
 
     > span{
       display: block;
+      padding: 50px 0;
       @include fontStyles(--text-super-large, --font-light, --white-color);
     }
   }
 
   &__paging{
-    padding-left: 90px;
+    padding-left: 5%;
     width: 100%;
     text-align: left;
     @include fontStyles(--text-xx-large,--font-light, --gray-color);

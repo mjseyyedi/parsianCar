@@ -2,14 +2,15 @@
 
 .footer {
   height: var(--footer-height);
-  position: fixed;
+  //position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  //left: 0;
+  //right: 0;
+  position: sticky;
   @include fontStyles(--text-small, --font-light, --text-color);
   padding: 0 16px 0 30px;
   @include flexLayout(row, space-between, center);
-
+    background-color: var(--primary-bg-color);
   div {
     &:first-child {
       span {
