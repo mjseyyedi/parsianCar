@@ -156,11 +156,17 @@
       @include flexLayout(row, space-between, center);
 
       > div{
+        @include flexLayout(column, space-between, center);
         &:first-child{
-          width: 70% !important;
+          width: 67% !important;
         }
         &:last-child{
-          width: 30%;
+          width: 29%;
+          img{
+            &:first-child{
+              margin-bottom: 8px;
+            }
+          }
         }
 
       }
