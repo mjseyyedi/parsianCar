@@ -1,21 +1,43 @@
-import React, {useState, useRef} from 'react'
-import { DatePicker } from "jalali-react-datepicker";
+import React, {useState, useEffect} from 'react'
+import {DatePicker} from 'jalali-react-datepicker'
+import 'moment'
+
+import Input from 'components/common/Input'
+
+import styles from './styles'
+
+function DatePickerComponent({
+                               placeholder, selectDate
+                             }) {
+
+  const [date, setDate] = useState(null)
+  const [ref, setRef] = useState(null)
+
+  useEffect(()=>{
+      if(date){
+        selectDate(date)
+      }
+  }, [date])
 
 
-import style from './styles'
-
-function DatePickerComponent({name , className, label,selectDate, id, setRef}) {
-
-
-  return (<div className={style.container} id={id}>
-      <DatePicker isRenderingButtons={false} label={label}
-                  ref={el => setRef(el)}
-                  onClickSubmitButton={({value}) =>{
+  return (<div className={styles.container} onClick={() => {
+    !(ref.state.isOpenModal) && ref.toggleModalOpen()
+    setRef(state => ({...state}))
+  }}>
+    <Input type={'text'} placeholder={placeholder} initialValue={date} disabled/>
+    <DatePicker isRenderingButtons={false}
+                ref={el => setRef(el)}
+                onClickSubmitButton={({value}) => {
+                  if(value && value._i){
                     const date = new Date(value._i.replace('-//', ''))
-                    selectDate(date.toLocaleDateString('fa-IR'))
-                  }}
-                  timePicker={false}
-      />
+                    const persianDate = date.toLocaleDateString('fa-IR')
+                    if(persianDate)
+                      setDate(persianDate)
+                  }
+
+                }}
+                timePicker={false}
+    />
   </div>)
 }
 

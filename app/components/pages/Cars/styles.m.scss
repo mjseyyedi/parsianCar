@@ -4,7 +4,7 @@
 .container {
   direction: rtl;
   $parent: &;
-  //height: var(--container-height);
+  min-height: var(--container-height);
   overflow-y: auto;
   @include flexLayout(row, center, flex-start);
 
@@ -22,17 +22,58 @@
     > div{
       margin-bottom: 8px;
     }
+
+    #{$parent}__category{
+      margin-bottom: 12px;
+      @include flexLayout(row, space-between , center, wrap);
+
+      &--active{
+        background-color: var(--hover-background);
+      }
+
+      > div{
+        &:hover{
+          background-color: var(--hover-background);
+          cursor: pointer;
+        }
+        flex: 0 0 32%;
+        text-align: center;
+        border-radius: 10px;
+        border: var(--seperator);
+        //height: 42px;
+        padding: 10px 0;
+        margin-bottom: 4px;
+      }
+    }
+
   }
 
   &__cars{
-    flex: 0 0 70%;
-    @include flexLayout(column, space-around, flex-start);
-    #{$parent}__content{
-      @include flexLayout(row, flex-start, center, wrap);
-      > section{
-        flex: 0 0 33%;
+
+    &--mobile{
+      flex: 0 0 100%;
+      > span{
+        //position: sticky;
+        //top: 0;
+        //background-color: var(--primary-bg-color);
+        font-size: var(--text-mid-large) !important;
+        text-align: center;
       }
     }
+
+    &--desk{
+      flex: 0 0 70%;
+      @include flexLayout(column, space-around, flex-start);
+      #{$parent}__content{
+        width: 100%;
+        @include flexLayout(row, flex-start, center, wrap);
+        > section{
+          flex: 0 0 33%;
+        }
+      }
+    }
+
+
 
     > span{
       display: block;

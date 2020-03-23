@@ -4,7 +4,7 @@ import saga from 'Redux/reducers/Cars/saga'
 import reducer from 'Redux/reducers/Cars/reducer'
 
 
-import {getCarsList, getBrandsList, searchCars} from 'Redux/reducers/Cars/actions'
+import {getCarsList, getBrandsList, searchCars, getCategoriesList} from 'Redux/reducers/Cars/actions'
 
 export const fetching = (store, req) => {
 
@@ -15,12 +15,14 @@ export const fetching = (store, req) => {
   if(Object.values(query).some(item => item)){
     return [
       dispatch(searchCars(query)),
-      dispatch(getBrandsList())
+      dispatch(getBrandsList()),
+      dispatch(getCategoriesList())
     ]
   }
   else{
     return [
       dispatch(getCarsList()),
+      dispatch(getCategoriesList()),
       dispatch(getBrandsList())
     ]
   }

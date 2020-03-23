@@ -63,6 +63,10 @@ const config = {
             use: styleLoader(),
           },
         ],
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
+        use:  'url-loader'
       }, {
         test: /\.(ttf)$/,
         use: [

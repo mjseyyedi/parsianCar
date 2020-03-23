@@ -1,17 +1,11 @@
 @import "../../theme/abstracts/_mixins.scss";
 
 .container {
-  color: red;
 
-  input{
-    display: none;
-    //@include border-radius(10px);
-    //height: 48px;
-    //outline: none;
-    //border: none;
-    //@include fontStyles(--text-x-large, --font-light, --button-text-color);
-    //padding: 0 10px;
-    //margin-left: 12px;
+  > div {
+    > input{
+      display: none;
+    }
   }
 
   button{

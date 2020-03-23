@@ -1,0 +1,17 @@
+@import "../../theme/abstracts/_mixins.scss";
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
+
+.image-gallery-slides{
+  width: calc(50vw + 200px);
+  height: 50vh;
+  padding: 0 90px;
+  @include flexCenter;
+
+  .image-gallery-slide{
+    height: 100%;
+    *{
+      height: 100%;
+    }
+  }
+
+}

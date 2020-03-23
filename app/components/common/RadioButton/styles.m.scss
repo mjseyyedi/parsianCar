@@ -1,0 +1,31 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.container{
+  $parent: &;
+
+  @include flexLayout(row, space-around,center);
+  @include fontStyles(--text-x-large, --font-light, --gray-color);
+  > div{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--white-color);
+    @include flexCenter;
+
+    > div{
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      transition: background-color 150ms;
+    }
+
+    #{$parent}__active{
+      background-color: var(--hover-background);
+    }
+
+    #{$parent}__inactive{
+      background-color: var(--white-color);
+    }
+
+  }
+}

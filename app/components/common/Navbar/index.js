@@ -19,13 +19,13 @@ export default function Navbar({userCredential}) {
   return (
     <div className={styles.navbar}>
       <div>
-        <Link to={'/cars/all'} className={styles.navbar__actions}>
+        <Link to={'/cars/all/all'} className={styles.navbar__actions}>
           انتخاب خودرو
         </Link>
         {
-          userCredential ? <Link to={'/'}
+          userCredential ? <Link to={'/profile/edit'}
                                  className={styles.navbar__actions}>
-              خروج
+              پروفایل
             </Link>
             :<Link to={'/login'}
                                   onClick={handleLoginClick}

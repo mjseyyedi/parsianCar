@@ -1,6 +1,5 @@
 @import "../../theme/abstracts/_mixins.scss";
 
-
 .container {
   $parent: &;
   //height: var(--container-height);
@@ -51,6 +50,25 @@
           }
         }
       }
+
+      #{$parent}__date{
+        > div{
+          &:first-child{
+            > input{
+              border-bottom-left-radius: 0;
+              border-top-left-radius: 0;
+              width: 99.5%;
+            }
+          }
+          &:last-child{
+            > input{
+              border-bottom-right-radius: 0;
+              border-top-right-radius: 0;
+              width: 99.5%;
+            }
+          }
+        }
+      }
     }
 
     #{$parent}__price{
@@ -74,6 +92,33 @@
       margin-bottom: 24px;
       button{
         width: 100%;
+      }
+    }
+
+    #{$parent}__options{
+      --option-border-color: #35333C;
+      @include flexLayout(row, space-between, center);
+      margin-top: 40px;
+      width: 100%;
+      padding: 0 2vw;
+
+      > div{
+        &:hover{
+          background-color: var(--option-border-color);
+        }
+        padding: 10px;
+        flex: 0 0 31%;
+        text-align: center;
+        border-radius: 10px;
+        border: 1px solid var(--option-border-color);
+        > svg{
+          width: 100%;
+        }
+        span{
+          display: inline-block;
+          width: 100%;
+          @include fontStyles(--text-small, --font-regular)
+        }
       }
     }
 
@@ -103,10 +148,11 @@
 
     #{$parent}__tabs{
       @include flexLayout(row, flex-start, flex-end);
-      transition: background-color var(--animation-time, 350ms);
+      height: 60px;
 
       > div{
-        background-color: var(--inactive-tab);
+        //transform: translate3d(0, 0, 0);
+        transition: all 350ms;
         @include fontStyles(--text-medium, --font-light, --inactive-text-color);
         width: 125px;
         padding: 12px 0;
@@ -124,7 +170,8 @@
       }
 
       &--active{
-        background-color: var(--inactive-text-color) !important;
+        //transform: translate3d(100%, 100%, 0) !important;
+        background-color: var(--inactive-text-color);
         font-size: var(--text-large) !important;
         color: var(--gray-color) !important;
         padding-top: 17px !important;
@@ -133,10 +180,16 @@
         line-height: 30px;
       }
 
+      &--inactive{
+        background-color: var(--inactive-tab);
+        padding-top: 12px !important;
+      }
+
     }
 
     #{$parent}__tabContent{
-      min-height: 60vh;
+      height: 60vh;
+      overflow-y: auto;
       width: 100%;
       background-color: var(--inactive-text-color) !important;
       border-radius: 10px;
@@ -149,7 +202,7 @@
   &__gallery{
       @include flexLayout(column, flex-start, center);
     img{
-      width: 100%;
+      max-width: 100%;
       border-radius: 10px;
     }
     #{$parent}__firstRow{
@@ -171,6 +224,65 @@
 
       }
     }
+
+
+    #{$parent}__others{
+      width: 100%;
+      @include flexLayout(row, space-between, center);
+      flex-wrap: wrap;
+      margin-top: 16px;
+      > div{
+        flex:  0 0 calc((100% / 3) - 16px);
+        margin-left: 16px;
+        margin-bottom: 16px;
+
+        &:last-child{
+          margin-left: 0;
+        }
+        > img{
+          //flex: 32%;
+          width: 100%;
+        }
+      }
+
+    }
+  }
+
+  &__carousel{
+    img{
+      width: 50vw
+    }
+  }
+
+  &__comments{
+    //padding: 38px 22px 0;
+    > div{
+      margin-bottom: 16px;
+    }
+
+    &--no-result{
+      @include fontStyles(--text-x-large, --font-light, --white-color);
+      opacity: .75;
+      text-align: center;
+    }
+  }
+
+  &__policies{
+    color: var(--gray-color);
+
+
+    h2{
+      line-height: 64px;
+    }
+    h3{
+      line-height: 40px;
+      p{
+        padding-right: 24px;
+        line-height: 20px;
+      }
+    }
+
+
   }
 
 }

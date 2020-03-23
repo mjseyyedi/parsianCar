@@ -1,0 +1,41 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.backdrop {
+  position: fixed;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10000;
+  background-color: transparent;
+  transition: background-color var(--animation-time, 300ms);
+
+  &--deactive {
+    transform: translate(0, 100%);
+    .modal {
+      transform: translate3d(-50%, 100%, 0);
+    }
+  }
+  &--active {
+    transform: translate(0, 0) !important;
+  }
+
+  &--appearing {
+    background-color: rgba(0, 0, 0, 0.3);
+    .modal {
+      transform: translate3d(-50%, -50%, 0) !important;
+    }
+  }
+}
+.modal {
+  position: absolute;
+  background-color: #fff;
+  min-width: 30%;
+  max-width: 70%;
+  min-height: 30vh;
+  max-height: 100vh;
+  z-index: 10001;
+  top: 50%;
+  left: 50%;
+  transition: transform var(--animation-time, 300ms);
+}

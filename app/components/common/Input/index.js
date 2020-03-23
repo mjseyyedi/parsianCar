@@ -4,14 +4,15 @@ import styles from './styles'
 
 const Input = ({type, onInput, placeholder, disabled, initialValue = ''}) => {
 
-  const [input, setInput] = useState(initialValue)
+  const [input, setInput] = useState('')
 
   useEffect(() =>{
-    setInput(initialValue)
+    if(initialValue){
+      setInput(initialValue)
+    }
   } , [initialValue])
 
   useEffect(() =>{
-    console.log(placeholder, disabled)
     if(!disabled){
       onInput(input)
     }
@@ -19,7 +20,9 @@ const Input = ({type, onInput, placeholder, disabled, initialValue = ''}) => {
 
   return (
     <input className={styles.container}
-           onInput={e => setInput(e.target.value)}
+           onInput={e => {
+             setInput(e.target.value)
+           }}
            placeholder={placeholder}
            value={input}
            disabled={disabled}

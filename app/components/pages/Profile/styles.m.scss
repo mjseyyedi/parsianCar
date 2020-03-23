@@ -1,0 +1,65 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+
+.container {
+  $parent: &;
+  padding: 40px 120px;
+  min-height: var(--container-height);
+
+  > span{
+    @include fontStyles(--text-mid-large, --font-medium, --gray-color);
+    margin-right: calc(18px + 143px + 40px);
+  }
+
+  &__tabs{
+    height: 80px;
+    background-color: var(--tab-bg-color);
+    border-radius: 10px;
+    margin-top: 35px;
+    position: relative;
+    @include flexLayout(row, space-between, center);
+
+    #{$parent}__avatar{
+      background-color: var(--gray-color);
+      border-radius: 10px;
+      opacity: 1 !important;
+      right: 18px;
+      bottom: 12px;
+      position: absolute;
+    }
+
+    &--active{
+      opacity: 1 !important;
+    }
+
+    > div{
+      width: 50%;
+      @include fontStyles(--text-medium, --font-light, --gray-color);
+      > div{
+        margin-left: 16px;
+        cursor: pointer;
+        transition: opacity 150ms;
+      }
+
+      &:first-child{
+        @include flexLayout(row, flex-start, center);
+        padding-right: calc(18px + 143px + 40px);
+        > div{
+          opacity: .5;
+        }
+      }
+
+      &:last-child{
+        @include flexLayout(row, flex-end, center);
+        padding-left: 30px;
+      }
+
+
+    }
+  }
+
+
+  &__tabContent{
+
+  }
+}

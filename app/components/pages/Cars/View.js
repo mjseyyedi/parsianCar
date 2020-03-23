@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
-import { useQueryParams, StringParam } from 'use-query-params';
+import {useQueryParams, StringParam} from 'use-query-params'
 
 import CarCard from 'components/common/CarCard'
 import Brand from 'components/common/BrandCard'
@@ -10,71 +10,89 @@ import styles from './styles'
 
 const PAGE_SIZE = 5
 
-const Cars = ({isMobile, getCarsList, carsList, getBrandsList, brands, history, searchCars, setCarsList}) => {
+const Cars = ({
+                isMobile, getCarsList, carsList, getBrandsList,
+                brands, history, searchCars, setCarsList, getCategoriesList, categories,
+              }) => {
 
   const [page, setPage] = useState(1)
-  const {brand} = useParams()
+  const {brand, category} = useParams()
 
   const [query] = useQueryParams({
     start_date: StringParam,
     end_date: StringParam,
     city: StringParam,
-  });
+  })
 
 
-
-  const cars = brand !== 'all' ? carsList.filter(({brand_name}) => brand_name === brand) : carsList
+  let cars = brand !== 'all' ? carsList.filter(({brand_name}) => brand_name === brand) : carsList
+  cars = category !== 'all' ? cars.filter(({category_name}) => category_name === category) : cars
   const totalPage = Math.ceil(cars.length / PAGE_SIZE)
 
   useEffect(() => {
-    if(!carsList || !carsList.length){
-      if(query && Object.values(query).some(item => item)){
+    if (!carsList || !carsList.length) {
+      if (query && Object.values(query).some(item => item)) {
         searchCars(query)
-      }
-      else{
+      } else {
         getCarsList()
       }
     }
     (!brands || !brands.length) && getBrandsList();
+    (!categories || !categories.length) && getCategoriesList()
 
-    return() =>{
+    return () => {
+      if(!(history.location && history.location.pathname && history.location.pathname.includes('detail')))
       setCarsList([])
     }
 
   }, [])
 
 
-  useEffect(() =>{
-    window.scrollTo(0, 0);
-  } , [page])
-
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [page])
 
   return (
-    <div className={styles.container}>
-      <div className={styles.container__brands}>
+    <div className={styles.container} style={{height: isMobile && 'var(--mobile-container-height)'}}>
+      {!isMobile && <div className={styles.container__brands}>
+        <section className={styles.container__category}>
+          {
+            categories &&
+            categories.map(cat => <div onClick={() => history.replace(`/cars/${brand}/${cat.name}`+ history.location.search)}
+              className={category === cat.name ? styles['container__category--active'] : ''}>
+              {cat.name}
+            </div>)
+          }
+        </section>
+
         {brands &&
         brands
           .map(item => <div>
             <Brand {...item}
                    activeBrand={brand}
-                   onClick={brand => history.replace('/cars/' + brand+history.location.search)}/>
+                   onClick={brand => history.replace('/cars/' + brand + '/' + category + history.location.search)}/>
           </div>)}
       </div>
+      }
 
-      <div className={styles.container__cars}>
+
+      <div className={`${styles.container__cars} ${isMobile ?
+        styles['container__cars--mobile'] :
+        styles['container__cars--desk']}`}>
           <span>
             خودرو خود را انتخاب کنید
           </span>
         <div className={styles.container__content}>
           {cars && cars
-            .slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+            .slice((page - 1) * PAGE_SIZE, isMobile ? cars.length : page * PAGE_SIZE)
             .map((car, idx) => <CarCard {...car}
-                                        selectCar={id => history.push('/cars/detail/'+id)}
-                                        reserveCar={id => history.push('/cars/reserve/'+id)}
-                                        hasBorder={(idx + 1) % 3}/>)}
+                                        isMobile={isMobile}
+                                        selectCar={id => history.push(`/cars/${brand}/${category}/detail/` + id)}
+                                        reserveCar={id => history.push('/cars/reserve/' + id)}
+                                        hasBorder={!isMobile && ((idx + 1) % 3)}/>)}
         </div>
         {
-          cars.length > PAGE_SIZE && <div className={styles.container__paging}>
+          cars.length > PAGE_SIZE && !isMobile && <div className={styles.container__paging}>
             {
               page === totalPage && <div style={{marginLeft: '8px'}} onClick={() => setPage(state => state - 1)}>
                 <Arrow rotation={'180deg'}/>

@@ -19,7 +19,7 @@ const Alert = ({text, type, onClose, isOpen}) => {
     else onClose()
   } , [isOpen])
 
-  function ToasterContent() {
+  const ToasterContent = () => {
     return <section className={`${styles.container} ${styles[`container__${type}`]} ${styles[`container--${isOpen ? 'open' : 'close'}`]}`}>
       <span onClick={onClose}>
         <Close/>

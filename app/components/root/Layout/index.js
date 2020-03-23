@@ -8,10 +8,14 @@ import MobileFooter from 'components/common/MobileFooter'
 import Notification from 'components/common/Notification'
 import Loading from 'components/common/Loading'
 
+import usePrevious from 'Hooks/usePrevious'
+
 const Layout = props => {
 
   let userAgent = ''
   let Authorization = ''
+
+  const previousError = usePrevious(props.error)
 
   if (props.staticContext && props.staticContext.userAgent) {
     userAgent = props.staticContext.userAgent
@@ -35,6 +39,13 @@ const Layout = props => {
 
   } , [Authorization])
 
+  useEffect(() =>{
+    if(!previousError && props.error && props.error.message){
+      addNotification('error', props.error.message);
+      props.setError(null)
+    }
+  } , [props.error])
+
   function addNotification(type, text) {
     setMText(text)
     setMType(type)
@@ -55,9 +66,13 @@ const Layout = props => {
     {renderRoutes(props.route.routes, {...props, isMobile, Authorization, addNotification})}
 
     {
-      !isMobile ? <Footer /> : <MobileFooter/>
+      !isMobile ? <Footer /> : !!(hasFooter(props.location.pathname) )&& <MobileFooter/>
     }
   </React.Fragment>
+}
+
+function hasFooter(location){
+  return !location.includes('/detail/') && !location.includes('profile/edit')
 }
 
 export default Layout

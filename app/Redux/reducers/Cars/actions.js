@@ -29,3 +29,11 @@ export const setCarDetail = makeActionCreator(
   C.SET_CAR_DETAIL,
   'result',
 )
+export const getCategoriesList = makeActionCreator(
+  C.GET_CATEGORIES_LIST,
+  'data',
+)
+export const setCategoriesList = makeActionCreator(
+  C.SET_CATEGORIES_LIST,
+  'result',
+)

@@ -1,0 +1,216 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.container {
+  $parent: &;
+  //height: calc(var(--mobile-container-height) - 95px);
+  padding: 0 16px 95px;
+
+  --flex-options-wrap: no-wrap;
+  --option-margin-bottom: 0;
+  --option-margin-left: 16px;
+
+  &__photo {
+    height: 33vh;
+    background-color: var(--yellow-color);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    @include flexLayout(column, flex-end);
+    margin-bottom: 16px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__price {
+    @include flexLayout(row, space-between, center);
+    border-bottom: var(--seperator);
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+
+    div {
+      &:first-child {
+        @include fontStyles(--text-small, --font-light, --gray-color);
+
+        span {
+          &:last-child {
+            font-size: var(--text-xx-small);
+          }
+        }
+      }
+    }
+
+    #{$parent}__comments {
+      @include fontStyles(--text-xx-small, --font-light, --gray-color);
+
+      span {
+        &:first-child {
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+
+  &__tabs {
+    @include flexLayout(row, space-between, center);
+    padding: 4px;
+    background-color: var(--hover-background);
+    border-radius: 10px;
+    @include fontStyles(--text-x-large, --font-light, --white-color);
+    margin-bottom: 28px;
+    &--active {
+      color: var(--primary-bg-color) !important;
+      background-color: var(--yellow-color) !important;
+    }
+
+    > div {
+      border-radius: 10px;
+      width: calc(100% / 3);
+      text-align: center;
+      transition: background-color 350ms;
+      padding: 4px 0;
+    }
+  }
+
+  &__tabContent {
+    --option-border-color: #484651;
+    #{$parent}__order {
+      #{$parent}__fields {
+        padding: 0 36px;
+
+        > input{
+          width: 100%;
+        }
+
+        span{
+          @include fontStyles(--text-x-large, --font-light, --white-color);
+          text-align: center;
+          width: 100%;
+          display: inline-block;
+          margin: 8px 0;
+        }
+
+        #{$parent}__date{
+          @include flexLayout(row, space-between, center);
+          > div{
+            width: 49.5%;
+            > input{
+              width: 100%;
+            }
+
+            &:first-child{
+              input{
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+              }
+            }
+
+            &:last-child{
+              input{
+                border-bottom-right-radius: 0;
+                border-top-right-radius: 0;
+              }
+            }
+
+          }
+        }
+
+        #{$parent}__options{
+          @include flexLayout(row, space-between, center);
+          padding-top: 40px;
+          margin: 0 -32px;
+          flex-wrap: var(--flex-options-wrap);
+          > div{
+            @include flexLayout(column, center, center);
+            width: calc((100%/3) - 8px);
+            border: 1px solid var(--option-border-color);
+            border-radius: 10px;
+            padding: 10px 0;
+            @include textEllipsis();
+            margin-bottom: var(--option-margin-bottom);
+            margin-left: var(--option-margin-left);
+
+            &:last-child{
+              margin-bottom: 0;
+              margin-left: 0;
+            }
+
+          }
+        }
+
+        #{$parent}__insurance{
+          @include flexLayout(row, space-between, center);
+          margin: 24px -32px;
+          > div{
+            padding-right: 20px;
+            height: 56px;
+            @include flexLayout(row, space-between, center);
+            width: calc(50% - 12px);
+            border: 1px solid var(--option-border-color);
+            border-radius: 10px;
+          }
+        }
+
+      }
+    }
+  }
+
+  &__gallery{
+    padding: 0 20px;
+    @include flexLayout(column, space-between, center);
+    > div{
+      &:first-child{
+        width: 100%;
+        margin-bottom: 16px;
+        > img{
+          width: 100%;
+          border-radius: 10px;
+        }
+      }
+      &:last-child{
+        width: 100%;
+        flex-wrap: wrap;
+        @include flexLayout(row, space-between, center);
+        > div{
+          width: calc(((100vw - (2 * 36px)) / 2) - 12px);
+          height: calc((((100vw - (2 * 36px)) / 2) - 12px) * 52 / 100);
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center;
+          margin-bottom: 16px;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+
+  &__commentItems{
+    background-color: var(--hover-background);
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    > div{
+      margin-bottom: 16px;
+    }
+  }
+
+  &__submitOrder{
+    position: fixed;
+    //height: 95px;
+    bottom: 25px;
+    left: 0;
+    right: 0;
+    padding: 0 16px;
+    > button{
+      width: 100%;
+      height: 70px;
+    }
+  }
+
+  @media only screen and (max-width: 360px) {
+    --flex-options-wrap: wrap;
+    --option-margin-bottom: 16px;
+    --option-margin-left: 0;
+  }
+
+}

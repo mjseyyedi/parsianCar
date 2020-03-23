@@ -26,7 +26,6 @@ const request = async (reqUrl, method, params, data, headers, options) => {
     finalHeaders = {...headers, Authorization}
   }
 
-  console.log('(((((((((((((', url)
   return await instance
     .request({
       url,

@@ -1,0 +1,33 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+
+.container {
+  $parent: &;
+  padding: 42px 0 0;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+
+  > span{
+    @include fontStyles(--text-mid-large, --font-light, --white-color);
+    padding-right: 24px;
+  }
+
+  &__content{
+
+
+  }
+
+  &__action{
+    padding: 8px 32px 8px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--primary-bg-color);
+    > button{
+      width: 100%;
+    }
+  }
+
+}

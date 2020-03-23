@@ -1,0 +1,62 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+.container {
+  $parent: &;
+  &__infoTab{
+    --content-direction: row;
+    @include fontStyles(--text-x-large, --font-light, --gray-color);
+    @include flexLayout(var(--content-direction), space-between, flex-start);
+
+    width: 100%;
+    padding: 56px 32px 0;
+
+    > div{
+      width: calc(50% - 46px);
+    }
+
+    #{$parent}__mobile{
+      width: 100%;
+    }
+
+    &--row{
+      @include flexLayout(row, space-between, center);
+      margin-bottom: 52px;
+      > *{
+        width: calc(50% - 8px);
+      }
+    }
+
+    &--mobile-row{
+      width: 100%;
+      >*{
+        margin-bottom: 16px;
+        width: 100%;
+      }
+    }
+
+    &--gander{
+      @include flexLayout(row, space-between, center);
+      > *{
+        width: calc(100% / 3);
+      }
+    }
+
+    &--phone{
+      @include flexLayout(row, space-between, center);
+      > input{
+        &:first-child{
+          width: calc(80% - 8px);
+        }
+        &:last-child{
+          width: 20%;
+        }
+      }
+    }
+
+    &--fullWidth{
+      > input{
+        width: 100% !important;
+      }
+    }
+  }
+}

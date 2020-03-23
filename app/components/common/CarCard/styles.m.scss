@@ -4,48 +4,114 @@
   $parent: &;
   padding: 14px;
   cursor: pointer;
-  section{
+
+  section {
     width: 100%;
     @include flexLayout(column, center, center);
     border-radius: 10px;
     padding-top: 10px;
-    div{
-      &:first-child{
+
+  }
+
+  &__mobile {
+    flex-direction: row !important;
+    position: relative;
+    margin-right: -14px;
+    width: calc(100% + 14px) !important;
+
+    > div {
+      flex: 0 0 50%;
+
+      &:first-child {
+        height: 25vw;
+        background-size: cover;
+      }
+    }
+
+    &:after {
+      content: "";
+      //margin: 0 24px;
+      height: 1px;
+      background-color: var(--seperator-color);
+      //width: 100%;
+      position: absolute;
+      left: 10px;
+      right: 24px;
+      bottom: -15px;
+    }
+  }
+
+  &__desk {
+    > div {
+      &:first-child {
         width: 230px;
-        img{
+
+        img {
           width: 100%;
         }
+      }
+
+      &:nth-child(2) {
+        width: 100%;
+        padding: 0 8px;
       }
     }
   }
 
-
-
-  &--border{
+  &--border {
     border-left: var(--seperator);
   }
 
 
-  &__info{
-    #{$parent}__name{
+  &__info {
+
+    &--desk {
+      @include flexLayout(row, space-between, center);
+
+      #{$parent}__comments {
+        @include fontStyles(--text-xx-small, --font-light, --gray-color);
+        @include flexLayout(column, flex-start, center);
+      }
+    }
+
+    &--mobile {
+      @include flexLayout(column, space-between, flex-start);
+
+      #{$parent}__comments {
+        @include fontStyles(--text-xx-small, --font-light, --gray-color);
+        @include flexLayout(row-reverse, flex-end, center);
+        width: 100%;
+        margin-top: 8px;
+
+        span {
+          &:last-child {
+            margin-left: 16px;
+          }
+        }
+      }
+    }
+
+    #{$parent}__name {
       @include fontStyles(--text-mid-large, --font-bold, --yellow-color);
     }
 
-    #{$parent}__location{
+    #{$parent}__location {
       @include flexLayout(row, flex-start, center);
       height: 20px;
       @include fontStyles(--text-x-small, --font-light, --gray-color);
     }
+
+
   }
 
-  &__pricing{
-    span{
-      &:first-child{
+  &__pricing {
+    span {
+      &:first-child {
         @include fontStyles(--text-x-large, --font-medium);
         opacity: .8;
       }
 
-      &:last-child{
+      &:last-child {
         @include fontStyles(--text-xxx-small, --font-small);
         opacity: .4;
         margin-right: 4px;
@@ -53,12 +119,20 @@
     }
   }
 
-  &__button{
+  &__button {
     width: 100%;
     padding: 8px;
-    button{
+
+    button {
       width: 100%;
     }
+  }
+
+  &__arrow {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
 }

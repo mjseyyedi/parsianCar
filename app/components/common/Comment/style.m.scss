@@ -1,0 +1,13 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+
+.container{
+  padding: 28px 16px;
+  border: 1px solid var(--white-color);
+  border-radius: 10px;
+  opacity: .25;
+
+  > span{
+    @include fontStyles(--text-x-large, --font-light, --white-color);
+  }
+}

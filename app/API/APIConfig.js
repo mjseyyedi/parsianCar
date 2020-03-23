@@ -28,6 +28,16 @@ export default {
       url: 'v2/token/verify/',
       method: 'POST',
     },
+    {
+      key: 'userInfo',
+      url: 'v2/token/user/',
+      method: 'GET',
+    },
+    {
+      key: 'updateUserInfo',
+      url: 'v2/token/user/',
+      method: 'PUT',
+    },
 
     //fetch front content
     {
@@ -40,6 +50,11 @@ export default {
     {
       key: 'carsList',
       url: 'v2/cars/',
+      method: 'GET',
+    },
+    {
+      key: 'categoriesList',
+      url: 'v2/categories/',
       method: 'GET',
     },
     {

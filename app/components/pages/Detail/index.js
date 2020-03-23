@@ -10,6 +10,7 @@ import {selectCarDetail} from 'Redux/reducers/Cars/selectors'
 import useRedux from 'Hooks/useRedux'
 
 import View from './View'
+import MobileView from './View.mobile'
 
 const CarPageIndex = (initialProps) => {
   const reducers = {cars: reducer}
@@ -29,7 +30,7 @@ const CarPageIndex = (initialProps) => {
 
   const props = Object.assign({}, initialProps, mapDispatchToProps, mapStateToProps)
 
-  return <View {...props} />
+  return props.isMobile ? <MobileView {...props}/> : <View {...props} />
 }
 
 export default CarPageIndex

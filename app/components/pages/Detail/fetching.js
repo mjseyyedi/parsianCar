@@ -12,7 +12,6 @@ export const fetching = (store, req) => {
   const {params} = req.router.match
 
   injector(store, {cars: reducer}, {cars: saga})
-
     return [
       dispatch(getCarDetail(params.id)),
     ]

@@ -6,7 +6,10 @@
   @include border-radius(10px);
   margin: 0 16px;
   @include flexLayout(row, space-around, center);
-
+  //position: fixed;
+  //bottom: 30px;
+  //left: 16px;
+  //right: 16px;
   > a {
     @include flexLayout(column, center, center);
     width: 70px;

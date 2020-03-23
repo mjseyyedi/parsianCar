@@ -8,6 +8,7 @@ html {
   --mobile-container-height: calc(100vh - var(--mobile-footer-height) - 30px);
 
   --primary-bg-color: #2F2D38;
+  --tab-bg-color: #43404B;
   --white-color: #FFFFFF;
   --text-color: #726C82;
   --button-text-color: #141E30;
@@ -27,6 +28,7 @@ html {
   --text-xxx-small: 8px;
 
   --font-light: 300;
+  --font-regular: 400;
   --font-medium: 500;
   --font-bold: 600;
   --seperator: 1px solid var(--seperator-color);

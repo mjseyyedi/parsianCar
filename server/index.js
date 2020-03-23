@@ -9,7 +9,7 @@ import getStore from 'Redux'
 import render from './render'
 import {routeParser} from './middlewares'
 
-const PORT = process.env.PORT || 3004
+const PORT = process.env.PORT || 3000
 
 const app = express()
 

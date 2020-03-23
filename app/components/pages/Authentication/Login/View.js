@@ -24,8 +24,8 @@ const Login = ({addNotification, login, OTPResult,history,isMobile,loginNumber, 
   } , [loginNumber])
 
   function handleLogin(phone) {
-
-    if(Phone.phoneNumberValidation(phone)){
+    console.log(phone)
+    if(phone && Phone.phoneNumberValidation(phone)){
       login({phone})
     }
     else{

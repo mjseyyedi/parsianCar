@@ -33,15 +33,111 @@
   }
 
 
+  &__mobileMiddle{
+    position: fixed;
+    top: 0;
+    left: 13vw;
+    right: 13vw;
+    height: 37vh;
+    padding-top: 30px;
+    background-color: var(--yellow-color);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    #{$parent}__logo{
+      width: 100%;
+      @include flexCenter;
+    }
+
+    #{$parent}__mobileImage{
+      position: absolute;
+      width: calc(100% + (2 * 13vw));
+      right: -13vw;
+      left: -13vw;
+      bottom: 0;
+      img{
+        width: 100%;
+      }
+    }
+
+  }
+
+
+
   &__fields{
     margin-top: calc(70vh + 35px - var(--navbar-height));
     @include flexLayout(row, space-between, center);
     width: 50vw;
-
-    > div, input{
+    > button{
+      width: 100%;
+    }
+    &--mobile{
+      margin-top: calc(37vh + 40px - var(--navbar-height));
+      @include flexLayout(column, flex-start, center);
+      padding: 0 13vw;
+      width: 100%;
+      > input{
         width: 100%;
-      margin-left: 12px;
+        margin: 0 0 16px !important;
+      }
+    }
 
+    &--desk{
+      > input{
+        width: 30%;
+      }
+      > div{
+        width: 60%;
+        input{
+          width: 100%;
+        }
+      }
+      > button{
+        width: 25%;
+      }
+    }
+
+    #{$parent}__mobileDate{
+      display: flex;
+      width: 100%;
+      > div{
+        flex: 0 0 50%;
+        margin-bottom: 16px;
+        &:first-child{
+          margin-left: 1%;
+          > input{
+            border-bottom-left-radius: 0 !important;
+            border-top-left-radius: 0 !important;
+          }
+        }
+
+        &:last-child{
+          > input{
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+          }
+        }
+
+        > input {
+          width: 99%;
+        }
+
+      }
+
+    }
+
+    #{$parent}__deskDate{
+      display: flex;
+      > div{
+        margin-left: 12px;
+      }
+    }
+
+
+
+    > input{
+      //width: 100%;
+      margin-left: 12px;
     }
 
   }

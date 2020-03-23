@@ -15,8 +15,6 @@ function* fetchFrontContent() {
     yield put(setHomeData(response))
   }
   else yield put(setError(response.error))
-
-
   yield put(setLoading(false))
 }
 

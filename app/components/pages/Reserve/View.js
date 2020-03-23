@@ -16,7 +16,6 @@ const Reserve = ({ ...props}) => {
         <span>
           اطلاعات رزرو
         </span>
-        <Input type={'textarea'} />
       </div>
     </div>
   )

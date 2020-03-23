@@ -1,12 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react'
-import 'moment';
-import moment from 'moment-jalaali';
 
 import Input from 'components/common/Input';
 import Button from 'components/common/Button';
 import Img from 'components/common/Img';
-import Datepicker from 'components/common/Datepicker';
-
+import DatePicker from 'components/common/Datepicker';
+import Logo from 'components/common/Icons/LoadingText'
 import styles from './styles'
 
 const Home = ({getFrontContent, isMobile, homeData, history, ...props}) => {
@@ -15,9 +13,6 @@ const Home = ({getFrontContent, isMobile, homeData, history, ...props}) => {
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
 
-  const [startDatePickerRef, setStartRef] = useState(null)
-  const [endDatePickerRef, setEndRef] = useState(null)
-
   useEffect(() =>{
     (!homeData || !homeData.length) && getFrontContent()
   } , [])
@@ -25,45 +20,30 @@ const Home = ({getFrontContent, isMobile, homeData, history, ...props}) => {
 
   const background = homeData && homeData.filter(item => item.name === 'background')
 
-  console.log(startDate, endDate)
-
   return (
-    <div className={styles.container}>
-      <div className={styles.container__middle}>
+    <div className={styles.container} style={{height : isMobile ? 'var(--mobile-container-height)' : 'var(--container-height)'}}>
+      <div className={!isMobile ? styles.container__middle : styles.container__mobileMiddle}>
         {
-          background && background.length > 0 ? <div className={styles.container__image}>
+          !!isMobile &&
+          <div className={styles.container__logo}>
+            <Logo width={282} height={18} fill={'#141E30'}/>
+          </div>
+        }
+        {
+          background && background.length > 0 ? <div className={isMobile ? styles.container__mobileImage
+            :styles.container__image}>
             <Img src={background[0] ? background[0].placeholder_background.image : null} />
           </div>  : null
         }
       </div>
-      <div className={styles.container__fields}>
+      <div className={`${styles.container__fields} ${isMobile ? styles['container__fields--mobile'] : styles['container__fields--desk']}`}>
           <Input placeholder={'مبدا'} type={'text'} onInput={setSource}/>
-          <div className={styles.container__dateContainer} onClick={() => {
-            !(startDatePickerRef.state.isOpenModal) && startDatePickerRef.toggleModalOpen();
-            setStartRef(state => ({...state}))
-          }}>
-            <Input type={'text'} placeholder={'تاریخ شروع'} initialValue={startDate} disabled/>
-            <Datepicker label={'تاریخ شروع'}
-                        id={'startDate'}
-                        value={startDate}
-                        setRef={el => setStartRef(el)}
-                        className={styles.container__startDate}
-                        selectDate={setStartDate}/>
+          <div className={isMobile ? styles.container__mobileDate : styles.container__deskDate}>
+            <DatePicker placeholder={'تاریخ شروع'} selectDate={setStartDate}/>
+            <DatePicker placeholder={'تاریخ پایان'} selectDate={setEndDate}/>
           </div>
-        <div className={styles.container__dateContainer} onClick={() => {
-          !(endDatePickerRef.state.isOpenModal) && endDatePickerRef.toggleModalOpen()
-          setEndRef(state => ({...state}))
-        }}>
-          <Input type={'text'} placeholder={'تاریخ پایان'} initialValue={endDate} disabled/>
-          <Datepicker label={'تاریخ پایان'}
-                      id={'endDate'}
-                      value={endDate}
-                      setRef={el => setEndRef(el)}
-                      className={styles.container__endDate}
-                      selectDate={setEndDate}/>
-        </div>
 
-          <Button type={'primary'} onClick={() => history.push(`/cars/all/?start_date=${startDate}&end_date=${endDate}&city=${source}`)}>
+          <Button type={'primary'} onClick={() => history.push(`/cars/all/all?start_date=${startDate}&end_date=${endDate}&city=${source}`)}>
             جستجو کنید
           </Button>
       </div>

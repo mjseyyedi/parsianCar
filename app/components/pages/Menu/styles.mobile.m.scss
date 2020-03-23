@@ -1,0 +1,48 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+
+.container {
+  $parent: &;
+  padding: 96px 16px 0;
+  height: var(--mobile-container-height);
+  overflow-y: auto;
+
+  &__content{
+    background-color: var(--tab-bg-color);
+    border-radius: 10px;
+    padding-bottom: 55px;
+    position: relative;
+    &--row{
+      @include fontStyles(--text-mid-large, --font-light, --gray-color);
+      text-align: center;
+      > div{
+        line-height: 38px;
+        margin-bottom: 16px;
+      }
+    }
+
+    > span{
+      @include fontStyles(--text-mid-large, --font-medium , --gray-color);
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+      margin: 120px 0 60px;
+    }
+
+    #{$parent}__avatar{
+      background-color: var(--gray-color);
+      border-radius: 10px;
+      opacity: 1 !important;
+      width: 143px;
+      position: absolute;
+      top: -43px;
+      left: 50%;
+      transform: translateX(-50%);
+      //right: 18px;
+      //bottom: 12px;
+      //position: absolute;
+    }
+
+  }
+
+}

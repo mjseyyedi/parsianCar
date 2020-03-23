@@ -1,6 +1,6 @@
 import {call, put, all, takeLatest} from 'redux-saga/effects'
 
-import {setBrandsList, setCarDetail, setCarsList} from './actions'
+import {setBrandsList, setCarDetail, setCarsList, setCategoriesList} from './actions'
 import {setError, setLoading} from 'Redux/reducers/global/actions'
 
 import Request from 'API'
@@ -68,6 +68,18 @@ function* fetchCarDetail(action) {
   yield put(setLoading(false))
 }
 
+function* fetchCategoriesList(action) {
+  yield put(setLoading(true))
+  const response = yield call(Request.categoriesList)
+  if(response.status){
+    yield put(setCategoriesList(response.data))
+  }
+  else{
+    yield put(setError(response))
+  }
+  yield put(setLoading(false))
+}
+
 
 export default function* carsSaga() {
   yield all([
@@ -75,5 +87,6 @@ export default function* carsSaga() {
     takeLatest(types.GET_BRANDS_LIST, fetchBrandsList),
     takeLatest(types.SEARCH_CARS, searchCars),
     takeLatest(types.GET_CAR_DETAIL, fetchCarDetail),
+    takeLatest(types.GET_CATEGORIES_LIST, fetchCategoriesList),
   ])
 }

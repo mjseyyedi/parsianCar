@@ -17,7 +17,7 @@ export default function Footer() {
           خانه
         </span>
       </Link>
-      <Link to={'/cars'}>
+      <Link to={'/cars/all/all'}>
         <CarsIcon/>
         <span>
           انتخاب خودرو

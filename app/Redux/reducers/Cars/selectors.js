@@ -24,8 +24,16 @@ const selectCarDetail = () =>
       cars.CarDetail,
   )
 
+const selectCarCategories = () =>
+  createSelector(
+    selectCars,
+    cars =>
+      cars.Categories,
+  )
+
 
 export {
+  selectCarCategories,
   selectCarDetail,
   selectCarsList,
   selectBrands
