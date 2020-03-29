@@ -4,31 +4,48 @@ import {ObjectParam, useQueryParams} from 'use-query-params'
 import Input from 'components/common/Input'
 import Button from 'components/common/Button'
 import Img from 'components/common/Img'
+import Arrow from 'components/common/Icons/Arrow'
 
 import styles from './styles'
 
-let insurance;
-const Factor = ({history, ...props}) => {
+const Factor = ({history, isMobile, ...props}) => {
 
+  const [insurance, setInsurance] = useState(null)
   const [query] = useQueryParams({
     data: DataParam,
   })
 
-  console.log('****************', insurance)
   const {data} = query
 
-  useEffect(() =>{
-  insurance = data && data.factor_details
+  useEffect(() => {
+    let insure = data && data.factor_details
       ? data.factor_details.filter(item => item.name === 'insurance') : []
 
-    if(insurance && insurance.length > 0){
-      insurance = insurance[0]
+    if (insure && insure.length > 0) {
+      insure = insure[0]
     }
 
-  } , [data])
+    setInsurance(insure)
+
+  }, [data])
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{
+      height: isMobile ?
+        'var(--mobile-container-height)' : 'var(--container-height)',
+      padding: isMobile ? '0 24px' : '76px 120px 0',
+      '--title-font': isMobile ? '25px' : '40px',
+      '--reserve-card-padding': isMobile ? '12px' : '36px 68px',
+      '--reserve-direction': isMobile ? 'column' : 'row',
+      '--price-direction': isMobile ? 'column' : 'row',
+      '--price-align': isMobile ? 'flex-start' : 'center',
+      '--price-border': isMobile ? 'none' : '1px solid #FFFFFF30',
+    }}>
+      {
+        isMobile && <div className={styles.container__back} onClick={() => history.goBack()}>
+          <Arrow rotation={'180deg'}/>
+        </div>
+      }
       <div className={/*!!(query && query.data) ? */ styles['container__data']
         /*: styles['container__no-result']*/}>
         {
@@ -36,7 +53,11 @@ const Factor = ({history, ...props}) => {
            <span>
           اطلاعات رزرو
         </span>
-            <div className={styles.container__reserve}>
+            <div className={styles.container__reserve} style={{
+              '--reserve-first-box-size': !isMobile ? '60%' : '100%',
+              '--reserve-second-box-size': !isMobile ? '40%' : '100%',
+              '--row-padding-left': isMobile ? '0' : '48px'
+            }}>
               <div>
                 <div className={`${styles['container__reserve--row']}`}>
                  <span>
@@ -44,25 +65,50 @@ const Factor = ({history, ...props}) => {
                  </span>
                   <div>{data.origin}</div>
                 </div>
-                <div className={styles['container__reserve--row']}>
-                  <section>
+                <div className={styles['container__reserve--row']} style={{
+                  height: 'auto',
+                  marginBottom: 0,
+                  '--row-div-width': isMobile ? '60%' : '70%'
+                }}>
+                  {
+                    isMobile ?
+                      <section className={styles['container__reserve--row-mobile']}>
+                        <div>
+                          <span>
+                            تاریخ تحویل
+                          </span>
+                          <div>
+                            {data.start_date ? data.start_date.split('-').join('/') : ''}
+                          </div>
+                        </div>
 
+                        <div>
+                          <span>
+                             تاریخ بازگشت
+                          </span>
+                          <div>
+                            {data.end_date ? data.end_date.split('-').join('/') : ''}
+                          </div>
+                        </div>
+                      </section>
+                      : <section>
                      <span>
                        تاریخ تحویل
                      </span>
-                    <div>
-                      <div>
-                        {data.start_date ? data.start_date.split('-').join('/') : ''}
-                      </div>
-                      <span>
+                        <div>
+                          <div>
+                            {data.start_date ? data.start_date.split('-').join('/') : ''}
+                          </div>
+                          <span>
                          تاریخ بازگشت
                        </span>
-                      <div>
-                        {data.end_date ? data.end_date.split('-').join('/') : ''}
-                      </div>
-                    </div>
+                          <div>
+                            {data.end_date ? data.end_date.split('-').join('/') : ''}
+                          </div>
+                        </div>
+                      </section>
+                  }
 
-                  </section>
                 </div>
               </div>
               <div>
@@ -110,7 +156,7 @@ const Factor = ({history, ...props}) => {
                       {item.name !== 'insurance' ? item.fa_name : 'بیمه'}
                     </span>
                       <span>
-                        {item.name !== 'insurance' ? item.days+` روز ` : item.fa_name}&nbsp;
+                        {item.name !== 'insurance' ? item.days + ` روز ` : item.fa_name}&nbsp;
                       </span>
                       <span>
                         {item.price}
@@ -120,7 +166,12 @@ const Factor = ({history, ...props}) => {
               }
             </div>
 
-            <div className={styles.container__totalPrice}>
+            <div className={styles.container__totalPrice} style={{
+              '--price-container-height': isMobile ? 'auto' : '98px',
+              '--price-cell-width': isMobile ? '100%' : '50%',
+              '--price-font-size': isMobile ? '18px' : '30px',
+            }
+            }>
               <div>
                 <span>
                   مبلغ کل

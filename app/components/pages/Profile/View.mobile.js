@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 import ProfileForm from 'components/common/ProfileForm'
+import Arrow from 'components/common/Icons/Arrow'
 import Button from 'components/common/Button'
 
 import usePrevious from 'Hooks/usePrevious'
@@ -38,12 +39,14 @@ const Profile = ({
 
   return (
     <div className={styles.container}>
+      <div className={styles.container__back} onClick={() => history.goBack()}>
+        <Arrow rotation={'180deg'}/>
+      </div>
       <span>
         مشخصات
       </span>
       <div className={styles.container__content}>
         <ProfileForm userInfo={userInfo} updateForm={setForm} isMobile/>
-
       </div>
       {
         isMobile && <div className={styles.container__action}>

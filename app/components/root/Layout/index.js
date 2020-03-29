@@ -61,6 +61,7 @@ const Layout = props => {
     <Notification text={messageText}
                   type={messageType}
                   isOpen={messageVisibility}
+                  isMobile={isMobile}
                   onClose={() => setVisibility(false)}/>
 
     {renderRoutes(props.route.routes, {...props, isMobile, Authorization, addNotification})}

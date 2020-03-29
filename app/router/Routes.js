@@ -86,6 +86,18 @@ const Routes = [
             exact: true,
             fetching: import('components/pages/Factor/fetching'),
           },
+          {
+            component: loadable(() => import('components/pages/Orders')),
+            path: '/profile/orders',
+            exact: true,
+            fetching: import('components/pages/Orders/fetching'),
+          },
+          {
+            component: loadable(() => import('components/pages/ChangePassword')),
+            path: '/profile/change-password',
+            exact: true,
+            fetching: import('components/pages/ChangePassword/fetching'),
+          },
         ],
       },
     ],

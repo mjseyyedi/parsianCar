@@ -6,6 +6,21 @@
   padding: 76px 120px 0;
   height: var(--container-height);
   overflow-y: auto;
+  --title-font: 40px;
+  --reserve-card-padding: 36px 68px;
+  --price-direction: row;
+  --reserve-direction: row;
+  --price-align: center;
+  --price-border: 1px solid #FFFFFF30;
+
+  &__back{
+    height: 48px;
+    padding-right: 24px;
+    @include flexLayout(row, flex-start, center);
+    position: sticky;
+    top: 0;
+    background-color: var(--primary-bg-color);
+  }
 
   &__no-result{
     @include flexCenter;
@@ -15,8 +30,8 @@
 
   &__data{
     > span{
-      @include fontStyles(--text-super-large, --font-light);
-      @include flexLayout(row, space-between, center);
+      @include fontStyles(--title-font, --font-light);
+      @include flexLayout(var(--price-direction), space-between, var(--price-align));
       width: 100%;
       > span{
         &:nth-child(2){
@@ -29,43 +44,48 @@
       margin-top: 24px;
       border-radius: 10px;
       background-color: var(--tab-bg-color);
-      padding: 36px 68px;
+      padding: var(--reserve-card-padding);
     }
 
     #{$parent}__reserve{
-      @include flexLayout(row, space-between, center);
+      --reserve-first-box-size: 60%;
+      --reserve-second-box-size: 40%;
+      --row-padding-left: 48px;
+
+      @include flexLayout(var(--reserve-direction), space-between, center);
       margin-bottom: 30px;
       > div{
         @include flexLayout(column, space-between, flex-start);
         &:first-child{
-          flex: 0 0 60%;
-          border-left: 1px solid #FFFFFF30;
+          width: var(--reserve-first-box-size);
+          border-left: var(--price-border);
           > div{
             margin-bottom: 54px;
           }
         }
         &:last-child{
-          flex: 0 0 40%;
+          width:var(--reserve-second-box-size);
         }
       }
 
       &--row {
         --data-color: #646070;
+        --row-div-width: 70%;
         @include flexLayout(row, space-between, center);
         width: 100%;
         height: 48px;
-        padding-left: 48px;
+        padding-left: var(--row-padding-left);
 
         > div{
           background-color: var(--data-color);
           border-radius: 10px;
           height: 100%;
-          flex: 0 0 70%;
+          flex: 0 0 var(--row-div-width);
           @include flexCenter;
           @include fontStyles(--text-mid-large, --font-medium, --gray-color);
         }
         > span{
-          flex: 0 0 30%;
+          flex: 0 0 calc(100% - var(--row-div-width));
           @include fontStyles(--text-x-large, --font-medium, --gray-color);
           padding-left: 48px;
           text-align: left;
@@ -103,6 +123,23 @@
             }
           }
         }
+
+        &-mobile{
+          width: 100%;
+          display: flex;
+          flex-direction: column !important;
+          > div{
+            height: 48px;
+            width: 100%;
+            margin-bottom: 24px;
+            > div{
+              flex: 0 0 var(--row-div-width);
+            }
+            span{
+              flex: 0 0 calc(100% - var(--row-div-width));
+            }
+          }
+        }
       }
 
       &--margin{
@@ -129,17 +166,21 @@
     }
 
     #{$parent}__totalPrice{
-      height: 98px;
+      --price-container-height: 98px;
+      --price-cell-width: 50%;
+      --price-font-size: 30px;
+
+      height: var(--price-container-height);
       padding: 16px 0;
-      @include flexLayout(row, space-between, center);
-      @include fontStyles(--text-mid-x-large, --font-bold, --gray-color);
+      @include flexLayout(var(--price-direction), space-between, center);
+      @include fontStyles(--price-font-size, --font-bold, --gray-color);
       > div{
-        width: 50%;
+        width: var(--price-cell-width);
         height: 100%;
         padding: 0 32px;
         @include flexLayout(row, space-between, center);
         &:first-child{
-          border-left: 1px solid #FFFFFF30;
+          border-left: var(--price-border);
         }
       }
     }
@@ -147,8 +188,11 @@
     #{$parent}__action{
       @include fontStyles(--text-xx-large, --font-light);
       color: #ffffff50;
-      @include flexLayout(row, space-between, center);
+      @include flexLayout(var(--price-direction), space-between, center);
       margin-bottom: 70px;
+      > span{
+        margin-bottom: 16px;
+      }
     }
 
   }

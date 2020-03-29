@@ -7,9 +7,12 @@ import ProfileForm from 'components/common/ProfileForm'
 import Documents from 'components/common/Documents'
 import Button from 'components/common/Button'
 import PromptModal from 'components/common/PromptModal'
+import ChangePassword from 'components/common/ChangePassword'
 
 import UserIcon from 'components/common/Icons/User'
 import Arrow from 'components/common/Icons/Arrow'
+
+import API from 'API'
 
 import usePrevious from 'Hooks/usePrevious'
 
@@ -69,6 +72,25 @@ const Profile = ({
     }
   }
 
+  function handleChangePassword(data) {
+    props.setLoading(true)
+    API.ChangePassword('', {data})
+      .then(response => {
+          props.setLoading(false)
+          if (response.status) {
+            props.addNotification('success', response.message)
+          } else {
+            props.addNotification('error', response.message || 'خطا دربرقراری ارتباط با سرور')
+          }
+
+        },
+        error => console.log(3, error))
+      .catch(error => {
+        props.setLoading(false)
+        console.log(2, error)
+      })
+  }
+
   function TabContent(activeTab) {
     switch (activeTab) {
       case 'info':
@@ -79,11 +101,16 @@ const Profile = ({
         return <Documents categories={documentCategories}
                           uploadedDocs={uploadedDocs}
                           uploadFile={uploadDocument}/>
+
+      case 'password':
+        return <div className={styles.container__password}>
+          <ChangePassword addNotification={props.addNotification}
+                          submitNewPassword={handleChangePassword}/>
+        </div>
     }
   }
 
   function Orders({user_factors}) {
-    console.log(1212121, user_factors)
     return <section>
       {user_factors &&
       user_factors.map(item => <div className={styles.container__factor}>
@@ -123,8 +150,7 @@ const Profile = ({
         break
       }
       case 'password': {
-
-
+        setActiveTab('password')
         break
       }
       case 'exit': {
@@ -167,7 +193,8 @@ const Profile = ({
         </div>
         <div>
           {
-            leftTabs.map(item => <div
+            leftTabs.map(item => !!(item.key !== 'save' ||
+              (item.key === 'save' && activeTab === 'info')) && <div
               onClick={() => handleClickOnAction(item.key)}>{item.value}</div>)
           }
         </div>

@@ -32,7 +32,7 @@ const Profile = ({userInfo, getUserInfo, history, ...props}) => {
         break;
       }
       case 'orders':{
-
+        history.push(`/profile/orders`)
         break;
       }
       case 'upload':{
@@ -40,7 +40,7 @@ const Profile = ({userInfo, getUserInfo, history, ...props}) => {
         break;
       }
       case 'password':{
-
+        history.push('/profile/change-password')
         break;
       }
     }

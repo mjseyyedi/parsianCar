@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 import styles from './styles'
 
-const Input = ({type, onInput, placeholder, disabled, initialValue = ''}) => {
+const Input = ({type, onInput, placeholder, disabled, initialValue = '', value}) => {
 
   const [input, setInput] = useState('')
 
@@ -13,7 +13,7 @@ const Input = ({type, onInput, placeholder, disabled, initialValue = ''}) => {
   } , [initialValue])
 
   useEffect(() =>{
-    if(!disabled){
+    if(!disabled && type !== 'submit'){
       onInput(input)
     }
   } , [input])
@@ -24,7 +24,7 @@ const Input = ({type, onInput, placeholder, disabled, initialValue = ''}) => {
              setInput(e.target.value)
            }}
            placeholder={placeholder}
-           value={input}
+           value={type === 'submit' ? value : input}
            disabled={disabled}
            type={type}/>
   )

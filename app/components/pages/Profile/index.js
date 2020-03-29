@@ -4,6 +4,8 @@ import {createStructuredSelector} from 'reselect'
 import reducer from 'Redux/reducers/Profile/reducer'
 import saga from 'Redux/reducers/Profile/saga'
 
+import {setLoading} from 'Redux/reducers/global/actions'
+
 import {
   getUserInfo, updateProfile,
   updateProfileSuccess, getUserFactors,
@@ -29,12 +31,13 @@ const ProfilePageIndex = (initialProps) => {
 
   const mapDispatchToProps = {
     getUserInfo: () => dispatch(getUserInfo()),
-    updateProfile: data => dispatch(updateProfile(data)),
+    setLoading: data => dispatch(setLoading(data)),
     getUserFactors: () => dispatch(getUserFactors()),
+    getUploadedDocs: () => dispatch(getUploadedDocs()),
+    updateProfile: data => dispatch(updateProfile(data)),
     uploadDocumentFile: data => dispatch(uploadDocument(data)),
     setProfileState: data => dispatch(updateProfileSuccess(data)),
     getDocumentCategories: () => dispatch(getDocumentCategories()),
-    getUploadedDocs: () => dispatch(getUploadedDocs()),
   }
 
   const mapStateToProps = useSelector(createStructuredSelector({

@@ -48,3 +48,13 @@ export const setUploadedDocs = makeActionCreator(
   C.SET_UPLOADED_DOCS,
   'result',
 )
+/*
+export const changePassword = makeActionCreator(
+  C.CHANGE_PASSWORD,
+  'data',
+)
+export const changePasswordSuccess = makeActionCreator(
+  C.CHANGE_PASSWORD,
+  'result',
+)
+*/

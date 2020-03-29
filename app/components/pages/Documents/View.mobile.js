@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 import Documents from 'components/common/Documents'
+import Arrow from 'components/common/Icons/Arrow'
 
 import usePrevious from 'Hooks/usePrevious'
 
@@ -35,6 +36,9 @@ const DocumentsPage = ({ history, uploadedDocs, getUploadedDocs,
   }
 
   return (<div className={styles.container}>
+     <div className={styles.container__back} onClick={() => history.goBack()}>
+          <Arrow rotation={'180deg'}/>
+        </div>
       <Documents categories={documentCategories}
                  uploadedDocs={uploadedDocs}
                  isMobile

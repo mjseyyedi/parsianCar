@@ -61,6 +61,11 @@ export default {
       url: 'v2/documents/RetrieveUerDocsRequest/',
       method: 'GET'
     },
+    {
+      key: 'ChangePassword',
+      url: 'v2/token/user/changePasswordRequest/',
+      method: 'PUT'
+    },
 
     //fetch front content
     {

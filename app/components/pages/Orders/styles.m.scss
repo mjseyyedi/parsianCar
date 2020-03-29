@@ -1,0 +1,58 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+
+.container {
+  $parent: &;
+  height: var(--mobile-container-height);
+  overflow-y: auto;
+
+  &__back{
+    height: 48px;
+    padding-right: 24px;
+    @include flexLayout(row, flex-start, center);
+    position: sticky;
+    top: 0;
+    background-color: var(--primary-bg-color);
+  }
+
+  > span{
+    @include fontStyles(--text-mid-large, --font-light);
+    padding-right: 24px;
+  }
+  &__content{
+    margin-top: 24px;
+    &--row{
+      padding: 10px 14px;
+      background-color: #43404B50;
+      border-radius: 10px;
+      margin: 0 24px 24px;
+      @include flexLayout(column, center, center);
+      > div{
+        @include flexLayout(row, space-between, center);
+        > div{
+          @include flexLayout(column, center, flex-start);
+          > span{
+            &:first-child{
+              @include fontStyles(--text-medium, --font-regular, --yellow-color);
+            }
+            &:last-child{
+              @include fontStyles(--text-x-large, --font-light, --gray-color);
+            }
+          }
+        }
+        > img{
+          width: 45%;
+        }
+      }
+      > a{
+        margin-top: 20px;
+        margin-bottom: 25px;
+        @include fontStyles(--text-x-large, --font-light, --gray-color);
+      }
+      > button{
+        width: 100%;
+      }
+    }
+  }
+
+}
