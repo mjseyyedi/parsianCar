@@ -13,7 +13,7 @@ const Alert = ({text, type, onClose, isOpen, isMobile}) => {
 
     if(isOpen){
         timer = setTimeout(() =>{
-          // onClose()
+          onClose()
         }, 4000)
     }
     else onClose()
