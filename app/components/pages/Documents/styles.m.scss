@@ -3,8 +3,6 @@
 
 .container {
   $parent: &;
-  padding: 0 120px;
-  //height: var(--container-height);
-
-
+  height: var(--mobile-container-height);
+  padding: 48px 24px 0;
 }

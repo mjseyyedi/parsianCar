@@ -17,9 +17,40 @@ const selectUserUpdated = () =>
       profile.userUpdated,
   )
 
+const selectDocumentCategories = () =>
+  createSelector(
+    selectProfile,
+    profile =>
+      profile.documentCategories,
+  )
+const selectFileUploaded = () =>
+  createSelector(
+    selectProfile,
+    profile =>
+      profile.fileUploaded,
+  )
+const selectUserOrders = () =>
+  createSelector(
+    selectProfile,
+    profile =>
+      profile.userOrders,
+  )
+
+
+const selectUploadedDocs = () =>
+  createSelector(
+    selectProfile,
+    profile =>
+      profile.uploadedDocs,
+  )
+
 
 
 export {
   selectUserInfo,
-  selectUserUpdated
+  selectUserOrders,
+  selectUserUpdated,
+  selectFileUploaded,
+  selectUploadedDocs,
+  selectDocumentCategories
 }

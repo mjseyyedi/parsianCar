@@ -1,33 +1,39 @@
 import React, {useState, useEffect} from 'react'
 
-import ProfileForm from 'components/common/ProfileForm';
+import ProfileForm from 'components/common/ProfileForm'
 import Button from 'components/common/Button'
 
 import usePrevious from 'Hooks/usePrevious'
 import styles from './styles.mobile'
 
-const Profile = ({userInfo, getUserInfo, history, isMobile,updateProfile, setProfileState, userUpdated, ...props}) => {
+const Profile = ({
+                   userInfo, getUserInfo, history, isMobile,
+                   updateProfile, setProfileState, userUpdated,
+                   getUserFactors,
+                   ...props
+                 }) => {
 
   const [form, setForm] = useState({})
   const previousUserUpdated = usePrevious(userUpdated)
 
-  useEffect(() =>{
-    if(userInfo && userInfo.user_profile){
+  useEffect(() => {
+    if (userInfo && userInfo.user_profile) {
       setForm(userInfo.user_profile)
     }
-  } , [userInfo])
+  }, [userInfo])
 
-
-  useEffect(() =>{
-    if(!previousUserUpdated && userUpdated){
-      props.addNotification('success', userUpdated);
-      setProfileState(null)
-
-    }
-  } , [userUpdated])
 
   useEffect(() => {
-    getUserInfo()
+    if (!previousUserUpdated && userUpdated) {
+      props.addNotification('success', userUpdated)
+      setProfileState(null)
+      history.goBack()
+    }
+  }, [userUpdated])
+
+  useEffect(() => {
+    getUserInfo();
+
   }, [])
 
   return (
@@ -36,7 +42,7 @@ const Profile = ({userInfo, getUserInfo, history, isMobile,updateProfile, setPro
         مشخصات
       </span>
       <div className={styles.container__content}>
-      <ProfileForm userInfo={userInfo} updateForm={setForm} isMobile/>
+        <ProfileForm userInfo={userInfo} updateForm={setForm} isMobile/>
 
       </div>
       {

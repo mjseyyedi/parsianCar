@@ -67,19 +67,11 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
                 }}/>
             </div>
             <div className={styles.container__options}>
-              {options && options.map(option => (option.name.includes("baby_seat") || option.name.includes("traffic_plan") || option.name.includes("driver")) && <div>
-                {
-                  option.name === "baby_seat" ? <CarSeat/> :
-                    option.name === "traffic_plan" ? <Traffic /> :
-                      option.name === 'driver' ? <Driver /> : null
-                }
+              {options && options.filter(item => item.name !== 'insurance').map(option => <div>
+                <Img src={option.icon} alt={option.name}/>
                 <span>
-              {
-                option.name === 'baby_seat' ? 'صندلی کودک' :
-                  option.name === 'traffic_plan' ? 'طرح ترافیک' :
-                    option.name === 'driver' ? 'راننده' : null
-              }
-            </span>
+                  {option.fa_name}
+                </span>
               </div>)}
             </div>
 
@@ -88,7 +80,7 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
                 {insurance.map(item => <div>
                   <Insurance />
                   <span>
-                    بیمه
+                    {item.fa_name}
                   </span>
                 </div>)}
               </div>

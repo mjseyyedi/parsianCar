@@ -38,6 +38,29 @@ export default {
       url: 'v2/token/user/',
       method: 'PUT',
     },
+    {
+      key: 'fetchUserFactors',
+      url: 'v2/token/user/Factors/',
+      method: 'GET',
+    },
+    {
+      key: 'fetchDocumentsCategories',
+      url: 'v2/documents/RetrieveCategoryDocsRequest/',
+      method: 'GET',
+    },
+    {
+      key: 'AddUserDocRequest',
+      url: 'v2/documents/AddUserDocRequest/',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    },
+    {
+      key: 'RetrieveUerDocsRequest',
+      url: 'v2/documents/RetrieveUerDocsRequest/',
+      method: 'GET'
+    },
 
     //fetch front content
     {

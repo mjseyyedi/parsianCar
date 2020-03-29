@@ -40,6 +40,11 @@ const ProfilePageIndex = (initialProps) => {
     {key: 'password', value:'تغییر رمز عبور'},
     {key: 'exit', value:'خروج'},
   ]
+
+  if(initialProps.isMobile){
+    leftTabs.splice(0, 1);
+  }
+
   const props = Object.assign({}, initialProps, mapDispatchToProps, mapStateToProps, {rightTabs}, {leftTabs})
 
   return <MobileView {...props}/>

@@ -26,6 +26,8 @@ const request = async (reqUrl, method, params, data, headers, options) => {
     finalHeaders = {...headers, Authorization}
   }
 
+  console.log('@@@@@@@@@@@@@@@@@@', finalHeaders)
+
   return await instance
     .request({
       url,
@@ -48,6 +50,7 @@ const API = {}
 
 APIConfig.endpoints.forEach(endpoint => {
   API[endpoint.key] = (params, body) => {
+    console.log(endpoint.url, endpoint.headers)
     return request(
       endpoint.url,
       endpoint.method,

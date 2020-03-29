@@ -99,6 +99,7 @@
       --option-border-color: #35333C;
       @include flexLayout(row, space-between, center);
       margin-top: 40px;
+      margin-bottom: 24px;
       width: 100%;
       padding: 0 2vw;
 
@@ -106,6 +107,7 @@
         &:hover{
           background-color: var(--option-border-color);
         }
+        cursor: pointer;
         padding: 10px;
         flex: 0 0 31%;
         text-align: center;
@@ -118,6 +120,29 @@
           display: inline-block;
           width: 100%;
           @include fontStyles(--text-small, --font-regular)
+        }
+      }
+    }
+
+    #{$parent}__insurance{
+      --option-border-color: #35333C;
+      @include flexLayout(row, space-between, center, wrap);
+      width: 100%;
+      padding: 0 2vw;
+      @include fontStyles(--text-small, --font-regular);
+
+      > div{
+        flex: 0 0 calc(50% - 12px);
+        border: 1px solid var(--option-border-color);
+        border-radius: 10px;
+        height: 56px;
+        @include flexCenter;
+        cursor: pointer;
+        &:hover{
+          background-color: var(--option-border-color);
+        }
+        > span{
+          margin-right: 16px;
         }
       }
     }

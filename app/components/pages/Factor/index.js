@@ -4,14 +4,14 @@ import {createStructuredSelector} from 'reselect'
 import reducer from 'Redux/reducers/Cars/reducer'
 import saga from 'Redux/reducers/Cars/saga'
 
-import {getFrontContent} from 'Redux/reducers/Cars/actions'
-import {selectHomeData} from 'Redux/reducers/Cars/selectors'
+// import {getFrontContent} from 'Redux/reducers/Cars/actions'
+// import {selectHomeData} from 'Redux/reducers/Cars/selectors'
 
 import useRedux from 'Hooks/useRedux'
 
 import View from './View'
 
-const ReservePageIndex = (initialProps) => {
+const FactorPageIndex = (initialProps) => {
   const reducers = {cars: reducer}
   const sagas = {cars: saga}
   const dispatch = useDispatch()
@@ -31,4 +31,4 @@ const ReservePageIndex = (initialProps) => {
   return <View {...props} />
 }
 
-export default ReservePageIndex
+export default FactorPageIndex

@@ -36,7 +36,7 @@ const Profile = ({userInfo, getUserInfo, history, ...props}) => {
         break;
       }
       case 'upload':{
-
+        history.push('/profile/documents')
         break;
       }
       case 'password':{

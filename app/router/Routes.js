@@ -44,12 +44,12 @@ const Routes = [
             exact: true,
             fetching: import('components/pages/Authentication/Password/fetching'),
           },
-          {
-            component: loadable(() => import('components/pages/Reserve')),
-            path: '/cars/reserve/:carId',
-            exact: true,
-            fetching: import('components/pages/Reserve/fetching'),
-          },
+          // {
+          //   component: loadable(() => import('components/pages/Reserve')),
+          //   path: '/cars/reserve/:carId',
+          //   exact: true,
+          //   fetching: import('components/pages/Reserve/fetching'),
+          // },
           {
             component: loadable(() => import('components/pages/Cars')),
             path: '/cars/:brand/:category',
@@ -73,6 +73,18 @@ const Routes = [
             path: '/profile/edit',
             exact: true,
             fetching: import('components/pages/Profile/fetching'),
+          },
+          {
+            component: loadable(() => import('components/pages/Documents')),
+            path: '/profile/documents',
+            exact: true,
+            fetching: import('components/pages/Documents/fetching'),
+          },
+          {
+            component: loadable(() => import('components/pages/Factor')),
+            path: '/profile/factor',
+            exact: true,
+            fetching: import('components/pages/Factor/fetching'),
           },
         ],
       },

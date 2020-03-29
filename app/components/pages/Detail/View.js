@@ -10,9 +10,7 @@ import Modal from 'components/common/Modal'
 import Comment from 'components/common/Comment'
 
 import HomeLand from 'components/common/Icons/HomeLand'
-import CarSeat from 'components/common/Icons/CarSeat'
-import Driver from 'components/common/Icons/Driver'
-import Traffic from 'components/common/Icons/Traffic'
+import Insurance from 'components/common/Icons/Insurance'
 import Arrow from 'components/common/Icons/Arrow'
 
 import styles from './styles'
@@ -237,18 +235,19 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
         </div>
 
         <div className={styles.container__options}>
-          {options && options.map(option => (option.name.includes("baby_seat") || option.name.includes("traffic_plan") || option.name.includes("driver")) && <div>
-            {
-              option.name === "baby_seat" ? <CarSeat/> :
-                option.name === "traffic_plan" ? <Traffic /> :
-                  option.name === 'driver' ? <Driver /> : null
-            }
+          {options && options.filter(item => item.name !== 'insurance').map(option => <div>
+            <Img src={option.icon} alt={option.name}/>
             <span>
-              {
-                option.name === 'baby_seat' ? 'صندلی کودک' :
-                  option.name === 'traffic_plan' ? 'طرح ترافیک' :
-                    option.name === 'driver' ? 'راننده' : null
-              }
+              {option.fa_name}
+            </span>
+          </div>)}
+        </div>
+
+        <div className={styles.container__insurance}>
+          {options && options.filter(item => item.name === 'insurance').map(option => <div>
+            <Insurance />
+            <span>
+              {option.fa_name}
             </span>
           </div>)}
         </div>

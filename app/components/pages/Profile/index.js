@@ -4,8 +4,16 @@ import {createStructuredSelector} from 'reselect'
 import reducer from 'Redux/reducers/Profile/reducer'
 import saga from 'Redux/reducers/Profile/saga'
 
-import {getUserInfo, updateProfile, updateProfileSuccess} from 'Redux/reducers/Profile/actions'
-import {selectUserInfo, selectUserUpdated} from 'Redux/reducers/Profile/selectors'
+import {
+  getUserInfo, updateProfile,
+  updateProfileSuccess, getUserFactors,
+  getDocumentCategories, uploadDocument,
+  getUploadedDocs,
+} from 'Redux/reducers/Profile/actions'
+import {
+  selectUserInfo, selectUserUpdated, selectUserOrders, selectUploadedDocs,
+  selectDocumentCategories, selectFileUploaded,
+} from 'Redux/reducers/Profile/selectors'
 
 import useRedux from 'Hooks/useRedux'
 
@@ -22,24 +30,32 @@ const ProfilePageIndex = (initialProps) => {
   const mapDispatchToProps = {
     getUserInfo: () => dispatch(getUserInfo()),
     updateProfile: data => dispatch(updateProfile(data)),
+    getUserFactors: () => dispatch(getUserFactors()),
+    uploadDocumentFile: data => dispatch(uploadDocument(data)),
     setProfileState: data => dispatch(updateProfileSuccess(data)),
+    getDocumentCategories: () => dispatch(getDocumentCategories()),
+    getUploadedDocs: () => dispatch(getUploadedDocs()),
   }
 
   const mapStateToProps = useSelector(createStructuredSelector({
     userInfo: selectUserInfo(),
     userUpdated: selectUserUpdated(),
+    documentCategories: selectDocumentCategories(),
+    fileUploaded: selectFileUploaded(),
+    userOrders: selectUserOrders(),
+    uploadedDocs: selectUploadedDocs(),
   }))
 
   const rightTabs = [
-    {key: 'info', value:'اطلاعات کاربری'},
-    {key: 'orders', value:'سفارش های من'},
-    {key: 'upload', value:'آپلود مدارک'},
+    {key: 'info', value: 'اطلاعات کاربری'},
+    {key: 'orders', value: 'سفارش های من'},
+    {key: 'upload', value: 'آپلود مدارک'},
   ]
 
   const leftTabs = [
-    {key: 'save', value:'ذخیره'},
-    {key: 'password', value:'تغییر رمز عبور'},
-    {key: 'exit', value:'خروج'},
+    {key: 'save', value: 'ذخیره'},
+    {key: 'password', value: 'تغییر رمز عبور'},
+    {key: 'exit', value: 'خروج'},
   ]
   const props = Object.assign({}, initialProps, mapDispatchToProps, mapStateToProps, {rightTabs}, {leftTabs})
 

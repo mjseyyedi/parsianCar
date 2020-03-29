@@ -1,0 +1,156 @@
+@import "../../theme/abstracts/_mixins.scss";
+
+
+.container {
+  $parent: &;
+  padding: 76px 120px 0;
+  height: var(--container-height);
+  overflow-y: auto;
+
+  &__no-result{
+    @include flexCenter;
+    @include fontStyles(--text-mid-large, --font-bold, --yellow-color);
+    height: 100%;
+  }
+
+  &__data{
+    > span{
+      @include fontStyles(--text-super-large, --font-light);
+      @include flexLayout(row, space-between, center);
+      width: 100%;
+      > span{
+        &:nth-child(2){
+          @include fontStyles(--text-xx-large, --font-light);
+          color: #FFFFFF50
+        }
+      }
+    }
+    > div{
+      margin-top: 24px;
+      border-radius: 10px;
+      background-color: var(--tab-bg-color);
+      padding: 36px 68px;
+    }
+
+    #{$parent}__reserve{
+      @include flexLayout(row, space-between, center);
+      margin-bottom: 30px;
+      > div{
+        @include flexLayout(column, space-between, flex-start);
+        &:first-child{
+          flex: 0 0 60%;
+          border-left: 1px solid #FFFFFF30;
+          > div{
+            margin-bottom: 54px;
+          }
+        }
+        &:last-child{
+          flex: 0 0 40%;
+        }
+      }
+
+      &--row {
+        --data-color: #646070;
+        @include flexLayout(row, space-between, center);
+        width: 100%;
+        height: 48px;
+        padding-left: 48px;
+
+        > div{
+          background-color: var(--data-color);
+          border-radius: 10px;
+          height: 100%;
+          flex: 0 0 70%;
+          @include flexCenter;
+          @include fontStyles(--text-mid-large, --font-medium, --gray-color);
+        }
+        > span{
+          flex: 0 0 30%;
+          @include fontStyles(--text-x-large, --font-medium, --gray-color);
+          padding-left: 48px;
+          text-align: left;
+        }
+        > section{
+          @include flexLayout(row, flex-end, center);
+          width: 100%;
+          height: 100%;
+          *{
+            height: 100%;
+          }
+          > span{
+            @include fontStyles(--text-x-large, --font-medium, --gray-color);
+            margin-right: 24px;
+            flex: 0 0 30%;
+            text-align: left;
+            padding-left: 48px;
+            @include flexLayout(row, flex-end, center);
+          }
+          > div{
+            @include flexLayout(row, space-between, center);
+            flex: 0 0 70%;
+            > *{
+              width: 33%;
+              text-align: center;
+              @include fontStyles(--text-x-large, --font-medium, --gray-color);
+              @include flexCenter;
+            }
+            > div{
+              background-color: var(--data-color);
+              border-radius: 10px;
+              height: 100%;
+              @include flexCenter;
+              //@include fontStyles(--text-mid-large, --font-medium, --gray-color);
+            }
+          }
+        }
+      }
+
+      &--margin{
+        margin-bottom: 24px;
+      }
+
+    }
+
+    #{$parent}__prices{
+      > div{
+        height: 58px;
+        @include fontStyles(--text-xx-large, --font-medium, --gray-color);
+        border-bottom: 1px solid #FFFFFF30;
+        @include flexLayout(row, space-between, center);
+        padding-left: 15%;
+        > *{
+          width: calc(100% / 3);
+          &:first-child{
+            text-align: right;
+          }
+          text-align: center;
+        }
+      }
+    }
+
+    #{$parent}__totalPrice{
+      height: 98px;
+      padding: 16px 0;
+      @include flexLayout(row, space-between, center);
+      @include fontStyles(--text-mid-x-large, --font-bold, --gray-color);
+      > div{
+        width: 50%;
+        height: 100%;
+        padding: 0 32px;
+        @include flexLayout(row, space-between, center);
+        &:first-child{
+          border-left: 1px solid #FFFFFF30;
+        }
+      }
+    }
+
+    #{$parent}__action{
+      @include fontStyles(--text-xx-large, --font-light);
+      color: #ffffff50;
+      @include flexLayout(row, space-between, center);
+      margin-bottom: 70px;
+    }
+
+  }
+
+}

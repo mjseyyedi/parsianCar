@@ -1,4 +1,8 @@
 {
   "userInfo": null,
-  "userUpdated": null
+  "userUpdated": null,
+  "documentCategories": [],
+  "userOrders": [],
+  "fileUploaded": false,
+  "uploadedDocs": []
 }
