@@ -12,7 +12,7 @@ COPY . .
 # Building app
 RUN yarn build
 
-EXPOSE 3004
+EXPOSE 3000
 
 # Running the app
 CMD [ "yarn", "serve" ]
