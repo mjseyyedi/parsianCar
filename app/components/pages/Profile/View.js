@@ -22,7 +22,7 @@ const Profile = ({
                    getUserInfo, userInfo, updateProfile, userUpdated,
                    setProfileState, getUserFactors, getDocumentCategories,
                    documentCategories, uploadDocumentFile, fileUploaded, userOrders,
-                   getUploadedDocs, uploadedDocs,
+                   getUploadedDocs, uploadedDocs,history,
                    ...props
                  }) => {
 
@@ -55,10 +55,19 @@ const Profile = ({
   }, [fileUploaded])
 
   useEffect(() => {
-    getUserInfo()
-    getUserFactors()
-    getDocumentCategories()
-    getUploadedDocs()
+    getUserInfo();
+    getUserFactors();
+    getDocumentCategories();
+    getUploadedDocs();
+
+    if(history.location.search && history.location.search.includes('status')){
+      if(history.location.search.includes('success')){
+        props.addNotification('success', 'پرداخت شما با موفقیت انجام شده و سفارش شما ثبت شد')
+      }
+      else{
+        props.addNotification('error', 'پرداخت شما با خطا مواجه شده است')
+      }
+    }
   }, [])
 
 
@@ -126,10 +135,10 @@ const Profile = ({
           <Link to={`/profile/factor?data=${JSON.stringify(item)}`}>نمایش فاکتور</Link>
           {
             +item.status === 2 ?
-              <Button type={'primary'}>
+              <Button type={'primary'} onClick={() =>handlePayment(item)}>
                 پرداخت
               </Button>
-              : <Button type={'primary'}>
+              : <Button type={'primary'} onClick={() => history.push(`/cars/detail/${item.car_id}`)}>
                 رزرو دوباره
               </Button>
           }
@@ -142,6 +151,22 @@ const Profile = ({
 
   }
 
+  function handlePayment(item) {
+    props.setLoading(true)
+    const data = {factor_id: item.factor_id}
+    API.CheckOutRequest({}, {data})
+      .then(response =>{
+        props.setLoading(false)
+        console.log(6666, response)
+        if(!response.status){
+          props.addNotification('error', response.message || 'خطا در برقراری ارتباط با سرور')
+        }
+        else{
+          const url = response.data.url_redirect
+          window.location.assign(url.split('‬‬').join('').split('‫‪').join(''))
+        }
+      })
+  }
 
   function handleClickOnAction(action) {
     switch (action) {
@@ -164,7 +189,6 @@ const Profile = ({
     Cookies.remove('Authorization')
     setExitModal(false)
     window.location.href = '/'
-
   }
 
   return (

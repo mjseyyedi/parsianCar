@@ -100,7 +100,33 @@ export default {
       url: 'v2/cars/:variable/',
       method: 'GET',
     },
+    {
+      key: 'Stations',
+      url: '/v2/stations/',
+      method: 'GET',
+    },
 
+    // reserve car
 
+    {
+      key: 'CheckCarExist',
+      url: 'v2/orders/CheckCarExists/',
+      method: 'POST',
+    },
+    {
+      key: 'ProcessFactor',
+      url: 'v2/orders/ConfirmFactorRequest/',
+      method: 'POST',
+    },
+    {
+      key: 'SubmitFactor',
+      url: 'v2/orders/SendFactorRequest/',
+      method: 'POST',
+    },
+    {
+      key: 'CheckOutRequest',
+      url: 'v2/orders/CheckOutRequest/',
+      method: 'POST',
+    },
   ],
 }

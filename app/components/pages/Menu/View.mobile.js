@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from 'react'
+import Cookies from 'js-cookie'
 
 import Img from 'components/common/Img'
 import UserIcon from 'components/common/Icons/User'
+import PromptModal from 'components/common/PromptModal'
 
 import styles from './styles.mobile'
 
 const Profile = ({userInfo, getUserInfo, history, ...props}) => {
 
   const [form, setForm] = useState({})
+  const [exitModal, setExitModal] = useState(false)
 
   const {leftTabs, rightTabs} = props
   const tabs = rightTabs.concat(leftTabs)
@@ -22,8 +25,6 @@ const Profile = ({userInfo, getUserInfo, history, ...props}) => {
   useEffect(() => {
     getUserInfo()
   }, [])
-
-  console.log(userInfo)
 
   function handleMenuClick(item) {
     switch (item) {
@@ -43,7 +44,17 @@ const Profile = ({userInfo, getUserInfo, history, ...props}) => {
         history.push('/profile/change-password')
         break;
       }
+      case 'exit':{
+        // history.push('/profile/change-password')
+        setExitModal(true)
+        break;
+      }
     }
+  }
+  function handleLogOut() {
+    Cookies.remove('Authorization')
+    setExitModal(false)
+    window.location.href = '/'
   }
 
   return (
@@ -67,7 +78,11 @@ const Profile = ({userInfo, getUserInfo, history, ...props}) => {
           {tabs.map(item => <div onClick={() => handleMenuClick(item.key)}>{item.value}</div>)}
         </div>
       </div>
-
+      <PromptModal isOpen={exitModal}
+                   text={'آیا برای خروج مطمئن هستید؟'}
+                   confirmButton={{text: 'بله', action: handleLogOut}}
+                   denyButton={{text: 'خیر'}}
+                   close={() => setExitModal(false)}/>
     </div>
   )
 }

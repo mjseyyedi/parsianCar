@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Modal from 'components/common/Modal'
 import Button from 'components/common/Button'
 
 import styles from './styles'

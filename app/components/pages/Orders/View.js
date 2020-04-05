@@ -7,18 +7,50 @@ import Img from 'components/common/Img'
 import Arrow from 'components/common/Icons/Arrow'
 
 import styles from './styles'
+import API from 'API'
 
 const Orders = ({history, userOrders, getUserFactors, ...props}) => {
 
   useEffect(() => {
-    getUserFactors()
+    getUserFactors();
+
+
+    if(history.location.search && history.location.search.includes('status')){
+      if(history.location.search.includes('success')){
+        props.addNotification('success', 'پرداخت شما با موفقیت انجام شده و سفارش شما ثبت شد')
+      }
+      else{
+        props.addNotification('error', 'پرداخت شما با خطا مواجه شده است')
+      }
+    }
   }, [])
 
+  function handlePayment(item) {
+    props.setLoading(true)
+    const data = {factor_id: item.factor_id}
+    API.CheckOutRequest({}, {data})
+      .then(response =>{
+        props.setLoading(false)
+        console.log(6666, response)
+        if(!response.status){
+          props.addNotification('error', response.message || 'خطا در برقراری ارتباط با سرور')
+        }
+        else{
+          const url = response.data.url_redirect
+          window.location.assign(url.split('‬‬').join('').split('‫‪').join(''))
+        }
+      })
+  }
 
   return (
     <div className={styles.container}>
+
       <div className={styles.container__back} onClick={() => history.goBack()}>
-        <Arrow rotation={'180deg'}/>
+        {
+          !(history.location.search && history.location.search.includes('status')) &&
+          <Arrow rotation={'180deg'}/>
+
+        }
       </div>
       <span>
         سفارش های من
@@ -39,10 +71,10 @@ const Orders = ({history, userOrders, getUserFactors, ...props}) => {
                 نمایش فاکتور
               </Link>
               {
-                +item.status === 2 ? <Button type={'primary'}>
+                +item.status === 2 ? <Button type={'primary'} onClick={() => handlePayment(item)}>
                     پرداخت
                   </Button>
-                  : <Button type={'primary'}>
+                  : <Button type={'primary'} onClick={() => history.push(`/cars/detail/${item.car_id}`)}>
                     رزرو دوباره
                   </Button>
               }

@@ -49,10 +49,11 @@ function* requestLoginByPassword(actions) {
   yield put(setLoading(true))
   const { data } = actions
 
+  console.log('000', data)
   const response = yield call(Request.login, '', data)
-  console.log(444444444444, response)
-  if(response.token){
-    yield put(setLoginInfo({Token: response.token}))
+  if(response.status){
+    console.log(111111, response, response.status, response.Token)
+    yield put(setLoginInfo({Token: response.Token}))
   }
   else {
     yield put(setError({message: response.message || 'خطا در ورود'}))

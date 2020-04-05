@@ -4,6 +4,8 @@ import {createStructuredSelector} from 'reselect'
 import reducer from 'Redux/reducers/Cars/reducer'
 import saga from 'Redux/reducers/Cars/saga'
 
+import {setLoading, setError} from 'Redux/reducers/global/actions'
+
 // import {getFrontContent} from 'Redux/reducers/Cars/actions'
 // import {selectHomeData} from 'Redux/reducers/Cars/selectors'
 
@@ -20,6 +22,8 @@ const FactorPageIndex = (initialProps) => {
 
   const mapDispatchToProps = {
     // getFrontContent : data => dispatch(getFrontContent(data))
+    setLoading : data => dispatch(setLoading(data)),
+    setError: data => dispatch(setError(data)),
   }
 
   const mapStateToProps = useSelector(createStructuredSelector({

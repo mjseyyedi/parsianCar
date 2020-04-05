@@ -51,16 +51,22 @@ const Routes = [
           //   fetching: import('components/pages/Reserve/fetching'),
           // },
           {
+            component: loadable(() => import('components/pages/Detail')),
+            path: '/cars/detail/:id',
+            exact: true,
+            fetching: import('components/pages/Detail/fetching'),
+          },
+          {
             component: loadable(() => import('components/pages/Cars')),
             path: '/cars/:brand/:category',
             exact: true,
             fetching: import('components/pages/Cars/fetching'),
           },
           {
-            component: loadable(() => import('components/pages/Detail')),
-            path: '/cars/:brand/:category/detail/:id',
+            component: loadable(() => import('components/pages/Factor')),
+            path: '/checkout',
             exact: true,
-            fetching: import('components/pages/Detail/fetching'),
+            fetching: import('components/pages/Factor/fetching'),
           },
           {
             component: loadable(() => import('components/pages/Menu')),

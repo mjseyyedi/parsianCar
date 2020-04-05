@@ -35,6 +35,10 @@ const Profile = ({
   useEffect(() => {
     getUserInfo();
 
+    if(history.location.search && history.location.search.includes('status')){
+      history.replace('/profile/orders'+history.location.search)
+    }
+
   }, [])
 
   return (

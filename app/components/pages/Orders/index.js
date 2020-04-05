@@ -4,6 +4,8 @@ import {createStructuredSelector} from 'reselect'
 import reducer from 'Redux/reducers/Profile/reducer'
 import saga from 'Redux/reducers/Profile/saga'
 
+import {setLoading} from 'Redux/reducers/global/actions'
+
 import {getUserFactors} from 'Redux/reducers/Profile/actions'
 import {selectUserOrders} from 'Redux/reducers/Profile/selectors'
 
@@ -21,6 +23,7 @@ const FactorPageIndex = (initialProps) => {
   const mapDispatchToProps = {
     // getFrontContent : data => dispatch(getFrontContent(data))
     getUserFactors: () => dispatch(getUserFactors()),
+    setLoading: data => dispatch(setLoading(data)),
   }
 
   const mapStateToProps = useSelector(createStructuredSelector({

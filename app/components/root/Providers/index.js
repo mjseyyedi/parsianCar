@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useLocation, Route} from 'react-router-dom'
 import {renderRoutes} from 'react-router-config'
 import {useSelector, useDispatch} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
+import {QueryParamProvider} from 'use-query-params'
 
 import 'components/theme'
 import {getBranch} from 'router/Routes'
@@ -21,7 +22,7 @@ import {Events} from 'utils'
 const Providers = ({route}) => {
   const reducers = {global: reducer}
   const sagas = {global: saga}
-  useRedux(reducers,sagas)
+  useRedux(reducers, sagas)
 
   const dispatch = useDispatch()
   const location = useLocation()
@@ -31,29 +32,30 @@ const Providers = ({route}) => {
   const selectors = useSelector(createStructuredSelector({
     error: selectError(),
     loading: selectLoading(),
-    userCredential: selectUserCredential()
+    userCredential: selectUserCredential(),
   }))
 
   const dispatches = {
     setError: data => dispatch(setError(data)),
-    verifyToken: data => dispatch(verifyToken(data))
+    verifyToken: data => dispatch(verifyToken(data)),
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     window.addEventListener(Events.CLICK_ON_LOGIN, e => {
       dispatch(loginSuccess(null))
       dispatch(setLoginNumber(null))
     })
 
-  } , [])
+  }, [])
 
   useEffect(() => {
     dispatch(setRouterMatch(match))
   }, [location.pathname])
 
 
-
-  return renderRoutes(route.routes, {...selectors, ...dispatches})
+  return <QueryParamProvider ReactRouterRoute={Route}>
+    {renderRoutes(route.routes, {...selectors, ...dispatches})}
+  </QueryParamProvider>
 }
 
 export default Providers

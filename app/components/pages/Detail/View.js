@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
-import ImageGallery from 'react-image-gallery';
+import ImageGallery from 'react-image-gallery'
+import Autocomplete from 'react-autocomplete'
 
 import Img from 'components/common/Img'
 import Input from 'components/common/Input'
@@ -8,24 +9,34 @@ import Datepicker from 'components/common/Datepicker'
 import Button from 'components/common/Button'
 import Modal from 'components/common/Modal'
 import Comment from 'components/common/Comment'
+import PromptModal from 'components/common/PromptModal'
 
 import HomeLand from 'components/common/Icons/HomeLand'
 import Insurance from 'components/common/Icons/Insurance'
-import Arrow from 'components/common/Icons/Arrow'
 
+import API from 'API'
+import {Tools} from 'utils'
 import styles from './styles'
 import './slider'
 
-const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
+const CarDetail = ({isMobile, carDetail,
+                     setLoading, setError,
+                     history, getCarDetail, ...props}) => {
 
   const [source, setSource] = useState('')
+  const [tempSource, setTempSource] = useState('')
+  const [sourceList, setSourceList] = useState([])
+
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [activeOptions, setActiveOptions] = useState([])
+
   const [activeTab, setActiveTab] = useState('gallery')
   const [modalState, setModalState] = useState(false)
   const [startImageIndex, setSImgIndex] = useState(null)
-  const [startDatePickerRef, setStartRef] = useState(null)
-  const [endDatePickerRef, setEndRef] = useState(null)
+  const [activeInsurance, setActiveInsurance] = useState(null)
+  const [insuranceModal, setInsuranceModal] = useState(false)
+  const [temporaryInsurance, setTempInsurance] = useState(null)
 
   const {id} = useParams()
   const data = carDetail[id]
@@ -36,8 +47,9 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
   const station = data && data.car_stations && data.car_stations.length ? data.car_stations[0] : null
   const galleryImages = data && data.car_images ? data.car_images : []
   const options = data && data.car_options ? data.car_options : []
+  const reserveDetail = data && data.car_reserve_detail ? data.car_reserve_detail : null
 
-  const images = [];
+  const images = []
 
   galleryImages.forEach(item => images.push({original: item.image, thumbnail: item.image}))
 
@@ -51,9 +63,22 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
       if (!data || !Object.keys(data).length) {
         getCarDetail(id)
       }
+
+      API.Stations()
+        .then(response => {
+          if (response.status) {
+            setSourceList(response.data)
+          }
+        })
     }
     , [])
 
+
+  useEffect(() => {
+    if (source) {
+      setTempSource(`${source.city} - ${source.subCity}`)
+    }
+  }, [source])
 
   const TabContent = ({type = 'gallery'}) => {
 
@@ -67,10 +92,10 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
       case 'policies': {
         return <Policies/>
       }
-      case 'info': {
-
-        return <Info/>
-      }
+      // case 'info': {
+      //
+      //   return <Info/>
+      // }
     }
 
     return <div/>
@@ -144,8 +169,10 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
       <h3>
         2- ودیعه نقدی
         <p>
-          یکی از شرایط ضروری در اجاره ماشین ودیعه نقدی می باشد، این مبلغ بابت تضمین سلامت ظاهری خودرو و ضمانت جرائم احتمالی از مشتری اخذ می گردد، تا مشتری رنت را، نسب به رانندگی با احتیاط ملزم سازد. این مبلغ 10% فرانشیز بیمه بدنه خودرو میباشد.
-          لازم بذکر است مبلغ ودیعه  در مورد مشتریان ماهیانه باتوجه به شرایط مشتری می تواند متغیر باشد.
+          یکی از شرایط ضروری در اجاره ماشین ودیعه نقدی می باشد، این مبلغ بابت تضمین سلامت ظاهری خودرو و ضمانت جرائم
+          احتمالی از مشتری اخذ می گردد، تا مشتری رنت را، نسب به رانندگی با احتیاط ملزم سازد. این مبلغ 10% فرانشیز بیمه
+          بدنه خودرو میباشد.
+          لازم بذکر است مبلغ ودیعه در مورد مشتریان ماهیانه باتوجه به شرایط مشتری می تواند متغیر باشد.
         </p>
       </h3>
       <h3>
@@ -158,7 +185,8 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
           که این موارد بر حسب شرایط مشتری قابل تغییر است.
           این سهولت انتخاب به سبب این که مشتری بتواند خودرو مورد علاقه اش را رنت کند، صورت گرفته است.
           شرکت های رنت خودرو این تضامین را از مشتریان خود به جهت برگشت خودرواجاره ای از طرف مستاجر دریافت می کنند.
-          البته بعضی از مشتریان هیچکدام از مدارک فوق را ندارند که کمی شرایط سخت تر می گردد، اما همچنان  راهی برای انکه شما از اجاره خودرو جانمانید وجود دارد که می توانید آنارا در قسمت خدمات ویژه اجاره خودرو دنبال نماید.
+          البته بعضی از مشتریان هیچکدام از مدارک فوق را ندارند که کمی شرایط سخت تر می گردد، اما همچنان راهی برای انکه
+          شما از اجاره خودرو جانمانید وجود دارد که می توانید آنارا در قسمت خدمات ویژه اجاره خودرو دنبال نماید.
         </p>
       </h3>
 
@@ -183,31 +211,128 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
       </h2>
 
       <h3>
-        1. حداقل مدت رنت ماشین سه  روز می باشد
+        1. حداقل مدت رنت ماشین سه روز می باشد
       </h3>
       <h3>
-        2.  مسافت مجاز حرکت خودروها برای هر روز ۲۵۰ کیلومتر می باشد
+        2. مسافت مجاز حرکت خودروها برای هر روز ۲۵۰ کیلومتر می باشد
       </h3>
       <h3>
-        3. هزینه سوخت به عهده مشتری می باشد (ماشین با باک پرتحویل مشتری داده خواهد شد و با باک پر تحویل گرفته خواهد شد در صورت خالی بودن باک هزینه از ودیعه کسر خواهد شد)
+        3. هزینه سوخت به عهده مشتری می باشد (ماشین با باک پرتحویل مشتری داده خواهد شد و با باک پر تحویل گرفته خواهد شد
+        در صورت خالی بودن باک هزینه از ودیعه کسر خواهد شد)
       </h3>
       <h3>
-        4.  در صورت عدم تخلف رانندگی حداکثر به مدت ۳۰ روز کاری پس از تحویل خودرو، مبلغ مربوطه بابت جرایم احتمالی به حساب اعلام شده عودت داده خواهد شد.
+        4. در صورت عدم تخلف رانندگی حداکثر به مدت ۳۰ روز کاری پس از تحویل خودرو، مبلغ مربوطه بابت جرایم احتمالی به حساب
+        اعلام شده عودت داده خواهد شد.
       </h3>
       <h3>
-        5.  مشتـری می تواند خودرو را در یک ایستگـاه تحویل گرفته و در ایستگـاه دیگر تحویل دهد که مشمـول هزینه می گردد، همچنین تحویل و عودت خودرو در محل مشتری یا فرودگاه شامل هزینه تحویل می گردد.
+        5. مشتـری می تواند خودرو را در یک ایستگـاه تحویل گرفته و در ایستگـاه دیگر تحویل دهد که مشمـول هزینه می گردد،
+        همچنین تحویل و عودت خودرو در محل مشتری یا فرودگاه شامل هزینه تحویل می گردد.
       </h3>
 
 
     </div>
   }
 
-  const Info = () => {
-    return <div>
-
-    </div>
+  function selectInsurance(item) {
+    if (activeInsurance && activeInsurance.fa_name === item.fa_name) {
+      setActiveInsurance(null)
+    } else if (item.message_golden_insurance) {
+      setTempInsurance(item)
+      setTimeout(() => {
+        setInsuranceModal(true)
+      }, 0)
+    }
+    else{
+      setActiveInsurance(item)
+    }
   }
 
+  function handleSelectInsurance() {
+    setInsuranceModal(false)
+    setActiveInsurance(temporaryInsurance)
+    setTimeout(() => {
+      setTempInsurance(null)
+    }, 350)
+  }
+
+  function reserveCar() {
+    if (!source) {
+      props.addNotification('warning', 'لطفا مبدا حرکت خود را وارد کنید')
+    } else if (!startDate || !endDate) {
+      props.addNotification('warning', 'لطفا تاریخ شروع و پایان را انتخاب کنید')
+    } else {
+      setLoading(true);
+      // const data = {
+      //   'reserve': reserveDetail.id,
+      //   'start_date': Tools.toEnglishDigits(startDate),
+      //   'end_date': Tools.toEnglishDigits(endDate),
+      //   'factor_details': activeOptions.concat(activeInsurance|| []),
+      //   'daily_cost': price.value,
+      //   'origin': source.id,
+      // }
+      // API.ProcessFactor('', {data})
+      //   .then(response => {
+      //     if(response.status){
+      //       setLoading(false);
+      //       const data = {...response.data, ...response.data.user_factors,
+      //         reserveId:reserveDetail.id, daily_cost: price.value}
+      //       delete data['user_factors']
+      //       console.log('********************', data)
+      //       history.push(`/checkout?data=${JSON.stringify(data)}`)
+      //     }
+      //   })
+      API.CheckCarExist('', {
+        data:
+          {
+            car_id: id,
+            start_date: Tools.toEnglishDigits(startDate),
+            end_date: Tools.toEnglishDigits(endDate),
+          },
+      })
+        .then(result => {
+          if (result.status) {
+            setLoading(false);
+            props.addNotification('warning', result.message)
+          } else {
+            const data = {
+              'reserve': reserveDetail.id,
+              'start_date': Tools.toEnglishDigits(startDate),
+              'end_date': Tools.toEnglishDigits(endDate),
+              'factor_details': activeOptions.concat(activeInsurance|| []),
+              'daily_cost': price.value,
+              'origin': source.id,
+            }
+            API.ProcessFactor('', {data})
+              .then(response => {
+                if(response.status){
+                  setLoading(false);
+                  const data = {...response.data, ...response.data.user_factors,
+                    reserveId:reserveDetail.id, daily_cost: price.value}
+                        delete data['user_factors']
+                        console.log('********************', data)
+                        history.push(`/checkout?data=${JSON.stringify(data)}`)
+                }
+              })
+          }
+        })
+    }
+
+  }
+
+  function handleSelectOption(option) {
+    const options = Object.assign([], activeOptions)
+
+    if (activeOptions.includes(option)) {
+      const index = options.findIndex(item => item.name === option.name)
+      if (index !== -1) {
+        options.splice(index, 1)
+        setActiveOptions([...options])
+      }
+    } else {
+      options.push(option)
+      setActiveOptions([...options])
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -216,18 +341,39 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
           <Img src={mainImage} alt={data ? data.name : ''}/>
         </div>
 
-        <div className={styles.container__fields}>
-          <Input onInput={setSource} placeholder={'مبدا'} type={'text'}/>
+        <div className={`${styles.container__fields} ${styles.container__autoComplete}`}>
+          {/*<Input onInput={setSource} placeholder={'مبدا'} type={'text'}/>*/}
+          <Autocomplete
+            getItemValue={(item) => item.city}
+            items={sourceList}
+            shouldItemRender={(item, value) => (item.city.indexOf(value) > -1 || item.subCity.indexOf(value) > -1)}
+            renderItem={(item, isHighlighted) =>
+              <div style={{background: isHighlighted ? 'lightgray' : 'white'}}>
+                {item.city} - {item.subCity}
+              </div>
+            }
+            value={tempSource}
+            inputProps={{placeholder: 'مبدا'}}
+            onChange={(e) => {
+              setTempSource(e.target.value)
+              if (!e.target.value) {
+                setSource(null)
+              }
+            }}
+            onSelect={(val, item) => {
+              setSource(item)
+            }}
+          />
           <span>
             تحویل خودرو در مقصد
           </span>
           <div className={styles.container__date}>
             {
               data && <React.Fragment>
-                  <Datepicker placeholder={'تاریخ شروع'}
-                              selectDate={setStartDate}/>
-                  <Datepicker placeholder={'تاریخ پایان'}
-                              selectDate={setEndDate}/>
+                <Datepicker placeholder={'تاریخ شروع'}
+                            selectDate={setStartDate}/>
+                <Datepicker placeholder={'تاریخ پایان'}
+                            selectDate={setEndDate}/>
               </React.Fragment>
             }
 
@@ -235,21 +381,28 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
         </div>
 
         <div className={styles.container__options}>
-          {options && options.filter(item => item.name !== 'insurance').map(option => <div>
-            <Img src={option.icon} alt={option.name}/>
-            <span>
+          {options && options.filter(item => item.name !== 'insurance').map(option =>
+            <div onClick={() => handleSelectOption(option)}
+                 className={(activeOptions.includes(option)) &&
+                 styles['container__options--active']}>
+              <Img src={option.icon} alt={option.name}/>
+              <span>
               {option.fa_name}
             </span>
-          </div>)}
+            </div>)}
         </div>
 
         <div className={styles.container__insurance}>
-          {options && options.filter(item => item.name === 'insurance').map(option => <div>
-            <Insurance />
-            <span>
+          {options &&
+          options.filter(item => item.name === 'insurance').map(option =>
+            <div onClick={() => selectInsurance(option)}
+                 className={(activeInsurance && activeInsurance.fa_name === option.fa_name) &&
+                 styles['container__insurance--active']}>
+              <Insurance/>
+              <span>
               {option.fa_name}
             </span>
-          </div>)}
+            </div>)}
         </div>
 
         <div className={styles.container__price}>
@@ -261,7 +414,7 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
           </span>
         </div>
 
-        <div className={styles.container__action}>
+        <div className={styles.container__action} onClick={reserveCar}>
           <Button type={'primary'}>
             رزرو کنید
           </Button>
@@ -304,24 +457,32 @@ const CarDetail = ({isMobile, carDetail, getCarDetail}) => {
         typeof window !== 'undefined' ? <Modal isOpen={modalState}
                                                closeModal={() => {
                                                  setModalState(false)
-                                                 setTimeout(() =>{
+                                                 setTimeout(() => {
                                                    setSImgIndex(null)
-                                                 } , 700)
+                                                 }, 700)
                                                }}>
           {
             !!(startImageIndex) && <ImageGallery isRTL
-                                             showBullets={false}
-                                             disableThumbnailScroll={false}
-                                             autoPlay={false}
-                                             showThumbnails={false}
-                                             showFullscreenButton={false}
-                                             showPlayButton={false}
-                                             startIndex={startImageIndex - 1}
-                                             swipingTransitionDuration={650}
-                                             items={images} />
+                                                 showBullets={false}
+                                                 disableThumbnailScroll={false}
+                                                 autoPlay={false}
+                                                 showThumbnails={false}
+                                                 showFullscreenButton={false}
+                                                 showPlayButton={false}
+                                                 startIndex={startImageIndex - 1}
+                                                 swipingTransitionDuration={650}
+                                                 items={images}/>
           }
 
-        </Modal> : <div />
+        </Modal> : <div/>
+      }
+      {
+        temporaryInsurance && <PromptModal isOpen={insuranceModal}
+                                           text={temporaryInsurance.message_golden_insurance}
+                                           confirmButton={{text: 'بله', action: handleSelectInsurance}}
+                                           denyButton={{text: 'لغو'}}
+                                           close={() => setInsuranceModal(false)}/>
+
       }
 
     </div>

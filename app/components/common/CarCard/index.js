@@ -25,7 +25,6 @@ const Car = ({
                car_comments,
                car_votes,
                hasBorder,
-               reserveCar,
                selectCar,
                isMobile,
              }) => {
@@ -91,10 +90,7 @@ const Car = ({
       }
       {
         !isMobile && <div className={styles.container__button}>
-          <Button type={isHovered ? 'primary' : 'deactive'} onClick={e => {
-            e.stopPropagation()
-            reserveCar(id)
-          }}>
+          <Button type={isHovered ? 'primary' : 'deactive'} onClick={e => {}}>
             رزرو کنید
           </Button>
         </div>

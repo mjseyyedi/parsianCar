@@ -51,7 +51,6 @@ function Modal({children, isOpen, closeModal}) {
   function clickOnBackDrop(e) {
     if (modalRef.current.contains(e.target)) return
     closeModal()
-    console.log(4444)
     // e.stopPropagation()
   }
 

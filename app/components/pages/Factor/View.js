@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import {ObjectParam, useQueryParams} from 'use-query-params'
 
-import Input from 'components/common/Input'
 import Button from 'components/common/Button'
-import Img from 'components/common/Img'
 import Arrow from 'components/common/Icons/Arrow'
+
+import API from 'API'
 
 import styles from './styles'
 
-const Factor = ({history, isMobile, ...props}) => {
+const Factor = ({history, isMobile, setLoading, ...props}) => {
 
   const [insurance, setInsurance] = useState(null)
+  const [paymentUrl, setPaymentUrl] = useState('')
   const [query] = useQueryParams({
     data: DataParam,
   })
@@ -20,14 +21,66 @@ const Factor = ({history, isMobile, ...props}) => {
   useEffect(() => {
     let insure = data && data.factor_details
       ? data.factor_details.filter(item => item.name === 'insurance') : []
-
     if (insure && insure.length > 0) {
       insure = insure[0]
     }
-
     setInsurance(insure)
-
   }, [data])
+
+
+  useEffect(() =>{
+    if(paymentUrl){
+      window.location.assign(paymentUrl)
+
+      // window.location.href = paymentUrl;
+    }
+  } , [paymentUrl])
+
+  function handlePayment() {
+    const options = [];
+    setLoading(true);
+    if(data.factor_id){
+      const factoreData = {factor_id: data.factor_id}
+      API.CheckOutRequest({}, {data:factoreData})
+        .then(response =>{
+          setLoading(false)
+          if(!response.status){
+            props.addNotification('error', response.message || 'خطا در برقراری ارتباط با سرور')
+          }
+          else{
+            const url = response.data.url_redirect
+            window.location.assign(url.split('‬‬').join('').split('‫‪').join(''))
+          }
+        })
+    }
+    else{
+      data.factor_details &&
+      data.factor_details.forEach(item => options.push({name: item.name, price: item.price}))
+
+      const paymentData = {
+        "reserve": data.reserveId,
+        "start_date": data.start_date,
+        "end_date": data.end_date,
+        "factor_details": options,
+        "is_complete_pay":false,
+        "origin": data.origin_id,
+        'daily_cost': data.daily_cost
+      }
+      API.SubmitFactor('', {data: paymentData})
+        .then(response =>{
+          setLoading(false)
+          if(response.status){
+            const url = response.data.url_redirect
+            setPaymentUrl(url.split('‬‬').join('').split('‫‪').join(''))
+          }
+          else{
+            props.addNotification('error', response.message || `خطا در برقراری ارتباط با سرور`)
+          }
+        })
+    }
+
+
+  }
 
   return (
     <div className={styles.container} style={{
@@ -195,7 +248,9 @@ const Factor = ({history, isMobile, ...props}) => {
                 20% از مبلغ نهایی فاکتور بصورت پیش پرداخت قابل پرداخت می باشد
               </span>
               {
-                +data.status === 2 && <Button type={'primary'}>
+                (!data.status || +data.status === 2) && <Button
+                onClick={handlePayment}
+                  type={'primary'}>
                   پرداخت
                 </Button>
               }
