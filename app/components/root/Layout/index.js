@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {renderRoutes} from 'react-router-config'
 import Cookies from 'js-cookie'
 
@@ -11,7 +11,7 @@ import Loading from 'components/common/Loading'
 import usePrevious from 'Hooks/usePrevious'
 
 const Layout = props => {
-
+  console.log(144444, props)
   let userAgent = ''
   let Authorization = ''
 
@@ -36,7 +36,6 @@ const Layout = props => {
     if(Authorization){
       props.verifyToken(Authorization)
     }
-
   } , [Authorization])
 
   useEffect(() =>{
@@ -45,6 +44,11 @@ const Layout = props => {
       props.setError(null)
     }
   } , [props.error])
+
+  useEffect(() =>{
+
+
+  } , [typeof window !== 'undefined' && window.location, props.userCredential])
 
   function addNotification(type, text) {
     setMText(text)

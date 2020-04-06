@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom'
 import {useQueryParams, StringParam, NumberParam} from 'use-query-params'
 
 import CarCard from 'components/common/CarCard'
+import CarType from 'components/common/Icons/CarType'
 import Brand from 'components/common/BrandCard'
 import Arrow from 'components/common/Icons/Arrow'
 
@@ -26,8 +27,6 @@ const Cars = ({
 
   const page = query.page || 1;
 
-
-  console.log('@@@@@', page)
   let cars = brand !== 'all' ? carsList.filter(({brand_name}) => brand_name === brand) : carsList
   cars = category !== 'all' ? cars.filter(({category_name}) => category_name === category) : cars
   const totalPage = Math.ceil(cars.length / PAGE_SIZE)
@@ -68,7 +67,8 @@ const Cars = ({
               } , 0)
             }}
               className={category === cat.name ? styles['container__category--active'] : ''}>
-              {cat.name}
+              <CarType type={cat.name}/>
+
             </div>)
           }
         </section>

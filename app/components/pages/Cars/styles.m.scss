@@ -21,6 +21,12 @@
     //top: calc(10vh + var(--navbar-height));
     > div{
       margin-bottom: 8px;
+      width: 155px;
+      > section{
+        > div{
+          text-align: center;
+        }
+      }
     }
 
     #{$parent}__category{
@@ -40,6 +46,7 @@
         text-align: center;
         border-radius: 10px;
         border: var(--seperator);
+        color: var(--white-color);
         //height: 42px;
         padding: 10px 0;
         margin-bottom: 4px;

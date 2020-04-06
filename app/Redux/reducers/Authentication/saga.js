@@ -49,10 +49,8 @@ function* requestLoginByPassword(actions) {
   yield put(setLoading(true))
   const { data } = actions
 
-  console.log('000', data)
   const response = yield call(Request.login, '', data)
   if(response.status){
-    console.log(111111, response, response.status, response.Token)
     yield put(setLoginInfo({Token: response.Token}))
   }
   else {
@@ -65,7 +63,19 @@ function* requestLoginByPassword(actions) {
 function* handleLogin(actions) {
     if(actions.result && actions.result.Token){
       Cookies.set('Authorization', `JWT ${actions.result.Token}`)
-      window.location.href = '/'
+      if(window.location.search && window.location.search.includes('referrer')){
+        const queryParam = window.location.search.replace('?' , '');
+        const params = queryParam.split('=');
+        const index = params.indexOf('referrer');
+        if(index !== -1){
+          const url = params[index + 1];
+          window.location.href = '/'+url;
+        }
+      }
+    else{
+        window.location.href = '/'
+      }
+      // Cookies.set('Authorization', `JWT ${actions.result.Token}`)
     }
 }
 

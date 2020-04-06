@@ -12,14 +12,14 @@ const Login = ({addNotification, login, OTPResult,history,isMobile,loginNumber, 
 
   useEffect(() =>{
     if(OTPResult && OTPResult.status){
-      history.push('/login/confirm-otp')
+      history.push('/login/confirm-otp'+history.location.search)
     }
   } , [OTPResult])
 
 
   useEffect(() => {
     if(loginNumber){
-      history.push('/login/password')
+      history.push('/login/password'+history.location.search)
     }
   } , [loginNumber])
 

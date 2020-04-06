@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef} from 'react'
 import {useLocation, Route} from 'react-router-dom'
 import {renderRoutes} from 'react-router-config'
 import {useSelector, useDispatch} from 'react-redux'
@@ -19,7 +19,7 @@ import useRedux from 'Hooks/useRedux'
 
 import {Events} from 'utils'
 
-const Providers = ({route}) => {
+const Providers = ({route, history}) => {
   const reducers = {global: reducer}
   const sagas = {global: saga}
   useRedux(reducers, sagas)
@@ -27,6 +27,7 @@ const Providers = ({route}) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const match = getBranch(location.pathname).match
+  const firstRender = useRef(true);
 
 
   const selectors = useSelector(createStructuredSelector({
@@ -51,6 +52,27 @@ const Providers = ({route}) => {
   useEffect(() => {
     dispatch(setRouterMatch(match))
   }, [location.pathname])
+
+  useEffect(() =>{
+    const {userCredential} = selectors;
+    console.log(22222, userCredential)
+    // if(!firstRender.current){
+      const {routes} = route.routes[0]
+      const index = routes.findIndex(item => item.path === location.pathname);
+      console.log(666666, location.pathname, routes, index, history)
+      if(index !== -1){
+        const currentRoute = routes[index]
+        if(userCredential && currentRoute.guestOnly){
+          history.length > 2 ? history.goBack() : history.push('/')
+        }
+        // else if(!userCredential && currentRoute.authenticatedOnly){
+        //   history.push('/')
+        // }
+      }
+    // }
+    firstRender.current = false
+
+  } , [selectors.userCredential, location.pathname])
 
 
   return <QueryParamProvider ReactRouterRoute={Route}>

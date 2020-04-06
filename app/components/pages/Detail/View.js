@@ -22,7 +22,7 @@ import './slider'
 const CarDetail = ({isMobile, carDetail,
                      setLoading, setError,
                      history, getCarDetail, ...props}) => {
-
+  console.log(111111, props)
   const [source, setSource] = useState('')
   const [tempSource, setTempSource] = useState('')
   const [sourceList, setSourceList] = useState([])
@@ -256,66 +256,55 @@ const CarDetail = ({isMobile, carDetail,
   }
 
   function reserveCar() {
-    if (!source) {
-      props.addNotification('warning', 'لطفا مبدا حرکت خود را وارد کنید')
-    } else if (!startDate || !endDate) {
-      props.addNotification('warning', 'لطفا تاریخ شروع و پایان را انتخاب کنید')
-    } else {
-      setLoading(true);
-      // const data = {
-      //   'reserve': reserveDetail.id,
-      //   'start_date': Tools.toEnglishDigits(startDate),
-      //   'end_date': Tools.toEnglishDigits(endDate),
-      //   'factor_details': activeOptions.concat(activeInsurance|| []),
-      //   'daily_cost': price.value,
-      //   'origin': source.id,
-      // }
-      // API.ProcessFactor('', {data})
-      //   .then(response => {
-      //     if(response.status){
-      //       setLoading(false);
-      //       const data = {...response.data, ...response.data.user_factors,
-      //         reserveId:reserveDetail.id, daily_cost: price.value}
-      //       delete data['user_factors']
-      //       console.log('********************', data)
-      //       history.push(`/checkout?data=${JSON.stringify(data)}`)
-      //     }
-      //   })
-      API.CheckCarExist('', {
-        data:
-          {
-            car_id: id,
-            start_date: Tools.toEnglishDigits(startDate),
-            end_date: Tools.toEnglishDigits(endDate),
-          },
-      })
-        .then(result => {
-          if (result.status) {
-            setLoading(false);
-            props.addNotification('warning', result.message)
-          } else {
-            const data = {
-              'reserve': reserveDetail.id,
-              'start_date': Tools.toEnglishDigits(startDate),
-              'end_date': Tools.toEnglishDigits(endDate),
-              'factor_details': activeOptions.concat(activeInsurance|| []),
-              'daily_cost': price.value,
-              'origin': source.id,
-            }
-            API.ProcessFactor('', {data})
-              .then(response => {
-                if(response.status){
-                  setLoading(false);
-                  const data = {...response.data, ...response.data.user_factors,
-                    reserveId:reserveDetail.id, daily_cost: price.value}
-                        delete data['user_factors']
-                        console.log('********************', data)
-                        history.push(`/checkout?data=${JSON.stringify(data)}`)
-                }
-              })
-          }
-        })
+    if(!props.userCredential){
+      history.push(`/login?referrer=cars/detail/${id}`)
     }
+    else{
+      if (!source) {
+        props.addNotification('warning', 'لطفا مبدا حرکت خود را وارد کنید')
+      } else if (!startDate || !endDate) {
+        props.addNotification('warning', 'لطفا تاریخ شروع و پایان را انتخاب کنید')
+      } else {
+        setLoading(true);
+        API.CheckCarExist('', {
+          data:
+            {
+              car_id: id,
+              start_date: Tools.toEnglishDigits(startDate),
+              end_date: Tools.toEnglishDigits(endDate),
+            },
+        })
+          .then(result => {
+            if (result.status) {
+              setLoading(false);
+              props.addNotification('warning', result.message)
+            } else {
+              const data = {
+                'reserve': reserveDetail.id,
+                'start_date': Tools.toEnglishDigits(startDate),
+                'end_date': Tools.toEnglishDigits(endDate),
+                'factor_details': activeOptions.concat(activeInsurance|| []),
+                'daily_cost': price.value,
+                'origin': source.id,
+              }
+              API.ProcessFactor('', {data})
+                .then(response => {
+                  setLoading(false);
+                  if(response.status){
+                    const data = {...response.data, ...response.data.user_factors,
+                      reserveId:reserveDetail.id, daily_cost: price.value}
+                    delete data['user_factors']
+                    history.push(`/checkout?data=${JSON.stringify(data)}`)
+                  }
+                  else{
+                    props.addNotification('error', response.message || `خطا در برقراری ارتباط با سرور`)
+                  }
+                })
+            }
+          })
+      }
+    }
+
 
   }
 

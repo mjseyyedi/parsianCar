@@ -38,7 +38,7 @@ const ConfirmCode = ({addNotification, OTPResult, history,setOTP,isMobile, ...pr
   function handleOTP() {
     if(OTPCode && String(OTPCode).length === 6){
       setOTP({[OTPResult.phone]: OTPCode})
-      history.push('/login/set-password')
+      history.push('/login/set-password'+window.location.search)
     }
     else{
       addNotification('warning', 'لطفا کد دریافتی خود را به صورت کامل وارد کنید.')
