@@ -1,10 +1,10 @@
-FROM node:10.16.3
+FROM base
 
 WORKDIR /app
 
 # Installing dependencies
 COPY package*.json ./
-RUN yarn
+#RUN yarn
 
 # Copying source files
 COPY . .
