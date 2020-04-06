@@ -1,8 +1,6 @@
 ### Auto Generated Files ###
-build/
-dist/
-/micros/
-
+#build/
+#dist/
 ### Linux ###
 *~
 
