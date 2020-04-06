@@ -1,1 +1,0 @@
-(window.__LOADABLE_LOADED_CHUNKS__=window.__LOADABLE_LOADED_CHUNKS__||[]).push([[26],{296:function(_,n,t){"use strict";t.r(n),t.d(n,"fetching",(function(){return i}));t(142);var i=function(_,n){_.dispatch;return[]}}}]);
