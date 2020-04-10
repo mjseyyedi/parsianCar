@@ -83,17 +83,49 @@
     }
 
     &--desk{
-      > input{
-        width: 30%;
-      }
       > div{
-        width: 60%;
+        width: 50%;
+        height: 48px;
+
+        &:first-child{
+          width: 30%;
+          margin-left: 12px;
+        }
         input{
           width: 100%;
         }
       }
       > button{
-        width: 25%;
+        width: 20%;
+      }
+    }
+
+    #{$parent}__autoComplete{
+      > div{
+        width: 100%;
+        > input{
+          width: 100%;
+          height: 48px;
+          border-radius: 10px !important;
+          border: none;
+          padding: 0 10px;
+          @include fontStyles(--text-x-large, --font-light, --button-text-color);
+
+          &::placeholder {
+            //font-family: 'dana-persian';
+            padding: 0 10px;
+            @include fontStyles(--text-x-large, --font-light, --button-text-color);
+            text-align: right;
+          }
+        }
+        > div{
+          > *{
+            height: 48px;
+            @include flexLayout(row, flex-start, center);
+            @include fontStyles(--text-x-large, --font-light, --button-text-color);
+            padding: 0 10px;
+          }
+        }
       }
     }
 

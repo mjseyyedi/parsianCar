@@ -9,7 +9,7 @@ import Arrow from 'components/common/Icons/Arrow'
 
 import styles from './styles'
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 6
 
 const Cars = ({
                 isMobile, getCarsList, carsList, getBrandsList,
@@ -22,6 +22,7 @@ const Cars = ({
     start_date: StringParam,
     end_date: StringParam,
     city: StringParam,
+    subCity: StringParam,
     page: NumberParam
   })
 

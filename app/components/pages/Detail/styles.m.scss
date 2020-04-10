@@ -54,14 +54,14 @@
       #{$parent}__date{
         > div{
           &:first-child{
-            > input{
+            > div{
               border-bottom-left-radius: 0;
               border-top-left-radius: 0;
               width: 99.5%;
             }
           }
           &:last-child{
-            > input{
+            > div{
               border-bottom-right-radius: 0;
               border-top-right-radius: 0;
               width: 99.5%;

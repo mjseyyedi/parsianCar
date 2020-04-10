@@ -11,7 +11,6 @@ import Loading from 'components/common/Loading'
 import usePrevious from 'Hooks/usePrevious'
 
 const Layout = props => {
-  console.log(144444, props)
   let userAgent = ''
   let Authorization = ''
 

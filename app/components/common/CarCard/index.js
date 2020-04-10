@@ -7,6 +7,7 @@ import Arrow from 'components/common/Icons/Arrow'
 import Comment from 'components/common/Icons/Comment'
 import Star from 'components/common/Icons/Star'
 
+import {Tools} from 'utils'
 import styles from './styles'
 
 const Car = ({
@@ -74,7 +75,8 @@ const Car = ({
         </div>
         <div className={styles.container__pricing}>
         <span>
-          {car_reserve_costs && car_reserve_costs.length ? car_reserve_costs[0].value : ''}&nbsp;
+          {car_reserve_costs && car_reserve_costs.length ?
+            Tools.formatPrice(car_reserve_costs[0].value) : ''}&nbsp;
           تومان
         </span>
           <span>

@@ -1,7 +1,8 @@
 import React from 'react'
 
 function LogoIcon({width = 70, height = 28, fill='white'}) {
-  return <svg width={width} height={height} viewBox="0 0 70 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return <svg width={width} height={height} viewBox={`0 0 70 28`}
+              fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipPath="url(#clip0)">
       <path
         d="M59.8217 18.7671C57.1173 17.2119 50.7026 13.2441 37.2221 13.2441C21.8717 13.2441 8.58659 20.3873 4.4679 22.2145C7.07758 20.1567 26.1384 11.2158 38.7371 11.2158C50.0339 11.2158 56.7504 15.3315 59.8217 18.7671Z"
@@ -78,7 +79,7 @@ function LogoIcon({width = 70, height = 28, fill='white'}) {
     </g>
     <defs>
       <clipPath id="clip0">
-        <rect y="0.873535" width="70" height="27" fill={fill}/>
+        <rect y="0.873535" width={width} height={height} fill={fill}/>
       </clipPath>
     </defs>
   </svg>

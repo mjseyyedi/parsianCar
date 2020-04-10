@@ -55,11 +55,9 @@ const Providers = ({route, history}) => {
 
   useEffect(() =>{
     const {userCredential} = selectors;
-    console.log(22222, userCredential)
     // if(!firstRender.current){
       const {routes} = route.routes[0]
       const index = routes.findIndex(item => item.path === location.pathname);
-      console.log(666666, location.pathname, routes, index, history)
       if(index !== -1){
         const currentRoute = routes[index]
         if(userCredential && currentRoute.guestOnly){

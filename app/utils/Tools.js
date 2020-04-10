@@ -8,6 +8,12 @@ function toEnglishDigits(str) {
   return str;
 }
 
+function formatPrice(val) {
+  return String(val).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+
 export default {
-  toEnglishDigits
+  toEnglishDigits,
+  formatPrice
 }

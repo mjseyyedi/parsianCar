@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {ObjectParam, useQueryParams} from 'use-query-params'
+import {useQueryParams} from 'use-query-params'
 
 import Button from 'components/common/Button'
 import Arrow from 'components/common/Icons/Arrow'
 
 import API from 'API'
-
+import {Tools} from 'utils'
 import styles from './styles'
 
 const Factor = ({history, isMobile, setLoading, ...props}) => {
@@ -18,6 +18,8 @@ const Factor = ({history, isMobile, setLoading, ...props}) => {
 
   const {data} = query
 
+
+  console.log(1111, data)
   useEffect(() => {
     let insure = data && data.factor_details
       ? data.factor_details.filter(item => item.name === 'insurance') : []
@@ -31,8 +33,6 @@ const Factor = ({history, isMobile, setLoading, ...props}) => {
   useEffect(() =>{
     if(paymentUrl){
       window.location.assign(paymentUrl)
-
-      // window.location.href = paymentUrl;
     }
   } , [paymentUrl])
 
@@ -212,7 +212,7 @@ const Factor = ({history, isMobile, setLoading, ...props}) => {
                         {item.name !== 'insurance' ? item.days + ` روز ` : item.fa_name}&nbsp;
                       </span>
                       <span>
-                        {item.price}
+                        {item.price ? Tools.formatPrice(item.price) : `رایگان`}
                       </span>
                     </div>
                   })
@@ -230,7 +230,7 @@ const Factor = ({history, isMobile, setLoading, ...props}) => {
                   مبلغ کل
                 </span>
                 <span>
-                  {data.total_pay}
+                  {data.total_pay ? Tools.formatPrice(data.total_pay) : `رایگان`}
                 </span>
               </div>
 
@@ -239,7 +239,7 @@ const Factor = ({history, isMobile, setLoading, ...props}) => {
                   قابل پرداخت
                 </span>
                 <span>
-                  {Math.floor(data.total_pay * 20 / 100)}
+                  {data.payable_amount ? Tools.formatPrice(data.payable_amount) : `رایگان`}
                 </span>
               </div>
             </div>

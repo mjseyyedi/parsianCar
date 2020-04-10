@@ -38,7 +38,7 @@ export default function Navbar({userCredential}) {
 
       </div>
       <Link to={'/'}>
-        <LogoIcon/>
+        <LogoIcon width={140} height={56}/>
       </Link>
 
 

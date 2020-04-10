@@ -157,7 +157,6 @@ const Profile = ({
     API.CheckOutRequest({}, {data})
       .then(response =>{
         props.setLoading(false)
-        console.log(6666, response)
         if(!response.status){
           props.addNotification('error', response.message || 'خطا در برقراری ارتباط با سرور')
         }

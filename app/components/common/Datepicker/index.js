@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react'
 import {DatePicker} from 'jalali-react-datepicker'
 import 'moment'
 
-import Input from 'components/common/Input'
-
 import styles from './styles'
 
 function DatePickerComponent({
@@ -24,7 +22,9 @@ function DatePickerComponent({
     !(ref.state.isOpenModal) && ref.toggleModalOpen()
     setRef(state => ({...state}))
   }}>
-    <Input type={'text'} placeholder={placeholder} initialValue={date} disabled/>
+    <div placeholder={placeholder} >
+      {date || placeholder}
+    </div>
     <DatePicker isRenderingButtons={false}
                 ref={el => setRef(el)}
                 onClickSubmitButton={({value}) => {

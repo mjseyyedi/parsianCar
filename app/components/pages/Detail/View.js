@@ -4,7 +4,6 @@ import ImageGallery from 'react-image-gallery'
 import Autocomplete from 'react-autocomplete'
 
 import Img from 'components/common/Img'
-import Input from 'components/common/Input'
 import Datepicker from 'components/common/Datepicker'
 import Button from 'components/common/Button'
 import Modal from 'components/common/Modal'
@@ -19,10 +18,11 @@ import {Tools} from 'utils'
 import styles from './styles'
 import './slider'
 
-const CarDetail = ({isMobile, carDetail,
+const CarDetail = ({
+                     isMobile, carDetail,
                      setLoading, setError,
-                     history, getCarDetail, ...props}) => {
-  console.log(111111, props)
+                     history, getCarDetail, ...props
+                   }) => {
   const [source, setSource] = useState('')
   const [tempSource, setTempSource] = useState('')
   const [sourceList, setSourceList] = useState([])
@@ -73,6 +73,14 @@ const CarDetail = ({isMobile, carDetail,
     }
     , [])
 
+  useEffect(() =>{
+    if(carDetail && carDetail[id]){
+      const simpleInsuranceIndex = options.findIndex(item => item.key === 'simple-insurance')
+      if(simpleInsuranceIndex !== -1  ){
+        setActiveInsurance(options[simpleInsuranceIndex])
+      }
+    }
+  } , [carDetail])
 
   useEffect(() => {
     if (source) {
@@ -234,15 +242,12 @@ const CarDetail = ({isMobile, carDetail,
   }
 
   function selectInsurance(item) {
-    if (activeInsurance && activeInsurance.fa_name === item.fa_name) {
-      setActiveInsurance(null)
-    } else if (item.message_golden_insurance) {
+  if (item.message_golden_insurance && item.key !== activeInsurance.key) {
       setTempInsurance(item)
       setTimeout(() => {
         setInsuranceModal(true)
       }, 0)
-    }
-    else{
+    } else {
       setActiveInsurance(item)
     }
   }
@@ -256,16 +261,16 @@ const CarDetail = ({isMobile, carDetail,
   }
 
   function reserveCar() {
-    if(!props.userCredential){
+    console.log(7, activeInsurance)
+    if (!props.userCredential) {
       history.push(`/login?referrer=cars/detail/${id}`)
-    }
-    else{
+    } else {
       if (!source) {
         props.addNotification('warning', 'لطفا مبدا حرکت خود را وارد کنید')
       } else if (!startDate || !endDate) {
         props.addNotification('warning', 'لطفا تاریخ شروع و پایان را انتخاب کنید')
       } else {
-        setLoading(true);
+        setLoading(true)
         API.CheckCarExist('', {
           data:
             {
@@ -276,27 +281,32 @@ const CarDetail = ({isMobile, carDetail,
         })
           .then(result => {
             if (result.status) {
-              setLoading(false);
+              setLoading(false)
               props.addNotification('warning', result.message)
             } else {
+              const options = activeOptions;
+              if(activeInsurance && activeInsurance.key !== 'simple-insurance'){
+                options.push(activeInsurance)
+              }
               const data = {
                 'reserve': reserveDetail.id,
                 'start_date': Tools.toEnglishDigits(startDate),
                 'end_date': Tools.toEnglishDigits(endDate),
-                'factor_details': activeOptions.concat(activeInsurance|| []),
+                'factor_details': options,
                 'daily_cost': price.value,
                 'origin': source.id,
               }
               API.ProcessFactor('', {data})
                 .then(response => {
-                  setLoading(false);
-                  if(response.status){
-                    const data = {...response.data, ...response.data.user_factors,
-                      reserveId:reserveDetail.id, daily_cost: price.value}
+                  setLoading(false)
+                  if (response.status) {
+                    const data = {
+                      ...response.data, ...response.data.user_factors,
+                      reserveId: reserveDetail.id, daily_cost: price.value,
+                    }
                     delete data['user_factors']
                     history.push(`/checkout?data=${JSON.stringify(data)}`)
-                  }
-                  else{
+                  } else {
                     props.addNotification('error', response.message || `خطا در برقراری ارتباط با سرور`)
                   }
                 })
@@ -382,21 +392,23 @@ const CarDetail = ({isMobile, carDetail,
         </div>
 
         <div className={styles.container__insurance}>
-          {options &&
-          options.filter(item => item.name === 'insurance').map(option =>
-            <div onClick={() => selectInsurance(option)}
-                 className={(activeInsurance && activeInsurance.fa_name === option.fa_name) &&
-                 styles['container__insurance--active']}>
-              <Insurance/>
-              <span>
+          {
+            options &&
+            options.filter(item => item.name === 'insurance')
+              .map(option =>
+                <div onClick={() => selectInsurance(option)}
+                     className={(activeInsurance && activeInsurance.fa_name === option.fa_name) &&
+                     styles['container__insurance--active']}>
+                  <Insurance/>
+                  <span>
               {option.fa_name}
             </span>
-            </div>)}
+                </div>)}
         </div>
 
         <div className={styles.container__price}>
           <span>
-            {price && price.value ? price.value : 0}&nbsp;تومان
+            {price && price.value ? Tools.formatPrice(price.value) : 0}&nbsp;تومان
           </span>
           <span>
             ({price && price.name === 'daily' ? 'روزانه' : 'ماهانه'})

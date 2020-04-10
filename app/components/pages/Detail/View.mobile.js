@@ -19,7 +19,7 @@ import {Tools} from 'utils'
 
 import styles from './styles.mobile'
 
-const CarDetail = ({setLoading, carDetail, getCarDetail, history,...props}) => {
+const CarDetail = ({setLoading, carDetail, getCarDetail, history, ...props}) => {
   const {id} = useParams()
 
   const [activeTab, setActiveTab] = useState('order')
@@ -88,8 +88,7 @@ const CarDetail = ({setLoading, carDetail, getCarDetail, history,...props}) => {
       setTimeout(() => {
         setInsuranceModal(true)
       }, 0)
-    }
-    else{
+    } else {
       setActiveInsurance(item)
     }
   }
@@ -205,7 +204,7 @@ const CarDetail = ({setLoading, carDetail, getCarDetail, history,...props}) => {
     } else if (!startDate || !endDate) {
       props.addNotification('warning', 'لطفا تاریخ شروع و پایان را انتخاب کنید')
     } else {
-      setLoading(true);
+      setLoading(true)
       // const data = {
       //   'reserve': reserveDetail.id,
       //   'start_date': Tools.toEnglishDigits(startDate),
@@ -235,25 +234,26 @@ const CarDetail = ({setLoading, carDetail, getCarDetail, history,...props}) => {
       })
         .then(result => {
           if (result.status) {
-            setLoading(false);
+            setLoading(false)
             props.addNotification('warning', result.message)
           } else {
             const data = {
               'reserve': reserveDetail.id,
               'start_date': Tools.toEnglishDigits(startDate),
               'end_date': Tools.toEnglishDigits(endDate),
-              'factor_details': activeOptions.concat(activeInsurance|| []),
+              'factor_details': activeOptions.concat(activeInsurance || []),
               'daily_cost': price.value,
               'origin': source.id,
             }
             API.ProcessFactor('', {data})
               .then(response => {
-                if(response.status){
-                  setLoading(false);
-                  const data = {...response.data, ...response.data.user_factors,
-                    reserveId:reserveDetail.id, daily_cost: price.value}
+                if (response.status) {
+                  setLoading(false)
+                  const data = {
+                    ...response.data, ...response.data.user_factors,
+                    reserveId: reserveDetail.id, daily_cost: price.value,
+                  }
                   delete data['user_factors']
-                  console.log('********************', data)
                   history.push(`/checkout?data=${JSON.stringify(data)}`)
                 }
               })

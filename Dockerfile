@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Installing dependencies
 COPY package*.json ./
-COPY yarn.lock ./
+COPY package*.json ./
 RUN yarn
 
 # Copying source files
