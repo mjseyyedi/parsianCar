@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom'
 import {useQueryParams, StringParam, NumberParam} from 'use-query-params'
 
 import CarCard from 'components/common/CarCard'
-import CarType from 'components/common/Icons/CarType'
+import Img from 'components/common/Img'
 import Brand from 'components/common/BrandCard'
 import Arrow from 'components/common/Icons/Arrow'
 
@@ -55,6 +55,8 @@ const Cars = ({
     window.scrollTo(0, 0)
   }, [page])
 
+  console.log(categories)
+
   return (
     <div className={styles.container} style={{height: isMobile && 'var(--mobile-container-height)'}}>
       {!isMobile && <div className={styles.container__brands}>
@@ -63,13 +65,19 @@ const Cars = ({
             categories &&
             categories.map(cat => <div onClick={() => {
               setQuery({page: 1}, 'replaceIn');
+              let param = cat.name
+              if(location.pathname.includes(cat.name)){
+                param = 'all'
+              }
               setTimeout(() =>{
-                history.replace(`/cars/${brand}/${cat.name}`+ history.location.search)
+                history.replace(`/cars/${brand}/${param}`+ history.location.search)
               } , 0)
             }}
               className={category === cat.name ? styles['container__category--active'] : ''}>
-              <CarType type={cat.name}/>
-
+              {/*<CarType type={cat.name}/>*/}
+              {
+                cat.icon ? <Img src={cat.icon}/> : cat.name
+              }
             </div>)
           }
         </section>
@@ -79,10 +87,14 @@ const Cars = ({
           .map(item => <div>
             <Brand {...item}
                    activeBrand={brand}
-                   onClick={brand => {
+                   onClick={eBrand => {
                      setQuery({page: 1}, 'replaceIn');
+                     let param = eBrand
+                     if(eBrand === brand){
+                       param = 'all'
+                     }
                      setTimeout(() =>{
-                       history.replace('/cars/' + brand + '/' + category + history.location.search)
+                       history.replace('/cars/' + param + '/' + category + history.location.search)
                      })
                    }}/>
           </div>)}

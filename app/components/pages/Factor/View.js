@@ -43,13 +43,14 @@ const Factor = ({history, isMobile, setLoading, ...props}) => {
       const factoreData = {factor_id: data.factor_id}
       API.CheckOutRequest({}, {data:factoreData})
         .then(response =>{
+          console.log('!!!!!!!!!!!', response)
           setLoading(false)
           if(!response.status){
             props.addNotification('error', response.message || 'خطا در برقراری ارتباط با سرور')
           }
           else{
-            const url = response.data.url_redirect
-            window.location.assign(url.split('‬‬').join('').split('‫‪').join(''))
+            const url = response.message
+            window.location.assign(url/*.split('‬‬').join('').split('‫‪').join('')*/)
           }
         })
     }
@@ -69,9 +70,10 @@ const Factor = ({history, isMobile, setLoading, ...props}) => {
       API.SubmitFactor('', {data: paymentData})
         .then(response =>{
           setLoading(false)
+          console.log('**************************', response)
           if(response.status){
-            const url = response.data.url_redirect
-            setPaymentUrl(url.split('‬‬').join('').split('‫‪').join(''))
+            const url = response.message
+            setPaymentUrl(url)
           }
           else{
             props.addNotification('error', response.message || `خطا در برقراری ارتباط با سرور`)

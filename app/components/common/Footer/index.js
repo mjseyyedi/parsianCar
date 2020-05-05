@@ -38,9 +38,13 @@ export default function Footer() {
         </span>
       </div>
       <div className={styles.footer__social}>
-        <SocialIcon type={'instagram'}/>
-        <SocialIcon type={'twitter'} width={16} height={21}/>
-        <SocialIcon type={'facebook'} width={16} height={21}/>
+        <a href="https://www.instagram.com/parsicar_rent/" target='_blank'>
+          <SocialIcon type={'instagram'}/>
+        </a>
+        <a href="https://twitter.com/parsicar" target='_blank'>
+          <SocialIcon type={'twitter'} width={16} height={21}/>
+        </a>
+        {/*<SocialIcon type={'facebook'} width={16} height={21}/>*/}
       </div>
 
     </div>

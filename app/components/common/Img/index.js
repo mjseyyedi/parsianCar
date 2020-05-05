@@ -5,7 +5,7 @@ import pattern from 'assets/images/pattern.svg'
 function Img({ src, alt, className, loaded,onClick, ...props }) {
   return (
     <img
-      src={src || pattern}
+      src={src}
       alt={alt}
       key={alt}
       className={className}

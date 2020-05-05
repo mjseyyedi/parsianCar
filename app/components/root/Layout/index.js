@@ -44,11 +44,6 @@ const Layout = props => {
     }
   } , [props.error])
 
-  useEffect(() =>{
-
-
-  } , [typeof window !== 'undefined' && window.location, props.userCredential])
-
   function addNotification(type, text) {
     setMText(text)
     setMType(type)

@@ -161,8 +161,8 @@ const Profile = ({
           props.addNotification('error', response.message || 'خطا در برقراری ارتباط با سرور')
         }
         else{
-          const url = response.data.url_redirect
-          window.location.assign(url.split('‬‬').join('').split('‫‪').join(''))
+          const url = response.message
+          window.location.assign(url/*.split('‬‬').join('').split('‫‪').join('')*/)
         }
       })
   }

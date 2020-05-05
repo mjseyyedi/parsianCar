@@ -32,7 +32,7 @@
     #{$parent}__category{
       margin-bottom: 12px;
       @include flexLayout(row, space-between , center, wrap);
-
+      width: 155px;
       &--active{
         background-color: var(--hover-background);
       }
@@ -42,7 +42,7 @@
           background-color: var(--hover-background);
           cursor: pointer;
         }
-        flex: 0 0 32%;
+        width: 32%;
         text-align: center;
         border-radius: 10px;
         border: var(--seperator);
@@ -50,6 +50,9 @@
         //height: 42px;
         padding: 10px 0;
         margin-bottom: 4px;
+        > img{
+          width: 100%;
+        }
       }
     }
 
