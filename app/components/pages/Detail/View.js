@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import ImageGallery from 'react-image-gallery'
 import Autocomplete from 'react-autocomplete'
@@ -38,6 +38,10 @@ const CarDetail = ({
   const [insuranceModal, setInsuranceModal] = useState(false)
   const [temporaryInsurance, setTempInsurance] = useState(null)
 
+  const [destModalState, setDestModalState] = useState(false)
+  const [tempDestination, setTempDestination] = useState('')
+  const [destination, setDestination] = useState('')
+
   const {id} = useParams()
   const data = carDetail[id]
 
@@ -73,20 +77,26 @@ const CarDetail = ({
     }
     , [])
 
-  useEffect(() =>{
-    if(carDetail && carDetail[id]){
+  useEffect(() => {
+    if (carDetail && carDetail[id]) {
       const simpleInsuranceIndex = options.findIndex(item => item.key === 'simple-insurance')
-      if(simpleInsuranceIndex !== -1  ){
+      if (simpleInsuranceIndex !== -1) {
         setActiveInsurance(options[simpleInsuranceIndex])
       }
     }
-  } , [carDetail])
+  }, [carDetail])
 
   useEffect(() => {
     if (source) {
       setTempSource(`${source.city} - ${source.subCity}`)
     }
   }, [source])
+
+  // useEffect(() => {
+  //   if (destination) {
+  //     setTempDestination(`${destination.city} - ${destination.subCity}`)
+  //   }
+  // }, [destination])
 
   const TabContent = ({type = 'gallery'}) => {
 
@@ -242,7 +252,7 @@ const CarDetail = ({
   }
 
   function selectInsurance(item) {
-  if (item.message_golden_insurance && item.key !== activeInsurance.key) {
+    if (item.message_golden_insurance && item.key !== activeInsurance.key) {
       setTempInsurance(item)
       setTimeout(() => {
         setInsuranceModal(true)
@@ -265,8 +275,8 @@ const CarDetail = ({
     if (!props.userCredential) {
       history.push(`/login?referrer=cars/detail/${id}`)
     } else {
-      if (!source) {
-        props.addNotification('warning', 'لطفا مبدا حرکت خود را وارد کنید')
+      if (!source || !destination) {
+        props.addNotification('warning', 'لطفا مبدا و مقصد حرکت خود را وارد کنید')
       } else if (!startDate || !endDate) {
         props.addNotification('warning', 'لطفا تاریخ شروع و پایان را انتخاب کنید')
       } else {
@@ -284,8 +294,8 @@ const CarDetail = ({
               setLoading(false)
               props.addNotification('warning', result.message)
             } else {
-              const options = activeOptions;
-              if(activeInsurance && activeInsurance.key !== 'simple-insurance'){
+              const options = activeOptions
+              if (activeInsurance && activeInsurance.key !== 'simple-insurance') {
                 options.push(activeInsurance)
               }
               const data = {
@@ -295,6 +305,7 @@ const CarDetail = ({
                 'factor_details': options,
                 'daily_cost': price.value,
                 'origin': source.id,
+                'destination': destination.id
               }
               API.ProcessFactor('', {data})
                 .then(response => {
@@ -363,8 +374,9 @@ const CarDetail = ({
               setSource(item)
             }}
           />
-          <span>
-            تحویل خودرو در مقصد
+          <span onClick={() => setDestModalState(true)}>
+            تحویل خودرو در
+            {destination ? (` ${destination.city} - ${destination.subCity}`) : ` مقصد `}
           </span>
           <div className={styles.container__date}>
             {
@@ -485,7 +497,56 @@ const CarDetail = ({
                                            close={() => setInsuranceModal(false)}/>
 
       }
+      {
+        sourceList.length ? <PromptModal isOpen={destModalState}
+                                         // confirmButton={{text: 'تایید', action: handleSelectInsurance}}
+                                         denyButton={{text: 'انصراف'}}
+                                         close={() => setDestModalState(false)}>
+          <div className={styles.container__destination__title}>
+            مقصد خود را انتخاب کنید
+          </div>
+          <div className={`${styles.container__autoComplete} ${styles.container__destination__items}`}>
+            {
+              sourceList.map(item => <div onClick={() =>{
+                setDestination(item)
+                setDestModalState(false)
+              }
+              }>
+                <span>
+                >
+                </span>
+                <span>
+                {item.city} - {item.subCity}
+                </span>
+              </div>)
+            }
+{/*
+            <Autocomplete
+              getItemValue={(item) => item.city}
+              items={sourceList}
+              shouldItemRender={(item, value) => (item.city.indexOf(value) > -1 || item.subCity.indexOf(value) > -1)}
+              renderItem={(item, isHighlighted) =>
+                <div style={{background: isHighlighted ? 'lightgray' : 'white'}}>
+                  {item.city} - {item.subCity}
+                </div>
+              }
+              value={tempDestination}
+              inputProps={{placeholder: 'مقصد'}}
+              onChange={(e) => {
+                setTempDestination(e.target.value)
+                if (!e.target.value) {
+                  setDestination(null)
+                }
+              }}
+              onSelect={(val, item) => {
+                setDestination(item)
+              }}
+            />
+*/}
+          </div>
 
+        </PromptModal> : <div/>
+      }
     </div>
   )
 }
