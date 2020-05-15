@@ -32,6 +32,8 @@ const CarDetail = ({setLoading, carDetail, getCarDetail, history, ...props}) => 
   const [activeOptions, setActiveOptions] = useState([])
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [destination, setDestination] = useState('')
+  const [destModalState, setDestModalState] = useState(false)
 
   if (carDetail && carDetail[id]) {
     var data = carDetail[id]
@@ -129,9 +131,10 @@ const CarDetail = ({setLoading, carDetail, getCarDetail, history, ...props}) => 
           />
         </div>
 
-        <span>
-              تحویل خودرو در مقصد
-            </span>
+        <span onClick={() => setDestModalState(true)}>
+              تحویل خودرو در
+          {destination ? (` ${destination.city} - ${destination.subCity}`) : ` مقصد `}
+        </span>
         <div className={styles.container__date}>
           <DatePicker placeholder={'تاریخ شروع'} selectDate={startDate => {
             setStartDate(startDate)
@@ -199,8 +202,10 @@ const CarDetail = ({setLoading, carDetail, getCarDetail, history, ...props}) => 
   }
 
   function reserveCar() {
-    if (!source) {
-      props.addNotification('warning', 'لطفا مبدا حرکت خود را وارد کنید')
+    if (!props.userCredential) {
+      history.push(`/login?referrer=cars/detail/${id}`)
+    } else if (!source || !destination) {
+      props.addNotification('warning', 'لطفا مبدا و مقصد حرکت خود را وارد کنید')
     } else if (!startDate || !endDate) {
       props.addNotification('warning', 'لطفا تاریخ شروع و پایان را انتخاب کنید')
     } else {
@@ -244,6 +249,7 @@ const CarDetail = ({setLoading, carDetail, getCarDetail, history, ...props}) => 
               'factor_details': activeOptions.concat(activeInsurance || []),
               'daily_cost': price.value,
               'origin': source.id,
+              'destination' : destination.id
             }
             API.ProcessFactor('', {data})
               .then(response => {
@@ -330,6 +336,36 @@ const CarDetail = ({setLoading, carDetail, getCarDetail, history, ...props}) => 
                                            denyButton={{text: 'لغو'}}
                                            close={() => setInsuranceModal(false)}/>
 
+      }
+      {
+        sourceList.length ? <PromptModal isOpen={destModalState}
+          // confirmButton={{text: 'تایید', action: handleSelectInsurance}}
+                                         denyButton={{text: 'انصراف'}}
+                                         close={() => setDestModalState(false)}>
+          <div className={styles.container__destination}>
+            <div className={styles.container__destination__title}>
+              مقصد خود را انتخاب کنید
+            </div>
+            <div className={`${styles.container__destination__items}`}>
+              {
+                sourceList.map(item => <div onClick={() =>{
+                  setDestination(item)
+                  setDestModalState(false)
+                }
+                }>
+                <span>
+                >
+                </span>
+                  <span>
+                {item.city} - {item.subCity}
+                </span>
+                </div>)
+              }
+            </div>
+
+          </div>
+
+        </PromptModal> : <div/>
       }
 
     </div>

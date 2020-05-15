@@ -70,7 +70,6 @@ const Factor = ({history, isMobile, setLoading, ...props}) => {
       API.SubmitFactor('', {data: paymentData})
         .then(response =>{
           setLoading(false)
-          console.log('**************************', response)
           if(response.status){
             const url = response.message
             setPaymentUrl(url)

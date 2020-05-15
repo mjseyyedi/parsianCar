@@ -50,6 +50,7 @@ const Layout = props => {
     setVisibility(true)
   }
 
+  console.log(props)
   return <React.Fragment>
     {
       props.loading &&  <Loading />
@@ -65,7 +66,7 @@ const Layout = props => {
     {renderRoutes(props.route.routes, {...props, isMobile, Authorization, addNotification})}
 
     {
-      !isMobile ? <Footer /> : !!(hasFooter(props.location.pathname) )&& <MobileFooter/>
+      !isMobile ? <Footer /> : !!(hasFooter(props.location.pathname) )&& <MobileFooter userCredential={props.userCredential} />
     }
   </React.Fragment>
 }

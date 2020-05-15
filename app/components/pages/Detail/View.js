@@ -271,7 +271,6 @@ const CarDetail = ({
   }
 
   function reserveCar() {
-    console.log(7, activeInsurance)
     if (!props.userCredential) {
       history.push(`/login?referrer=cars/detail/${id}`)
     } else {

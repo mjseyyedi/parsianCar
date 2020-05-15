@@ -12,6 +12,7 @@ import {routeParser} from './middlewares'
 const PORT = process.env.PORT || 3000
 
 const app = express()
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 const publicPath = path.resolve(process.cwd(), './dist')
 

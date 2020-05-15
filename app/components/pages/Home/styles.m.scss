@@ -101,6 +101,7 @@
     }
 
     #{$parent}__autoComplete{
+      width: 100%;
       > div{
         width: 100%;
         > input{
@@ -132,19 +133,21 @@
     #{$parent}__mobileDate{
       display: flex;
       width: 100%;
+      margin-top: 16px;
       > div{
-        flex: 0 0 50%;
+        height: 48px;
+        width: 49.5%;
         margin-bottom: 16px;
         &:first-child{
           margin-left: 1%;
-          > input{
+          > div{
             border-bottom-left-radius: 0 !important;
             border-top-left-radius: 0 !important;
           }
         }
 
         &:last-child{
-          > input{
+          > div{
             border-top-right-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
           }

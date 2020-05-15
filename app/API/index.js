@@ -28,6 +28,7 @@ const request = async (reqUrl, method, params, data, headers, options) => {
 
   return await instance
     .request({
+      rejectUnauthorized: false,
       url,
       method,
       params,
