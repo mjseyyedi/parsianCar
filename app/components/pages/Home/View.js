@@ -18,7 +18,9 @@ const Home = ({getFrontContent, isMobile, homeData, history, ...props}) => {
   const [endDate, setEndDate] = useState(null)
 
   useEffect(() =>{
-    (!homeData || !homeData.length) && getFrontContent();
+    if(!homeData || !homeData.length){
+      getFrontContent();
+    }
 
 
     API.Stations()

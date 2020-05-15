@@ -53,25 +53,6 @@ const Providers = ({route, history}) => {
     dispatch(setRouterMatch(match))
   }, [location.pathname])
 
-  useEffect(() =>{
-    // const {userCredential} = selectors;
-    // if(!firstRender.current){
-    //   const {routes} = route.routes[0]
-      // const index = routes.findIndex(item => item.path === location.pathname);
-      // if(index !== -1){
-      //   const currentRoute = routes[index]
-      //   if(userCredential && currentRoute.guestOnly){
-      //     history.length > 2 ? history.goBack() : history.push('/')
-      //   }
-      //   // else if(!userCredential && currentRoute.authenticatedOnly){
-      //   //   history.push('/')
-      //   // }
-      // }
-    // }
-    // firstRender.current = false
-
-  } , [selectors.userCredential, location.pathname])
-
 
   return <QueryParamProvider ReactRouterRoute={Route}>
     {renderRoutes(route.routes, {...selectors, ...dispatches})}

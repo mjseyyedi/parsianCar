@@ -50,7 +50,6 @@ const Layout = props => {
     setVisibility(true)
   }
 
-  console.log(props)
   return <React.Fragment>
     {
       props.loading &&  <Loading />

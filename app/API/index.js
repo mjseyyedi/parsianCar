@@ -37,11 +37,14 @@ const request = async (reqUrl, method, params, data, headers, options) => {
       ...options,
     })
     .then(response => {
+      console.log(1, response)
       if(response.status === 200 || !!response.data) return response.data
       else return response
     })
-    .catch(error =>
-      error.response ? error.response.data : {status: false, error},
+    .catch(error =>{
+        console.log(2, error)
+        return error.response ? error.response.data : {status: false, error}
+    }
     )
 }
 

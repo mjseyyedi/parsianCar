@@ -1,4 +1,5 @@
 import {call, put, all, takeLatest} from 'redux-saga/effects'
+import Cookies from 'js-cookie'
 import Request from 'API'
 import types from './constants'
 
@@ -15,12 +16,15 @@ import {setError, setLoading} from 'Redux/reducers/global/actions'
 function* fetchUserInfo(actions) {
   yield put(setLoading(true))
   const response = yield call(Request.userInfo)
+  yield put(setLoading(false))
   if (!!response && response.status) {
     yield put(setUserInfo(response.data))
   } else {
-    yield put(setError(response.error))
+    console.log('!!!!!!!!!!!!!!!', response.error || response.detail)
+    yield put(setError(response.error || response.detail))
+    Cookies.remove('Authorization');
+    window.location.href = '/'
   }
-  yield put(setLoading(false))
 }
 
 function* updateUserProfile(actions) {

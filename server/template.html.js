@@ -18,6 +18,7 @@ export default (content, extractor, state) => {
       ${helmet.style.toString()}
       ${helmet.script.toString()}
       ${helmet.noscript.toString()}
+      <link rel="manifest" href="/manifest.json"/>
     </head>
     <body>
       <div id="app">${content}</div>

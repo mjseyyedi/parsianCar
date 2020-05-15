@@ -9,6 +9,7 @@ import styles from './styles'
 
 export default function Navbar({userCredential}) {
 
+  console.log(33333, userCredential)
 
   function handleLoginClick() {
     window.dispatchEvent(

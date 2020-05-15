@@ -52,6 +52,13 @@ const config = {
           `./dist/images_${toHash(process.env.APP_VERSION)}`,
         ),
       },
+      {
+        from: path.resolve(process.cwd(), './app/assets/manifest.json'),
+        to: path.resolve(
+          process.cwd(),
+          `dist`,
+        ),
+      },
     ]),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [
